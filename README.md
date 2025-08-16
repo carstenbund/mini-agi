@@ -1,0 +1,2 @@
+# mini-agi
+Thinking system
