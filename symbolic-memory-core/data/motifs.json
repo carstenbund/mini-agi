@@ -1,1 +1,15 @@
-{}
+{
+  "590494e0-de56-406e-a2df-86c6436a45ee": {
+    "id": "590494e0-de56-406e-a2df-86c6436a45ee",
+    "symbols": [
+      "justice",
+      "gradient"
+    ],
+    "content": "[ollama error] 'ollama' CLI not found.",
+    "thread_id": "session",
+    "references": [],
+    "history": [],
+    "created_at": "2025-08-17T01:13:00.049649",
+    "updated_at": "2025-08-17T01:13:00.049653"
+  }
+}

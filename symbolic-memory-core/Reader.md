@@ -34,8 +34,7 @@ It simulates a minimal **proto-AGI architecture** by maintaining symbolic contin
 
 ## Technical Notes
 
-- Embeddings via `sentence-transformers` (local CPU or GPU)
-- Vector search via `scikit-learn`, `faiss`, or brute force (initially)
+- Embeddings: tiny local bag-of-words cosine (stdlib only)
 - Motifs are serialized to `data/motifs.json`
 - Ollama CLI used for model inference (e.g. `llama2`, `mistral`, `gemma`)
 
@@ -62,8 +61,8 @@ It simulates a minimal **proto-AGI architecture** by maintaining symbolic contin
 ## Roadmap
 
 - [x] Core data model and JSON persistence
-- [ ] Embedding + router module
-- [ ] Multiple thread support
+- [x] Minimal router with cosine similarity
+- [x] Multiple thread support (lightweight)
 - [ ] Interactive terminal UI or minimal Flask UI
 - [ ] Visualization of motif links (e.g. D3, NetworkX)
 
