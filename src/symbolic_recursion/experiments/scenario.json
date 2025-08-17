@@ -1,0 +1,21 @@
+{
+  "model": "llama3:instruct",
+  "use_stub": false,
+  "capture_threshold": 0.45,
+  "novelty_threshold": 0.55,
+  "low_confidence_threshold": 0.40,
+  "cycles": 2,
+  "prompts": [
+    {
+      "name": "justice-taxonomy",
+      "prompt": "Outline a 7-level 'Justice as a Gradient' taxonomy; keep labels short; 1-2 lines each.",
+      "symbols": ["justice","gradient","taxonomy","mercy","redistributive","pragmatic","contextual"]
+    },
+    {
+      "name": "bridge",
+      "prompt": "Bridge the 7-level justice taxonomy to symbolic recursion and propose 2 measurable indicators per level (with data sources).",
+      "symbols": ["integration","bridge","metrics","recursion"]
+    }
+  ]
+}
+
