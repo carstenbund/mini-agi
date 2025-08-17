@@ -1,6 +1,6 @@
 import json, sys
 from pathlib import Path
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 
 from symbolic_recursion.core.motif import SymbolicMemoryCore
 from symbolic_recursion.core.storage import load_motifs, save_motifs
@@ -34,9 +34,14 @@ def run(cfg_path: str):
     tm = ThreadManager(smc)
 
     if use_stub:
-        import symbolic_recursion.core as core.ollama_interface as oi
+        from symbolic_recursion.core import ollama_interface as oi
+        from symbolic_recursion.threads import manager as tmgr
         from symbolic_recursion.core.model_stub import stub_response
-        oi.query_ollama = lambda prompt, model=model, timeout=None: stub_response(prompt, model, timeout)
+
+        def _stub(prompt: str, model: str = model, timeout: Optional[int] = None) -> str:
+            return stub_response(prompt, model, timeout)
+
+        oi.query_ollama = tmgr.query_ollama = _stub
 
     state = _load_state()
 
