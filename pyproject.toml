@@ -3,7 +3,7 @@ name = "symbolic-recursion"
 version = "0.1.0"
 description = "Symbolic Memory Core — proto-AGI skeleton with novelty/confidence harness"
 requires-python = ">=3.9"
-readme = "Reader.md"
+readme = "README.md"
 
 [build-system]
 requires = ["setuptools>=68", "wheel"]
