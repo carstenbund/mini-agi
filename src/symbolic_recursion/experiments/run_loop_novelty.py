@@ -1,4 +1,4 @@
-import json, sys
+import json, os, sys
 from pathlib import Path
 from typing import List, Dict, Any
 
@@ -33,6 +33,17 @@ def run(cfg_path: str):
     smc = SymbolicMemoryCore(); smc.motifs = load_motifs()
     tm = ThreadManager(smc)
 
+    router = None
+    if os.getenv("SMC_ROUTER", "").lower() == "vector":
+        from symbolic_recursion.core.vector_router import VectorRouter
+        try:
+            from symbolic_recursion.embeddings.sbert import Embeddings
+            emb = Embeddings()
+            router = VectorRouter(emb)
+        except Exception:
+            router = VectorRouter(None)
+        router.rebuild_from_smc(smc)
+
     if use_stub:
         import symbolic_recursion.core.ollama_interface as oi
         from symbolic_recursion.core.model_stub import stub_response
@@ -51,13 +62,19 @@ def run(cfg_path: str):
             resp = thr.ask(p["prompt"])
             m = tm.capture_as_motif(thr, p.get("symbols", []), resp)
             new_ids.append(m.id)
+            if router:
+                router.add_motif(smc, m)
 
         # 2) Auto-link and score novelty
         for mid in new_ids:
             m = smc.get_motif(mid)
             # auto-link by similarity
             linked_any = False
-            for cand, score in suggest_links(smc, mid, top_k=3):
+            if router:
+                suggestions = router.suggest_for_motif(smc, mid, top_k=3)
+            else:
+                suggestions = suggest_links(smc, mid, top_k=3)
+            for cand, score in suggestions:
                 if score >= link_threshold:
                     smc.link_motifs(mid, cand.id)
                     linked_any = True
