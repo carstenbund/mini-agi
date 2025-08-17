@@ -15,7 +15,7 @@ from urllib import request, error
 
 def query_ollama(
     prompt: str,
-    model: str = "llama3",
+    model: str = "llama3:8b",
     host: Optional[str] = "localhost:11434",
     timeout: Optional[int] = None,
 ) -> str:
