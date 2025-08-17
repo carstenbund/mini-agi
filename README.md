@@ -41,7 +41,7 @@ It simulates a minimal **proto-AGI architecture** by maintaining symbolic contin
 - Embeddings via `sentence-transformers` (local CPU or GPU)
 - Vector search via `scikit-learn`, `faiss`, or brute force (initially)
 - Motifs are serialized to `data/motifs.json`
-- Ollama CLI used for model inference (e.g. `llama2`, `mistral`, `gemma`)
+- Ollama CLI or HTTP API used for model inference (e.g. `llama2`, `mistral`, `gemma`)
 
 ---
 
