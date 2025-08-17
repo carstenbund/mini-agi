@@ -2,8 +2,9 @@
 
 The original project accessed Ollama exclusively through the local
 command-line interface.  This module extends that behaviour by adding an
-optional network wrapper.  Supplying a ``host`` will send the request to a
-running Ollama server over HTTP; otherwise the local CLI is used.
+optional network wrapper.  The network interface is now preferred and
+defaults to a server running on ``localhost:11434``.  Passing ``None`` for
+``host`` will fall back to the local CLI.
 """
 
 from typing import Optional
@@ -15,15 +16,16 @@ from urllib import request, error
 def query_ollama(
     prompt: str,
     model: str = "llama2",
-    host: Optional[str] = None,
+    host: Optional[str] = "localhost:11434",
     timeout: Optional[int] = None,
 ) -> str:
     """Query an Ollama model.
 
     If ``host`` is provided, the function sends an HTTP request to the
-    specified ``host`` (``host`` should include the port, e.g.
+    specified ``host`` (which should include the port, e.g.
     ``"localhost:11434"``).  If ``host`` is ``None`` the local ``ollama``
-    CLI is invoked.
+    CLI is invoked.  The default host is ``"localhost:11434"``, meaning the
+    network interface is used unless explicitly disabled.
 
     Args:
         prompt: Text prompt to send to the model.
