@@ -1,0 +1,15 @@
+[project]
+name = "symbolic-recursion"
+version = "0.1.0"
+description = "Symbolic Memory Core — proto-AGI skeleton with novelty/confidence harness"
+requires-python = ">=3.9"
+readme = "Reader.md"
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = ["symbolic_recursion"]
+include-package-data = true

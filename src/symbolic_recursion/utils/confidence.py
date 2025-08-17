@@ -1,7 +1,7 @@
 from typing import Dict, List
 import re
-from embeddings.embedder import embed_text, cosine_sparse
-from core.motif import SymbolicMemoryCore
+from symbolic_recursion.embeddings.embedder import embed_text, cosine_sparse
+from symbolic_recursion.core.motif import SymbolicMemoryCore
 
 HEDGE_RE = re.compile(r"\b(might|maybe|perhaps|possibly|could|unclear|not sure|i think|it seems|appears)\b", re.I)
 

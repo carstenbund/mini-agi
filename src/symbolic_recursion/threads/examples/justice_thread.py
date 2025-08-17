@@ -1,5 +1,5 @@
-from core.motif import SymbolicMemoryCore
-from threads.manager import ThreadManager
+from symbolic_recursion.core.motif import SymbolicMemoryCore
+from symbolic_recursion.threads.manager import ThreadManager
 
 if __name__ == "__main__":
     smc = SymbolicMemoryCore()

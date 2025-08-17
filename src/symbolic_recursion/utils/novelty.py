@@ -1,7 +1,7 @@
 # utils/novelty.py
 from typing import Dict, List, Set
-from embeddings.embedder import embed_text, cosine_sparse
-from core.motif import SymbolicMemoryCore, MotifNode
+from symbolic_recursion.embeddings.embedder import embed_text, cosine_sparse
+from symbolic_recursion.core.motif import SymbolicMemoryCore, MotifNode
 
 def _all_vectors(smc: SymbolicMemoryCore) -> List[Dict[str, float]]:
     return [embed_text(m.content) for m in smc.list_motifs()]
