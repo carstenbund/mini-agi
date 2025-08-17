@@ -35,6 +35,33 @@ python scripts/run_cli.py list
 python scripts/run_cli.py chat --prompt "Briefly outline Justice as a Gradient" --capture justice,gradient
 ```
 
+## Chroma Persistence
+
+SMC can persist vector search data using [Chroma](https://www.trychroma.com/).
+To enable it:
+
+1. Install the optional dependency (and SBERT for better embeddings):
+
+   ```bash
+   pip install chromadb sentence-transformers
+   ```
+
+2. (Optional) Index existing motifs into Chroma:
+
+   ```bash
+   python scripts/motif_to_chroma.py
+   ```
+
+3. Select the Chroma router via an environment variable or CLI flag:
+
+   ```bash
+   SMC_ROUTER=chroma python scripts/run_cli.py query --text "hello world"
+   # or
+   python scripts/run_cli.py --router chroma query --text "hello world"
+   ```
+
+Chroma data is stored under `data/chroma/`.
+
 ## Experiments
 
 The novelty harness generates motifs with an LLM and scores semantic novelty.
