@@ -1,0 +1,31 @@
+{
+  "cycle": 1,
+  "new_motifs": [
+    {
+      "id": "2e5e4922-7116-48d8-8207-9f6dd6dca48e",
+      "semantic": 2.220446049250313e-16,
+      "symbolic": 0.0,
+      "structural": 0.25,
+      "novelty_index": 0.07500000000000011,
+      "linked": true
+    },
+    {
+      "id": "3e0ec69c-3f53-42fd-8213-0fa250a83392",
+      "semantic": 0.0,
+      "symbolic": 0.0,
+      "structural": 0.5,
+      "novelty_index": 0.15,
+      "linked": true
+    }
+  ],
+  "V": 4.0,
+  "E": 6.0,
+  "edge_density": 1.0,
+  "recurrence_rate": 1.0,
+  "lcc_fraction": 1.0,
+  "clustering_coeff": 1.0,
+  "avg_shortest_path": 1.0,
+  "centroid_shift": 0.10283402005274744,
+  "cohesion": 0.7396708146570287,
+  "pursue_queue": []
+}

@@ -22,6 +22,8 @@ def _save_state(state):
     json.dump(state, open(STATE_PATH, "w"), indent=2)
 
 def run(cfg_path: str):
+    here = os.path.dirname(__file__)
+    cfg_path = os.path.join(here, os.path.basename(cfg_path))  # always load from same dir
     cfg = json.load(open(cfg_path, "r"))
     model = cfg.get("model", "llama2")
     use_stub = bool(cfg.get("use_stub", False))

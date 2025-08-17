@@ -1,0 +1,20 @@
+{
+  "topics": [
+    {
+      "name": "justice-taxonomy",
+      "prompt": "Produce a 7-level justice-as-gradient taxonomy with crisp definitions.",
+      "symbols": ["justice","gradient","taxonomy"]
+    },
+    {
+      "name": "bridge-metrics",
+      "prompt": "Bridge the justice taxonomy to symbolic recursion with 2 measurable indicators per level.",
+      "symbols": ["integration","bridge","metrics","recursion"]
+    },
+    {
+      "name": "contrast-rawls",
+      "prompt": "Contrast justice-as-gradient with Rawls' difference principle; produce 3 falsifiable claims.",
+      "symbols": ["contrast","rawls","prediction"]
+    }
+  ]
+}
+
