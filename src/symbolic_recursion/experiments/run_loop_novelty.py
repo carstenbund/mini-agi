@@ -36,7 +36,8 @@ def run(cfg_path: str):
     tm = ThreadManager(smc)
 
     router = None
-    if os.getenv("SMC_ROUTER", "").lower() == "vector":
+    rt = os.getenv("SMC_ROUTER", "").lower()
+    if rt == "vector":
         from symbolic_recursion.core.vector_router import VectorRouter
         try:
             from symbolic_recursion.embeddings.sbert import Embeddings
@@ -44,6 +45,15 @@ def run(cfg_path: str):
             router = VectorRouter(emb)
         except Exception:
             router = VectorRouter(None)
+        router.rebuild_from_smc(smc)
+    elif rt == "chroma":
+        from symbolic_recursion.core.chroma_router import ChromaRouter
+        try:
+            from symbolic_recursion.embeddings.sbert import Embeddings
+            emb = Embeddings()
+            router = ChromaRouter(emb)
+        except Exception:
+            router = ChromaRouter(None)
         router.rebuild_from_smc(smc)
 
     if use_stub:

@@ -1,9 +1,48 @@
 import argparse
+import os
+
 from symbolic_recursion.core.motif import MotifNode, SymbolicMemoryCore
 from symbolic_recursion.core.storage import save_motifs, load_motifs
 from symbolic_recursion.core.router import rank_similar, suggest_links
 from symbolic_recursion.threads.manager import ThreadManager
 from symbolic_recursion.utils.id_gen import generate_id
+
+
+def _init_router(kind: str, smc: SymbolicMemoryCore):
+    """Instantiate a vector router if requested.
+
+    Parameters
+    ----------
+    kind: str
+        Name of the router backend ("vector" or "chroma").
+    smc: SymbolicMemoryCore
+        The motif store used to populate the router.
+    """
+    kind = (kind or "").lower()
+    router = None
+    if kind == "vector":
+        from symbolic_recursion.core.vector_router import VectorRouter
+
+        try:
+            from symbolic_recursion.embeddings.sbert import Embeddings
+
+            emb = Embeddings()
+            router = VectorRouter(emb)
+        except Exception:
+            router = VectorRouter(None)
+        router.rebuild_from_smc(smc)
+    elif kind == "chroma":
+        from symbolic_recursion.core.chroma_router import ChromaRouter
+
+        try:
+            from symbolic_recursion.embeddings.sbert import Embeddings
+
+            emb = Embeddings()
+            router = ChromaRouter(emb)
+        except Exception:
+            router = ChromaRouter(None)
+        router.rebuild_from_smc(smc)
+    return router
 
 def load_smc() -> SymbolicMemoryCore:
     smc = SymbolicMemoryCore()
@@ -38,13 +77,21 @@ def cmd_link(args):
 
 def cmd_query(args):
     smc = load_smc()
-    results = rank_similar(smc, args.text, top_k=args.k)
+    router = _init_router(args.router, smc)
+    if router:
+        results = router.search_text(args.text, top_k=args.k)
+    else:
+        results = rank_similar(smc, args.text, top_k=args.k)
     for m, score in results:
         print(f"{m.id}  score={score:.3f}  symbols={m.symbols}  thread={m.thread_id}")
 
 def cmd_suggest(args):
     smc = load_smc()
-    results = suggest_links(smc, args.motif_id, top_k=args.k)
+    router = _init_router(args.router, smc)
+    if router:
+        results = router.suggest_for_motif(smc, args.motif_id, top_k=args.k)
+    else:
+        results = suggest_links(smc, args.motif_id, top_k=args.k)
     for m, score in results:
         print(f"{m.id}  score={score:.3f}  symbols={m.symbols}  thread={m.thread_id}")
 
@@ -62,6 +109,12 @@ def cmd_chat(args):
 
 def main():
     p = argparse.ArgumentParser(description="Symbolic Memory Core CLI")
+    p.add_argument(
+        "--router",
+        type=str,
+        default=os.getenv("SMC_ROUTER", ""),
+        help="Vector backend: 'vector', 'chroma', or blank for legacy",
+    )
     sub = p.add_subparsers(required=True)
 
     p_add = sub.add_parser("add", help="Add a motif")
