@@ -90,7 +90,7 @@ def main():
 
     p_chat = sub.add_parser("chat", help="Ask local Ollama and (optionally) capture as motif")
     p_chat.add_argument("--name", type=str, default="session")
-    p_chat.add_argument("--model", type=str, default="llama2")
+    p_chat.add_argument("--model", type=str, default="llama3:instruct")
     p_chat.add_argument("--prompt", type=str, required=True)
     p_chat.add_argument("--capture", type=str, help="Comma-separated symbols to store result as motif")
     p_chat.set_defaults(func=cmd_chat)

@@ -12,48 +12,58 @@ import json
 import subprocess
 from urllib import request, error
 
-
 def query_ollama(
     prompt: str,
     model: str = "llama3:instruct",
-    host: Optional[str] = "localhost:11434",
+    host: Optional[str] = "127.0.0.1:11434",
     timeout: Optional[int] = None,
+    debug: bool = True,   # new flag for logging
 ) -> str:
-    """Query an Ollama model.
-
-    If ``host`` is provided, the function sends an HTTP request to the
-    specified ``host`` (which should include the port, e.g.
-    ``"localhost:11434"``).  If ``host`` is ``None`` the local ``ollama``
-    CLI is invoked.  The default host is ``"localhost:11434"``, meaning the
-    network interface is used unless explicitly disabled.
-
-    Args:
-        prompt: Text prompt to send to the model.
-        model: Name of the Ollama model to use.
-        host: Optional ``host:port`` of a remote Ollama server.
-        timeout: Optional timeout in seconds for the request/process.
-
-    Returns:
-        Model response text.  Errors are returned as strings prefixed with
-        ``[ollama error]`` or ``[ollama network error]``.
-    """
+    """Query an Ollama model via HTTP or local CLI (fallback)."""
 
     if host:
-        data = json.dumps({"model": model, "prompt": prompt, "stream": False}).encode()
+        url = f"http://{host}/api/generate"
+        payload = {"model": model, "prompt": prompt, "stream": False}
+        data = json.dumps(payload).encode()
+
+        # Disable proxies so localhost requests go directly
+        opener = request.build_opener(request.ProxyHandler({}))
         req = request.Request(
-            f"http://{host}/api/generate",
+            url,
             data=data,
             headers={"Content-Type": "application/json"},
+            method="POST",
         )
+
+        if debug:
+            print("---- OLLAMA REQUEST ----")
+            print("URL:", url)
+            print("Payload:", json.dumps(payload, indent=2))
+            print("------------------------")
+
         try:
-            with request.urlopen(req, timeout=timeout) as resp:
-                payload = resp.read()
+            with opener.open(req, timeout=timeout) as resp:
+                body = resp.read()
+            if debug:
+                print("---- OLLAMA RESPONSE ----")
+                print(body.decode(errors="replace"))
+                print("-------------------------")
             try:
-                return json.loads(payload).get("response", "")
+                obj = json.loads(body)
+                return obj.get("response") or obj.get("message", "") or body.decode()
             except json.JSONDecodeError:
-                return payload.decode()
-        except error.URLError as exc:  # includes HTTPError
-            return f"[ollama network error] {exc.reason}" if hasattr(exc, "reason") else f"[ollama network error] {exc}"
+                return body.decode()
+        except error.HTTPError as e:
+            err_body = e.read().decode(errors="replace")
+            if debug:
+                print("---- OLLAMA HTTP ERROR ----")
+                print("Status:", e.code)
+                print("Body:", err_body)
+                print("---------------------------")
+            msg = err_body or getattr(e, "reason", str(e)) or str(e)
+            return f"[ollama network error] HTTP {e.code}: {msg}"
+        except error.URLError as e:
+            return f"[ollama network error] {getattr(e, 'reason', e)}"
 
     # Fallback to local CLI invocation
     try:
