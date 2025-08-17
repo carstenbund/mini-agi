@@ -1,7 +1,7 @@
 import json
 import os
 from typing import Dict
-from core.motif import MotifNode
+from symbolic_recursion.core.motif import MotifNode
 
 DATA_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "motifs.json")
 DATA_PATH = os.path.abspath(DATA_PATH)

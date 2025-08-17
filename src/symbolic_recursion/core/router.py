@@ -1,6 +1,6 @@
 from typing import List, Tuple
-from embeddings.embedder import embed_text, cosine_sparse
-from core.motif import MotifNode, SymbolicMemoryCore
+from symbolic_recursion.embeddings.embedder import embed_text, cosine_sparse
+from symbolic_recursion.core.motif import MotifNode, SymbolicMemoryCore
 
 def rank_similar(smc: SymbolicMemoryCore, query_text: str, top_k: int = 5) -> List[Tuple[MotifNode, float]]:
     q = embed_text(query_text)

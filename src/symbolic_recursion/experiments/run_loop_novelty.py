@@ -2,12 +2,12 @@ import json, sys
 from pathlib import Path
 from typing import List, Dict, Any
 
-from core.motif import SymbolicMemoryCore
-from core.storage import load_motifs, save_motifs
-from core.router import suggest_links
-from threads.manager import ThreadManager
-from utils.metrics import graph_stats, semantic_stats
-from utils.novelty import novelty_index
+from symbolic_recursion.core.motif import SymbolicMemoryCore
+from symbolic_recursion.core.storage import load_motifs, save_motifs
+from symbolic_recursion.core.router import suggest_links
+from symbolic_recursion.threads.manager import ThreadManager
+from symbolic_recursion.utils.metrics import graph_stats, semantic_stats
+from symbolic_recursion.utils.novelty import novelty_index
 
 STATE_PATH = Path("experiments/state.json")
 LOGS_DIR   = Path("experiments/logs")
@@ -34,8 +34,8 @@ def run(cfg_path: str):
     tm = ThreadManager(smc)
 
     if use_stub:
-        import core.ollama_interface as oi
-        from core.model_stub import stub_response
+        import symbolic_recursion.core as core.ollama_interface as oi
+        from symbolic_recursion.core.model_stub import stub_response
         oi.query_ollama = lambda prompt, model=model, timeout=None: stub_response(prompt, model, timeout)
 
     state = _load_state()

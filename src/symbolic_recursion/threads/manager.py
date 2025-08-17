@@ -1,7 +1,7 @@
 from typing import List, Optional
-from core.motif import MotifNode, SymbolicMemoryCore
-from core.ollama_interface import query_ollama
-from utils.id_gen import generate_id
+from symbolic_recursion.core.motif import MotifNode, SymbolicMemoryCore
+from symbolic_recursion.core.ollama_interface import query_ollama
+from symbolic_recursion.utils.id_gen import generate_id
 from datetime import datetime
 
 class ChatThread:

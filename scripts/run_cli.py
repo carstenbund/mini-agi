@@ -1,9 +1,9 @@
 import argparse
-from core.motif import MotifNode, SymbolicMemoryCore
-from core.storage import save_motifs, load_motifs
-from core.router import rank_similar, suggest_links
-from threads.manager import ThreadManager
-from utils.id_gen import generate_id
+from symbolic_recursion.core.motif import MotifNode, SymbolicMemoryCore
+from symbolic_recursion.core.storage import save_motifs, load_motifs
+from symbolic_recursion.core.router import rank_similar, suggest_links
+from symbolic_recursion.threads.manager import ThreadManager
+from symbolic_recursion.utils.id_gen import generate_id
 
 def load_smc() -> SymbolicMemoryCore:
     smc = SymbolicMemoryCore()
