@@ -65,33 +65,67 @@ class ChromaRouter:
         self.id_to_motif: Dict[str, MotifNode] = {}
         self.ids: List[str] = []
         self._smc: Optional[SymbolicMemoryCore] = None
+        # persistent vocabulary for legacy embeddings
+        self._voc: Dict[str, int] = {}
 
     # -------- embedding (mirror your VectorRouter) ------------------------
 
-    def _encode(self, texts: List[str]) -> np.ndarray:
+    def _encode(self, texts: List[str], update_vocab: bool = True) -> Tuple[np.ndarray, bool]:
+        """Encode text into a dense L2-normalized matrix.
+
+        Parameters
+        ----------
+        texts: List[str]
+            Text strings to encode.
+        update_vocab: bool
+            If True, extend the legacy vocabulary with new tokens. Queries
+            should pass False to avoid side effects.
+
+        Returns
+        -------
+        mat: np.ndarray
+            Embedding matrix of shape (len(texts), D).
+        expanded: bool
+            Whether the vocabulary grew during this call.
+        """
         # Preferred: SBERT
         if self.emb is not None:
             try:
                 mat = self.emb.encode_texts(texts)
-                return _l2_normalize(np.asarray(mat, dtype=np.float32))
+                return _l2_normalize(np.asarray(mat, dtype=np.float32)), False
             except Exception:
                 pass
 
-        # Fallback: legacy sparse → dense bag with normalization
-        voc: Dict[str, int] = {}
+        expanded = False
         vecs = []
         for t in texts:
             d = legacy_embed(t)  # dict[token] -> weight
             for k in d.keys():
-                if k not in voc:
-                    voc[k] = len(voc)
+                if update_vocab and k not in self._voc:
+                    self._voc[k] = len(self._voc)
+                    expanded = True
             vecs.append(d)
-        D = len(voc)
+        D = len(self._voc)
         out = np.zeros((len(texts), D), dtype=np.float32)
         for i, d in enumerate(vecs):
             for k, v in d.items():
-                out[i, voc[k]] = v
-        return _l2_normalize(out)
+                idx = self._voc.get(k)
+                if idx is not None:
+                    out[i, idx] = v
+        return _l2_normalize(out), expanded
+
+    def _reencode_all_motifs(self) -> None:
+        """Rebuild embeddings for all motifs using the current vocabulary."""
+        if not self.id_to_motif:
+            return
+        texts = [m.content for m in self.id_to_motif.values()]
+        embs, _ = self._encode(texts, update_vocab=False)
+        self._coll.upsert(
+            ids=self.ids,
+            documents=texts,
+            embeddings=[row.tolist() for row in embs],
+            metadatas=[{"symbols": ",".join(m.symbols)} for m in self.id_to_motif.values()],
+        )
 
     # -------- chroma helpers ---------------------------------------------
 
@@ -126,7 +160,7 @@ class ChromaRouter:
                 return
 
             texts = [m.content for m in self.id_to_motif.values()]
-            mat = self._encode(texts)  # (N, D), float32, L2-normalized
+            mat, _ = self._encode(texts, update_vocab=True)  # (N, D), float32
 
             # Chroma needs lists of lists
             embeddings = [row.tolist() for row in mat]
@@ -146,13 +180,16 @@ class ChromaRouter:
             self._smc = smc
             self.id_to_motif[m.id] = m
             self.ids.append(m.id)
-            v = self._encode([m.content])[0].tolist()
-            self._coll.upsert(
-                ids=[m.id],
-                documents=[m.content],
-                embeddings=[v],
-                metadatas=[{"symbols": ",".join(m.symbols)}],
-            )
+            embs, expanded = self._encode([m.content], update_vocab=True)
+            if expanded:
+                self._reencode_all_motifs()
+            else:
+                self._coll.upsert(
+                    ids=[m.id],
+                    documents=[m.content],
+                    embeddings=[embs[0].tolist()],
+                    metadatas=[{"symbols": ",".join(m.symbols)}],
+                )
 
     def add_many(self, smc: SymbolicMemoryCore, motifs: List[MotifNode]) -> None:
         if not motifs:
@@ -163,13 +200,17 @@ class ChromaRouter:
                 self.id_to_motif[m.id] = m
                 if m.id not in self.ids:
                     self.ids.append(m.id)
-            embs = self._encode([m.content for m in motifs])
-            self._coll.upsert(
-                ids=[m.id for m in motifs],
-                documents=[m.content for m in motifs],
-                embeddings=[row.tolist() for row in embs],
-                metadatas=[{"symbols": ",".join(m.symbols)} for m in motifs],
-            )
+            texts = [m.content for m in motifs]
+            embs, expanded = self._encode(texts, update_vocab=True)
+            if expanded:
+                self._reencode_all_motifs()
+            else:
+                self._coll.upsert(
+                    ids=[m.id for m in motifs],
+                    documents=texts,
+                    embeddings=[row.tolist() for row in embs],
+                    metadatas=[{"symbols": ",".join(m.symbols)} for m in motifs],
+                )
 
 
     def remove_motif(self, motif_id: str) -> None:
@@ -186,7 +227,8 @@ class ChromaRouter:
     def search_text(self, text: str, top_k: int = 5) -> List[Tuple[MotifNode, float]]:
         if self._smc is None or not self.ids:
             return []
-        q = self._encode([text])[0].tolist()
+        q, _ = self._encode([text], update_vocab=False)
+        q = q[0].tolist()
         with self._lock:
             res = self._coll.query(query_embeddings=[q], n_results=max(1, top_k))
         out: List[Tuple[MotifNode, float]] = []
