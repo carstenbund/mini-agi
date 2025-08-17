@@ -34,7 +34,7 @@ def run(cfg_path: str):
     tm = ThreadManager(smc)
 
     if use_stub:
-        import symbolic_recursion.core as core.ollama_interface as oi
+        import symbolic_recursion.core.ollama_interface as oi
         from symbolic_recursion.core.model_stub import stub_response
         oi.query_ollama = lambda prompt, model=model, timeout=None: stub_response(prompt, model, timeout)
 
