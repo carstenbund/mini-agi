@@ -17,3 +17,5 @@ include-package-data = true
 
 [project.optional-dependencies]
 faiss = ["faiss-cpu"]
+chroma = ["chromadb>=0.5.0"]
+test = ["pytest>=8.0"]

@@ -140,4 +140,7 @@ class VectorRouter:
             if len(out) >= top_k:
                 break
         return out
+    def persist(self) -> None:
+        """Compatibility no-op for in-memory routers."""
+        return None
 
