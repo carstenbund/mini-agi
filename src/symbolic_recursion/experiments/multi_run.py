@@ -11,34 +11,7 @@ from symbolic_recursion.utils.novelty import novelty_index
 from symbolic_recursion.core.runtime_policy import Policy
 from symbolic_recursion.utils.context import render_context
 
-# Routers
-from symbolic_recursion.core.vector_router import VectorRouter
-try:
-    from symbolic_recursion.core.chroma_router import ChromaRouter  # persistent
-except Exception:
-    ChromaRouter = None  # type: ignore
-
-
-# -------- Router factory --------
-
-def _make_router(kind: str):
-    if kind.lower() == "chroma":
-        from symbolic_recursion.core.chroma_router import ChromaRouter
-        from symbolic_recursion.embeddings.sbert import Embeddings
-        return ChromaRouter(embeddings=Embeddings())
-    from symbolic_recursion.core.vector_router import VectorRouter
-    return VectorRouter(None)
-
-
-def _make_routerx(kind: str):
-    k = (kind or os.getenv("SMC_ROUTER", "vector")).lower()
-    if k == "chroma":
-        if ChromaRouter is None:
-            raise RuntimeError("ChromaRouter not available. `pip install chromadb` and ensure import path is correct.")
-        # Let ChromaRouter pick up your default Embeddings or legacy fallback internally
-        return ChromaRouter()
-    # In-memory fallback (SBERT+FAISS or numpy; legacy sparse if SBERT missing)
-    return VectorRouter(None)
+from symbolic_recursion.core.router_factory import make_router
 
 
 _router = None  # late-bound
@@ -47,7 +20,7 @@ _router = None  # late-bound
 def _ensure_router_built(smc: SymbolicMemoryCore, kind: str):
     global _router
     if _router is None:
-        _router = _make_router(kind)
+        _router = make_router(kind)
     _router.rebuild_from_smc(smc)
 
 

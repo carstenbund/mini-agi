@@ -4,8 +4,12 @@ from typing import List, Tuple, Optional, Dict
 import threading
 import numpy as np
 
-import chromadb
-from chromadb.config import Settings
+try:
+    import chromadb
+    from chromadb.config import Settings
+except Exception:  # optional dependency
+    chromadb = None
+    Settings = None
 
 from symbolic_recursion.core.motif import SymbolicMemoryCore, MotifNode
 from symbolic_recursion.embeddings.sbert import Embeddings
@@ -57,6 +61,9 @@ class ChromaRouter:
         self.metric = metric
 
         self._lock = threading.RLock()
+        if chromadb is None or Settings is None:
+            raise RuntimeError("ChromaRouter requires optional dependency `chromadb`.")
+
         self._client = chromadb.PersistentClient(
             path=persist_dir,
             settings=Settings(allow_reset=False)
@@ -244,6 +251,10 @@ class ChromaRouter:
             if m is not None:
                 out.append((m, sim))
         return out
+
+    def persist(self) -> None:
+        """Chroma persistence is handled by the underlying persistent client."""
+        return None
 
     def suggest_for_motif(
         self, smc: SymbolicMemoryCore, motif_id: str, top_k: int = 5
