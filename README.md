@@ -13,6 +13,8 @@ src/symbolic_recursion/
   core/        # motif data model, storage, router, Ollama interface
   threads/     # thread manager for chatting with a local model
   embeddings/  # simple term-frequency embedding + cosine similarity
+  documents/   # document loading/chunking/indexing for RAG-style retrieval
+  skills/      # API-facing retrieval helpers (knowledge_search)
   utils/       # novelty and confidence heuristics
   experiments/ # novelty loop and reporting scripts
 scripts/run_cli.py  # command-line interface
@@ -74,3 +76,15 @@ python -m symbolic_recursion.experiments.report_novelty
 ## License
 
 MIT / Apache 2.0 (TBD)
+
+
+## Document Layer (RAG Seed)
+
+The repo now includes a first-pass document retrieval layer that can coexist with motif retrieval:
+
+- `documents.loader`: load local text files or raw text inputs
+- `documents.chunker`: deterministic chunking with overlap
+- `documents.indexer`: in-memory chunk index + sparse retrieval
+- `skills.knowledge_search`: unified `SearchResult` ranking across motifs and document chunks
+
+This is intentionally lightweight and keeps the API boundary clear for future multi-collection routing and persistent vector backends.
