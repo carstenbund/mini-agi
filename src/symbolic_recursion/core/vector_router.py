@@ -27,40 +27,71 @@ class VectorRouter:
         self.id_to_motif: Dict[str, MotifNode] = {}
         self.mat: Optional[np.ndarray] = None
         self.index = None  # FAISS index if used
+        # Persistent vocabulary for the legacy sparse fallback so query and
+        # corpus vectors share a coordinate system across calls.
+        self._voc: Dict[str, int] = {}
 
     # --- encoding helpers -------------------------------------------------
-    def _encode(self, texts: List[str]) -> np.ndarray:
+    def _encode(self, texts: List[str], update_vocab: bool = True) -> Tuple[np.ndarray, bool]:
+        """Encode texts to an L2-normalized dense matrix.
+
+        Returns (matrix, expanded) where ``expanded`` indicates whether the
+        legacy vocabulary grew during this call. SBERT path always returns
+        ``expanded=False`` since its embedding dim is fixed by the model.
+        """
         if self.emb is not None:
-            return self.emb.encode_texts(texts)
-        # fallback: legacy sparse -> dense via bag-of-words dict to vector space
-        voc: Dict[str, int] = {}
+            mat = np.asarray(self.emb.encode_texts(texts), dtype=np.float32)
+            return mat, False
+
+        expanded = False
         vecs = []
         for t in texts:
             d = legacy_embed(t)
             for k in d.keys():
-                if k not in voc:
-                    voc[k] = len(voc)
+                if k not in self._voc:
+                    if update_vocab:
+                        self._voc[k] = len(self._voc)
+                        expanded = True
             vecs.append(d)
-        D = len(voc)
+        D = len(self._voc)
         out = np.zeros((len(texts), D), dtype=np.float32)
         for i, d in enumerate(vecs):
             for k, v in d.items():
-                out[i, voc[k]] = v
+                idx = self._voc.get(k)
+                if idx is not None:
+                    out[i, idx] = v
         norms = np.linalg.norm(out, axis=1, keepdims=True) + 1e-9
         out /= norms
-        return out
+        return out, expanded
+
+    def _reencode_corpus(self) -> None:
+        """Rebuild self.mat (and FAISS index) from the current vocab."""
+        if not self.id_to_motif:
+            self.mat = None
+            self.index = None
+            return
+        texts = [m.content for m in self.id_to_motif.values()]
+        mat, _ = self._encode(texts, update_vocab=False)
+        self.mat = mat
+        if _HAS_FAISS and mat.size:
+            self.index = faiss.IndexFlatIP(mat.shape[1])
+            self.index.add(mat)
+        else:
+            self.index = None
 
     # --- index management -------------------------------------------------
     def rebuild_from_smc(self, smc: SymbolicMemoryCore) -> None:
         motifs = smc.list_motifs()
         self.id_to_motif = {m.id: m for m in motifs}
         self.ids = list(self.id_to_motif.keys())
+        # Reset legacy vocab on rebuild so removed tokens don't linger.
+        self._voc = {}
         texts = [m.content for m in self.id_to_motif.values()]
         if len(texts) == 0:
             self.mat = None
             self.index = None
             return
-        mat = self._encode(texts)
+        mat, _ = self._encode(texts, update_vocab=True)
         self.mat = mat
         if _HAS_FAISS:
             d = mat.shape[1]
@@ -70,17 +101,20 @@ class VectorRouter:
             self.index = None
 
     def add_motif(self, smc: SymbolicMemoryCore, m: MotifNode) -> None:
-        v = self._encode([m.content])
         self.id_to_motif[m.id] = m
+        if m.id not in self.ids:
+            self.ids.append(m.id)
+        v, expanded = self._encode([m.content], update_vocab=True)
+        if expanded and self.mat is not None:
+            # Legacy vocab grew; corpus matrix is at the old (narrower) width.
+            self._reencode_corpus()
+            return
         if self.mat is None:
-            self.ids = [m.id]
             self.mat = v
             if _HAS_FAISS:
-                d = v.shape[1]
-                self.index = faiss.IndexFlatIP(d)
+                self.index = faiss.IndexFlatIP(v.shape[1])
                 self.index.add(v)
             return
-        self.ids.append(m.id)
         self.mat = np.vstack([self.mat, v])
         if _HAS_FAISS and self.index is not None:
             self.index.add(v)
@@ -113,7 +147,7 @@ class VectorRouter:
     def search_text(self, text: str, top_k: int = 5) -> List[Tuple[MotifNode, float]]:
         if self.mat is None or len(self.ids) == 0:
             return []
-        q = self._encode([text])
+        q, _ = self._encode([text], update_vocab=False)
         if _HAS_FAISS and self.index is not None:
             D, I = self.index.search(q, top_k)
             sims = D[0]
