@@ -83,6 +83,38 @@ field cluster even before many explicit links exist; explicit references always
 outweigh them. Disable with `--no-symbol-edges`. Library API:
 `symbolic_recursion.graph.analyze_field(smc)` / `render_report(smc)`.
 
+## Document Capture
+
+Structured intake: a markdown document becomes a motif subgraph — hub motif
+(title + preamble), one motif per heading with the text kept verbatim,
+hub-and-sequence references, honest symbols (frontmatter tags that occur in
+the section + heading words), and `[[wiki-links]]` resolved to previously
+captured documents' hubs via `data/doc_registry.json`.
+
+```bash
+python scripts/run_cli.py capture note.md --dry-run   # show the plan
+python scripts/run_cli.py capture note.md --prefix stw --thread stewardship
+```
+
+## Reviewer
+
+The one component that reads text instead of structure. With `--review`,
+a pursuit capture is judged on content — does it name an abstraction that
+genuinely covers its targets, or restate them with sticker words swapped
+in? Verdict with reasons (`accept`/`revise`/`reject` + evidence + extracted
+prediction), never a scalar. The gate ties the LINK, not the capture: the
+card stays in the field and the flow ledger either way, but links to the
+targets are made only on accept — a rejected bridge leaves the surprise
+open for a better attempt. Verdicts feed the journal; a field where
+pursuits fire but are mostly rejected classifies as `thrashing`.
+
+```bash
+python scripts/run_cli.py pursue --review                         # same model reviews
+python scripts/run_cli.py pursue --review --review-model qwen2.5  # second opinion
+```
+
+In the loop: `"pursue": { "enabled": true, "review": { "enabled": true, "model": "..." } }`.
+
 ## Pursue Step
 
 Motifs initiating their own follow-up exploration — the consumer of the

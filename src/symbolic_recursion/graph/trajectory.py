@@ -126,6 +126,19 @@ def classify_regime(events: List[Dict], window: int = 8) -> Dict:
     ]
 
     pursuits = [e for e in recent if e["event"].get("type") == "pursuit"]
+
+    # thrashing: pursuits fire but the reviewer mostly withholds the links —
+    # its own failure mode, distinct from the structural five
+    verdicts = [p["event"]["review"] for p in pursuits if p["event"].get("review")]
+    for e in recent:
+        if e["event"].get("type") == "cycle":
+            verdicts.extend(e["event"].get("reviews", []))
+    if len(verdicts) >= 3:
+        accepted = sum(1 for v in verdicts if v == "accept")
+        if accepted / len(verdicts) <= 1 / 3:
+            return {"regime": "thrashing",
+                    "evidence": ev + [f"{accepted}/{len(verdicts)} pursuit captures accepted by review"]}
+
     target_comms = {c for p in pursuits for c in p["event"].get("target_communities", [])}
     if len(pursuits) >= 3 and len(target_comms) == 1:
         return {"regime": "concentrating",

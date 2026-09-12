@@ -101,7 +101,7 @@ def run(cfg_path: str):
                     router.add_motif(smc, smc.get_motif(r.motif_id))
             cycle_log["pursuits"] = [
                 {"kind": r.kind, "motif_id": r.motif_id,
-                 "targets": r.targets, "skipped": r.skipped}
+                 "targets": r.targets, "skipped": r.skipped, "review": r.review}
                 for r in pursued
             ]
 
@@ -130,7 +130,9 @@ def run(cfg_path: str):
         from symbolic_recursion.graph.trajectory import record_event
         record_event(smc, {"type": "cycle", "cycle": t,
                            "captures": len(new_ids),
-                           "pursuits": len(cycle_log.get("pursuits", []))})
+                           "pursuits": len(cycle_log.get("pursuits", [])),
+                           "reviews": [p["review"] for p in cycle_log.get("pursuits", [])
+                                       if p.get("review")]})
 
         print(f"[cycle {t}] V={int(g['V'])} nov_candidates={len(pursue_queue)} "
               f"rec={g['recurrence_rate']:.2f} lcc={g['lcc_fraction']:.2f} "

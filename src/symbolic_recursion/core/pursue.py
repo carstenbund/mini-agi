@@ -68,6 +68,8 @@ class PursuitResult:
     targets: List[str] = field(default_factory=list)
     thread_name: str = ""
     skipped: Optional[str] = None  # reason, when nothing fired
+    review: Optional[str] = None   # "accept" | "revise" | "reject" when reviewed
+    review_evidence: str = ""
 
 
 def _merge_symbols(a: List[str], b: List[str], per_side: int = 3) -> List[str]:
@@ -209,23 +211,50 @@ def plan_deepen(
     )
 
 
-def execute(smc: SymbolicMemoryCore, tm, pursuit: Pursuit, model: str) -> PursuitResult:
+def execute(
+    smc: SymbolicMemoryCore, tm, pursuit: Pursuit, model: str,
+    review_cfg: Optional[dict] = None,
+) -> PursuitResult:
     """Fire a planned pursuit through the existing ask -> capture -> link
-    path. ``tm`` is a threads.manager.ThreadManager."""
+    path. ``tm`` is a threads.manager.ThreadManager.
+
+    With ``review_cfg = {"enabled": True, "model": ...}`` the capture is
+    read by the reviewer BEFORE the strings are tied: links to the
+    targets are made only on ``accept``. The card stays in the field and
+    the flow ledger either way; a rejected bridge leaves the surprise
+    unresolved — an open question for a better attempt."""
     thread = tm.new_thread(pursuit.thread_name, model=model)
     resp = thread.ask(pursuit.prompt)
     m = tm.capture_as_motif(thread, pursuit.symbols, resp)
-    for target in pursuit.targets:
-        smc.link_motifs(m.id, target)
+
+    review = None
+    if review_cfg and review_cfg.get("enabled"):
+        from symbolic_recursion.core.review import review_capture
+        review = review_capture(
+            smc, resp, pursuit.targets,
+            model=review_cfg.get("model", model),
+            query_fn=review_cfg.get("query_fn"),
+        )
+
+    if review is None or review.verdict == "accept":
+        for target in pursuit.targets:
+            smc.link_motifs(m.id, target)
+
     from symbolic_recursion.core.flow import record_flow
-    record_flow({"kind": pursuit.kind, "thread": pursuit.thread_name,
-                 "model": model, "motif_id": m.id, "targets": pursuit.targets,
-                 "prompt": pursuit.prompt, "response": resp})
+    entry = {"kind": pursuit.kind, "thread": pursuit.thread_name,
+             "model": model, "motif_id": m.id, "targets": pursuit.targets,
+             "prompt": pursuit.prompt, "response": resp}
+    if review is not None:
+        entry["review"] = {"verdict": review.verdict, "evidence": review.evidence,
+                           "prediction": review.prediction}
+    record_flow(entry)
     return PursuitResult(
         kind=pursuit.kind,
         motif_id=m.id,
         targets=list(pursuit.targets),
         thread_name=pursuit.thread_name,
+        review=(review.verdict if review else None),
+        review_evidence=(review.evidence if review else ""),
     )
 
 
@@ -259,11 +288,12 @@ def run_pursuits(
         analysis = analyze_field(smc)
 
     half_life = float(cfg.get("recency_half_life_hours", DEFAULT_RECENCY_HALF_LIFE_HOURS))
+    review_cfg = cfg.get("review")
 
     results: List[PursuitResult] = []
     bridge = plan_bridge(smc, analysis, templates["bridge"], half_life_hours=half_life)
     if bridge is not None and budget > 0:
-        results.append(execute(smc, tm, bridge, model))
+        results.append(execute(smc, tm, bridge, model, review_cfg=review_cfg))
         budget -= 1
     else:
         results.append(PursuitResult(kind="bridge", skipped="no surprising connection"))
@@ -274,6 +304,6 @@ def run_pursuits(
         if plan is None:
             results.append(PursuitResult(kind="deepen", skipped=f"unknown motif {mid}"))
             continue
-        results.append(execute(smc, tm, plan, model))
+        results.append(execute(smc, tm, plan, model, review_cfg=review_cfg))
         budget -= 1
     return results

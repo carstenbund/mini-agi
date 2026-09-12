@@ -119,6 +119,31 @@ def cmd_chat(args):
     print("--- Response ---")
     print(resp)
 
+def cmd_capture(args):
+    from symbolic_recursion.documents.capture import capture_document, plan_capture
+
+    with open(args.file, "r", encoding="utf-8") as f:
+        text = f.read()
+    smc = load_smc()
+    if args.dry_run:
+        plan = plan_capture(smc, text, title=args.title, thread=args.thread, prefix=args.prefix)
+        print(f"title: {plan['title']}  thread: {plan['thread']}  motifs: {len(plan['motifs'])}")
+        for spec in plan["motifs"]:
+            print(f"  {spec['id']}  [{', '.join(spec['symbols'])}]  refs={spec['references']}")
+            if spec["unresolved_links"]:
+                print(f"    unresolved links: {spec['unresolved_links']}")
+        return
+    plan = capture_document(smc, text, title=args.title, thread=args.thread, prefix=args.prefix)
+    save_smc(smc)
+    for spec in plan["motifs"]:
+        _journal(smc, {"type": "capture", "motif_id": spec["id"], "via": "document"})
+    unresolved = sorted({u for s in plan["motifs"] for u in s["unresolved_links"]})
+    print(f"captured {len(plan['motifs'])} motifs in thread {plan['thread']} "
+          f"(registered as '{plan['registered_as']}')")
+    if unresolved:
+        print("unresolved wiki-links (capture those documents to connect them):",
+              ", ".join(unresolved))
+
 def cmd_trace(args):
     from symbolic_recursion.core.flow import render_trace
 
@@ -176,12 +201,25 @@ def cmd_pursue(args):
         from symbolic_recursion.core.model_stub import stub_response
         import symbolic_recursion.threads.manager as tmgr
         tmgr.query_ollama = lambda prompt, model=args.model, timeout=None: stub_response(prompt, model, timeout)
+    review_cfg = None
+    if args.review:
+        review_cfg = {"enabled": True}
+        if args.review_model:
+            review_cfg["model"] = args.review_model
     tm = ThreadManager(smc)
-    result = execute(smc, tm, plan, model=args.model)
+    result = execute(smc, tm, plan, model=args.model, review_cfg=review_cfg)
     save_smc(smc)
-    _journal(smc, {"type": "pursuit", "kind": result.kind,
-                   "motif_id": result.motif_id, "targets": result.targets})
-    print(f"captured {result.motif_id} linked -> {result.targets}")
+    event = {"type": "pursuit", "kind": result.kind,
+             "motif_id": result.motif_id, "targets": result.targets}
+    if result.review:
+        event["review"] = result.review
+    _journal(smc, event)
+    if result.review and result.review != "accept":
+        print(f"captured {result.motif_id} — review: {result.review} "
+              f"({result.review_evidence}); links withheld, surprise stays open")
+    else:
+        suffix = " (review: accept)" if result.review else ""
+        print(f"captured {result.motif_id} linked -> {result.targets}{suffix}")
 
 def main():
     p = argparse.ArgumentParser(description="Symbolic Memory Core CLI")
@@ -229,7 +267,17 @@ def main():
     p_pur.add_argument("--model", type=str, default="llama3:instruct")
     p_pur.add_argument("--stub", action="store_true", help="Use the deterministic model stub (no Ollama)")
     p_pur.add_argument("--dry-run", action="store_true", help="Print the assembled prompt, change nothing")
+    p_pur.add_argument("--review", action="store_true", help="Reviewer reads the capture; links tied only on accept")
+    p_pur.add_argument("--review-model", type=str, help="Different model for the reviewer (default: generator model)")
     p_pur.set_defaults(func=cmd_pursue)
+
+    p_cap = sub.add_parser("capture", help="Capture a structured document as a motif subgraph")
+    p_cap.add_argument("file", type=str, help="Path to a markdown/text document")
+    p_cap.add_argument("--title", type=str, help="Document title (default: frontmatter topic or first heading)")
+    p_cap.add_argument("--thread", type=str, help="Thread id (default: slug of title)")
+    p_cap.add_argument("--prefix", type=str, help="Motif id prefix (default: slug of title)")
+    p_cap.add_argument("--dry-run", action="store_true", help="Print the capture plan, change nothing")
+    p_cap.set_defaults(func=cmd_capture)
 
     p_tr = sub.add_parser("trace", help="Show the flow of text around one motif (prompt, response, lineage)")
     p_tr.add_argument("motif_id", type=str)
