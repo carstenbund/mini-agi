@@ -190,5 +190,472 @@
     "history": [],
     "created_at": "2026-09-12T09:47:29.235626",
     "updated_at": "2026-09-12T09:47:29.235655"
+  },
+  "stw-premise": {
+    "id": "stw-premise",
+    "symbols": [
+      "manager",
+      "stewardship",
+      "regulation",
+      "coherence"
+    ],
+    "content": "The Manager and the Living System \u2014 Premise. Every human life begins not with choice, identity, or desire, but with an assignment. A living system \u2014 biological, fragile, time-bound \u2014 is placed under local governance. A regulatory function emerges whose task is to maintain coherence under changing conditions: the manager. The manager is not a substance, personality, or moral agent. It is a process of stewardship: perceive signals, regulate behavior, coordinate resources, adapt the organism over time. In humans this function becomes unusually complex through memory, abstraction, language, culture \u2014 bringing not transcendence but a longer, more failure-prone training sequence. What psychology has called 'needs' are better understood as domains of responsibility the manager must learn to govern \u2014 in sequence, under time pressure, without full instruction.",
+    "thread_id": "stewardship-model",
+    "references": [],
+    "history": [],
+    "created_at": "2026-09-12T09:58:08.416447",
+    "updated_at": "2026-09-12T09:58:08.416464"
+  },
+  "stw-layer0": {
+    "id": "stw-layer0",
+    "symbols": [
+      "stewardship",
+      "custodianship",
+      "inheritance",
+      "constraints"
+    ],
+    "content": "Layer 0 \u2014 Inherited Order: Custodianship Before Agency. Before the manager awakens as a conscious regulator, the system is already structured: biological architecture, temporal rhythm, social field, cultural inheritance. None are chosen; they function as pre-installed governance systems. The manager's first condition is not autonomy but custodianship of inherited constraints \u2014 agency awakens inside an already-moving system, which is why responsibility often feels retroactive. Failing to recognize this layer produces two errors: moralism ('you should have known better') and fantasy autonomy ('I am self-made'). Both misunderstand the starting condition.",
+    "thread_id": "stewardship-model",
+    "references": [
+      "stw-premise"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T09:58:08.416467",
+    "updated_at": "2026-09-12T09:58:08.416469"
+  },
+  "stw-layer1": {
+    "id": "stw-layer1",
+    "symbols": [
+      "stewardship",
+      "physiology",
+      "signals",
+      "maintenance"
+    ],
+    "content": "Layer I \u2014 Physiological Stewardship: The Manager as System Keeper. First explicit responsibility, uncompromising: maintain the integrity of the biological system \u2014 nourishment, hydration, rest, pain recognition, rhythm regulation. Initially outsourced to caregivers; over time the manager must assume direct control. Hunger, fatigue, discomfort are not obstacles to meaning; they are the first data streams of governance. No external system can perform this work internally: technology supplies food but cannot decide when the body must rest; medicine suppresses symptoms but cannot replace attentiveness. Failure here destabilizes every layer above.",
+    "thread_id": "stewardship-model",
+    "references": [
+      "stw-premise",
+      "stw-layer0"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T09:58:08.416471",
+    "updated_at": "2026-09-12T09:58:08.416472"
+  },
+  "stw-layer2": {
+    "id": "stw-layer2",
+    "symbols": [
+      "stewardship",
+      "safety",
+      "intelligibility",
+      "abstraction"
+    ],
+    "content": "Layer II \u2014 Safety and Environmental Regulation: The Manager as Stability Builder. Responsibility expands outward: shelter, predictability, continuity, bounded exposure to threat. Societies externalize this heavily (law, infrastructure, medicine, economic buffering) \u2014 assistive systems that raise the abstraction level of regulation without eliminating individual responsibility. When the manager loses contact with how stability is produced \u2014 relying on opaque systems \u2014 environmental literacy declines; anxiety grows not because danger increased but because understanding shrank. Safety is not the absence of threat. It is the presence of intelligibility.",
+    "thread_id": "stewardship-model",
+    "references": [
+      "stw-premise",
+      "stw-layer1"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T09:58:08.416473",
+    "updated_at": "2026-09-12T09:58:08.416474"
+  },
+  "stw-layer3": {
+    "id": "stw-layer3",
+    "symbols": [
+      "stewardship",
+      "belonging",
+      "feedback",
+      "reciprocity",
+      "repair"
+    ],
+    "content": "Layer III \u2014 Relational Stewardship: The Manager as Co-Regulator. Belonging is not an emotion and not a service; it is a reciprocal regulatory loop between two or more managing agents. Defining properties: mutual responsiveness, shared memory, vulnerability under constraint, capacity for repair. Belonging cannot be automated or delivered unilaterally \u2014 institutions create proximity, not reciprocity; digital systems simulate presence, not obligation. Social isolation is therefore regulatory isolation: a system attempting to self-stabilize without external feedback.",
+    "thread_id": "stewardship-model",
+    "references": [
+      "stw-premise",
+      "stw-layer2"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T09:58:08.416476",
+    "updated_at": "2026-09-12T09:58:08.416477"
+  },
+  "stw-layer4": {
+    "id": "stw-layer4",
+    "symbols": [
+      "stewardship",
+      "competence",
+      "esteem",
+      "evaluation"
+    ],
+    "content": "Layer IV \u2014 Competence and Esteem: The Manager as Reliable Operator. Esteem is not vanity but recognition \u2014 by self and others \u2014 that one's actions are coherent, useful, repeatable under load. Involves skill acquisition, contribution, responsibility under observation, acceptance of evaluation. Modern societies often invert the sequence, demanding performance before stability: many managers awaken already judged, ranked, compared, without having mastered earlier responsibilities. The resulting friction is not personal failure but structural mis-sequencing.",
+    "thread_id": "stewardship-model",
+    "references": [
+      "stw-premise",
+      "stw-layer3"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T09:58:08.416478",
+    "updated_at": "2026-09-12T09:58:08.416479"
+  },
+  "stw-layer5": {
+    "id": "stw-layer5",
+    "symbols": [
+      "stewardship",
+      "integration",
+      "direction",
+      "coherence"
+    ],
+    "content": "Layer V \u2014 Integration and Direction: The Manager as Synthesizer. No longer solving isolated problems but aligning the system as a whole: bodily rhythms respected, environments navigable, relationships reciprocal, competence grounded. Only then can the manager direct the organism toward meaningful expression without collapse. Not escape, transcendence, or fulfillment-as-commodity: coherent functioning over time. Integration increases responsibility rather than dissolving it \u2014 the better the system is governed, the more load it can bear on behalf of others.",
+    "thread_id": "stewardship-model",
+    "references": [
+      "stw-premise",
+      "stw-layer4"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T09:58:08.416480",
+    "updated_at": "2026-09-12T09:58:08.416481"
+  },
+  "stw-invariants": {
+    "id": "stw-invariants",
+    "symbols": [
+      "stewardship",
+      "invariants",
+      "regulation",
+      "custodianship"
+    ],
+    "content": "Invariants of the System. 1. Non-Delegable Responsibility: some work cannot be outsourced without degradation \u2014 systems may assist stewardship, never replace it. 2. Temporal Maintenance: no layer is completed once and for all; all require ongoing regulation; regression under stress is expected, not pathological. 3. Mis-Governance Modes: at every layer failure appears as under-regulation (neglect), over-regulation (control), or misdirected regulation (symbolic substitution). 4. Provisional Authority: the manager does not own the system; it holds temporary custodianship. Order is borrowed, not possessed.",
+    "thread_id": "stewardship-model",
+    "references": [
+      "stw-premise"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T09:58:08.416483",
+    "updated_at": "2026-09-12T09:58:08.416484"
+  },
+  "stw-modern": {
+    "id": "stw-modern",
+    "symbols": [
+      "stewardship",
+      "modernity",
+      "mis-sequencing",
+      "outsourcing"
+    ],
+    "content": "The Modern Condition. Most contemporary individuals awaken mid-sequence: physiology partially outsourced, safety abstracted, belonging fragmented, competence demanded early, meaning marketed prematurely. The result is not nihilism but misaligned stewardship.",
+    "thread_id": "stewardship-model",
+    "references": [
+      "stw-premise",
+      "stw-layer4",
+      "stw-invariants"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T09:58:08.416485",
+    "updated_at": "2026-09-12T09:58:08.416486"
+  },
+  "stw-repair": {
+    "id": "stw-repair",
+    "symbols": [
+      "stewardship",
+      "repair",
+      "sequence",
+      "meaning"
+    ],
+    "content": "Relearning the Sequence. Repair does not require transcendence, only reordering: restore somatic literacy; rebuild small zones of safety; enter reciprocal relationships without substitution; develop competence from the ground up; allow meaning to emerge as a consequence, not a goal. Closing: the manager theory does not describe what humans should desire. It describes what any living system must regulate to remain coherent over time.",
+    "thread_id": "stewardship-model",
+    "references": [
+      "stw-modern",
+      "stw-layer1",
+      "stw-layer2",
+      "stw-layer3",
+      "stw-layer4",
+      "stw-layer5"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T09:58:08.416487",
+    "updated_at": "2026-09-12T09:58:08.416488"
+  },
+  "80755c14-7333-485e-a43c-cdb5bd2589cf": {
+    "id": "80755c14-7333-485e-a43c-cdb5bd2589cf",
+    "symbols": [
+      "justice",
+      "gradient",
+      "metrics",
+      "stewardship",
+      "belonging",
+      "feedback"
+    ],
+    "content": "Reciprocal Sensing \u2014 the binding abstraction.\n\nThe measured gradient says: a system climbs its levels only insofar as each\nlevel-transition is observed by sensors the system itself maintains. The\nco-regulation motif says: belonging is a reciprocal regulatory loop \u2014 mutual\nresponsiveness, shared memory, repair. Held together they state one law at\ntwo scales:\n\n  Coherent systems ascend their gradients through RECIPROCAL sensing loops.\n  Measurement and belonging are the same operation at different scales.\n\n1. An indicator (survey, court statistic, access audit) is society-scale\n   co-regulation: the institution senses the population AND is sensed back \u2014\n   legitimacy is the return channel. Belonging is person-scale measurement:\n   two managers continuously indicating each other's states.\n2. The pathologies unify. Indicator capture (optimizing the sensor, not the\n   state) and regulatory isolation (self-stabilizing without external\n   feedback) are the same failure: a sensing loop that has lost its return\n   channel. Surveillance is measurement minus reciprocity \u2014 structurally\n   identical to proximity without obligation.\n3. Repair, in both motifs, is sensor recalibration: re-opening the return\n   channel rather than adding more one-way instruments.\n\nTestable prediction: institutions that expand one-way measurement (more\nindicators, no legitimacy feedback) should exhibit, at population scale, the\nsignature of Layer-III regulatory isolation \u2014 rising anxiety with constant\nobjective safety \u2014 at rates tracking the reciprocity deficit, not the\nindicator count.",
+    "thread_id": "pursue-bridge-3b41341f-stw-laye",
+    "references": [
+      "3b41341f-d255-49c8-a175-2f2c5ae814b0",
+      "stw-layer3"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T10:05:38.994059",
+    "updated_at": "2026-09-12T10:05:38.994060"
+  },
+  "tru-premise": {
+    "id": "tru-premise",
+    "symbols": [
+      "trust",
+      "infrastructure",
+      "coordination"
+    ],
+    "content": "Trust as Infrastructure \u2014 Premise. Trust is commonly treated as a feeling between persons. Treat it instead as infrastructure: a load-bearing substrate that other coordination runs on. Like roads and power grids it is invisible while it works, noticed only in failure, expensive to build, cheap to use, and catastrophically expensive to rebuild once collapsed.",
+    "thread_id": "trust-infrastructure",
+    "references": [],
+    "history": [],
+    "created_at": "2026-09-12T10:30:04.298471",
+    "updated_at": "2026-09-12T10:30:04.298478"
+  },
+  "tru-load": {
+    "id": "tru-load",
+    "symbols": [
+      "trust",
+      "load",
+      "coordination",
+      "substitution"
+    ],
+    "content": "Load-bearing trust. Every transaction that does not verify is riding on trust. The higher the trust substrate, the more verification a society can omit \u2014 contracts shorten, escrow disappears, cooperation extends to strangers. Low-trust systems must convert trust into procedure: audits, collateral, surveillance. Verification is the expensive substitute a system buys when its trust infrastructure fails.",
+    "thread_id": "trust-infrastructure",
+    "references": [
+      "tru-premise"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T10:30:04.301054",
+    "updated_at": "2026-09-12T10:30:04.301057"
+  },
+  "tru-verify": {
+    "id": "tru-verify",
+    "symbols": [
+      "trust",
+      "verification",
+      "measurement",
+      "feedback"
+    ],
+    "content": "Trust and verification are not opposites but a feedback pair. Verification produces the evidence on which trust extends; trust decides how much verification to skip. A system that verifies everything trusts nothing and grinds; a system that verifies nothing cannot detect betrayal and shatters. Healthy infrastructure meters verification to the stakes: measure at the load-bearing joints, trust the spans between.",
+    "thread_id": "trust-infrastructure",
+    "references": [
+      "tru-premise",
+      "tru-load"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T10:30:04.302150",
+    "updated_at": "2026-09-12T10:30:04.302151"
+  },
+  "tru-erosion": {
+    "id": "tru-erosion",
+    "symbols": [
+      "trust",
+      "erosion",
+      "maintenance",
+      "asymmetry"
+    ],
+    "content": "Erosion and maintenance. Trust degrades asymmetrically: built in repeated small confirmations, destroyed in single violations. Maintenance is therefore continuous and boring \u2014 kept promises, predictable behavior, honest accounting of failures. There is no heroic act that builds trust quickly; there are only heroic acts that destroy it quickly. Institutions that skip maintenance run on inherited trust capital until, abruptly, they do not.",
+    "thread_id": "trust-infrastructure",
+    "references": [
+      "tru-premise"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T10:30:04.303227",
+    "updated_at": "2026-09-12T10:30:04.303229"
+  },
+  "tru-repair": {
+    "id": "tru-repair",
+    "symbols": [
+      "trust",
+      "repair",
+      "reciprocity",
+      "acknowledgment"
+    ],
+    "content": "Repair. Broken trust is not rebuilt by assertion but by verified reciprocity: acknowledgment of the specific breach, cost voluntarily borne by the violator, and a period of checkable behavior \u2014 verification temporarily raised while the substrate regrows. Repair that skips acknowledgment is rebranding; repair that skips the checkable period is a demand for unearned load.",
+    "thread_id": "trust-infrastructure",
+    "references": [
+      "tru-premise",
+      "tru-erosion"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T10:30:04.304272",
+    "updated_at": "2026-09-12T10:30:04.304274"
+  },
+  "0d-takeover": {
+    "id": "0d-takeover",
+    "symbols": [
+      "causality",
+      "assignment",
+      "inheritance",
+      "custodianship",
+      "judgment"
+    ],
+    "content": "Assignment is inherited, then redefined at the margin. The individual does not author the causal assignment; it takes over one already running, on a regular basis, and redefines it a little \u2014 from a higher-order vantage, but still using the same projection of reason. The world supplies co-occurrence; culture supplies the finished graph. 'I cannot get a doctor' is experienced; 'immigration is why' is received intact as a compiled assignment. The carrier contributes the marginal edit. This is Layer 0 custodianship applied to the act of assigning: agency awakens inside an already-moving system, which is why responsibility feels retroactive. Michotte: causal structure arrives through a compiled recogniser \u2014 fast, confident, no provenance \u2014 so the received assignment and the perceived one are not marked differently; takeover is invisible to the taker.",
+    "thread_id": "mem-framework",
+    "references": [
+      "stw-layer0",
+      "stw-premise"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T10:32:15.229060",
+    "updated_at": "2026-09-12T10:32:15.229066"
+  },
+  "0d-projection-limit": {
+    "id": "0d-projection-limit",
+    "symbols": [
+      "judgment",
+      "projection",
+      "revision",
+      "limits"
+    ],
+    "content": "The limit: you can revise the rule, not the projection. Live judgment can notice, from inside an inherited rule, the case the rule does not cover \u2014 but it notices with faculties the same inheritance supplied: what counts as a reason, evidence, which questions are askable. The higher-order vantage is higher, not outside. Against the germline reset (which deletes acquired compiled states wholesale, without understanding them), culture's substitute is strictly weaker in kind: it revises rules and cannot revise the apparatus that decides what a good rule is. Candidates for what DOES revise a projection: collision with a foreign projection, irreversible correspondence failure, or generational replacement \u2014 culture borrowing the biological solution by waiting for carriers to die.",
+    "thread_id": "mem-framework",
+    "references": [
+      "0d-takeover"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T10:32:15.231425",
+    "updated_at": "2026-09-12T10:32:15.231428"
+  },
+  "0d-sanction-proof": {
+    "id": "0d-sanction-proof",
+    "symbols": [
+      "sanction",
+      "deviance",
+      "black-sheep",
+      "signal"
+    ],
+    "content": "Does a single unit matter? The sanction is the proof. You do not build enforcement against noise. The existence of a fixed, low-cost, reliably-triggered response to non-conformity is the system's own admission that a single deviant instance is signal requiring correction, not noise. The unit's whole causal contribution is takeover-and-redefine \u2014 and a redefinition offered from inside the shared projection is the only kind that can propagate, therefore the only kind worth suppressing.",
+    "thread_id": "mem-framework",
+    "references": [
+      "0d-takeover"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T10:32:15.232585",
+    "updated_at": "2026-09-12T10:32:15.232587"
+  },
+  "0d-compiled-response": {
+    "id": "0d-compiled-response",
+    "symbols": [
+      "sanction",
+      "conformity",
+      "judgment",
+      "closure"
+    ],
+    "content": "The fixed response is itself a compiled judgment: fast, cheap, categorical, no case-by-case evaluation, high confidence, no provenance \u2014 J1 at group scale, inheriting J1's failure exactly. The group cannot notice, from inside its rule, the case its rule does not cover. The response fires on the deviant who is right precisely as reliably as on the deviant who is wrong, because it keys on non-conformity, not on error. 'Black sheep' is the name a group has for the person currently supplying epistemic friction.",
+    "thread_id": "mem-framework",
+    "references": [
+      "0d-takeover",
+      "0d-sanction-proof"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T10:32:15.233827",
+    "updated_at": "2026-09-12T10:32:15.233828"
+  },
+  "0d-repair-exclude": {
+    "id": "0d-repair-exclude",
+    "symbols": [
+      "sanction",
+      "repair",
+      "cost",
+      "exclusion"
+    ],
+    "content": "Two stages: repair first, then exclusion. Schachter 1951: groups first direct intense communication at the deviant \u2014 persuasion, argument, attention \u2014 then abruptly cut and exclude. Cost economics at group level: spend expensively on repair while repair looks achievable, then switch to the cheap fixed response. And sanction is calibrated to the threat to the recogniser, not the harm of the act: the black sheep effect \u2014 ingroup deviants judged more harshly than outsiders doing the same thing. The more the deviant shares with the group, the harsher the response. Being right and being close are aggravating factors.",
+    "thread_id": "mem-framework",
+    "references": [
+      "0d-compiled-response"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T10:32:15.235027",
+    "updated_at": "2026-09-12T10:32:15.235028"
+  },
+  "0d-content-neutral": {
+    "id": "0d-content-neutral",
+    "symbols": [
+      "sanction",
+      "conformity",
+      "cost",
+      "norms"
+    ],
+    "content": "Content-neutral \u2014 the engine with no moral term. Boyd & Richerson: 'Punishment allows the evolution of cooperation (or anything else) in sizable groups.' Enforcement stabilises whichever norm is in place, not the good one; with conformist transmission and third-party punishment, any arbitrary norm becomes evolutionarily stable. Second-order effect: because non-conformity is costly, people conform publicly and dissent privately (Kuran; spiral of silence). The distribution of actual belief becomes invisible \u2014 the norm looks more solid than it is, raising the apparent cost of deviating. The group cannot see its own validity boundary because everyone hides the evidence of it.",
+    "thread_id": "mem-framework",
+    "references": [
+      "0d-compiled-response"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T10:32:15.236256",
+    "updated_at": "2026-09-12T10:32:15.236258"
+  },
+  "0d-reset-suppression": {
+    "id": "0d-reset-suppression",
+    "symbols": [
+      "reset",
+      "containment",
+      "deviance",
+      "revision",
+      "closure"
+    ],
+    "content": "The sting \u2014 culture suppresses its own reset. Biological inheritance deletes acquired compiled states wholesale each generation; culture has no deletion step at the content level, so live judgment is the only mechanism that can revoke an inherited compiled state whose environment has gone. And that one mechanism is precisely what the group's fixed response is built to suppress. Amended: culture DOES delete \u2014 at the carrier level. 'Removes the carrier and keeps the rule' is a deletion step performed on the substrate instead of the state; exclusion at one scale, elimination at another. Containment decides whether the group restores coherence by revising the rule or by removing the carrier \u2014 the highest-stakes variable in the framework. Moscovici: minorities change groups through conversion (slow, private, deep), not compliance \u2014 the cheap fixed response and the expensive revision run on different clocks.",
+    "thread_id": "mem-framework",
+    "references": [
+      "0d-takeover",
+      "0d-projection-limit",
+      "0d-compiled-response",
+      "stw-invariants"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T10:32:15.237460",
+    "updated_at": "2026-09-12T10:32:15.237462"
+  },
+  "0d-counterweight": {
+    "id": "0d-counterweight",
+    "symbols": [
+      "judgment",
+      "deviance",
+      "validity",
+      "humility"
+    ],
+    "content": "The honest counterweight. The group is usually right: most deviations are errors, and a cheap categorical response to them is efficient \u2014 a compiled judgment performing correctly inside its validity environment. Nothing here licenses reading the deviant as the truth-teller; that is the same romance in the opposite direction and fails as reliably. The narrower claim survives: the response cannot distinguish the two cases, because it keys on conformity rather than correspondence. At the validity boundary \u2014 where the environment that compiled the norm has changed \u2014 that indifference is the entire problem, on both sides.",
+    "thread_id": "mem-framework",
+    "references": [
+      "0d-compiled-response",
+      "0d-sanction-proof"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T10:32:15.238692",
+    "updated_at": "2026-09-12T10:32:15.238693"
+  },
+  "0d-ledger": {
+    "id": "0d-ledger",
+    "symbols": [
+      "ledger",
+      "predictions",
+      "containment",
+      "sanction"
+    ],
+    "content": "Ledger rows (testable). J8: does sanction key on non-conformity or on error? Prediction: sanction tracks deviation distance and ingroup membership, not correctness. J9: repair-then-exclude as a cost curve \u2014 what predicts the switch? T7: preference falsification hides the validity boundary most where recognisers are most compiled. J10: what revises a projection \u2014 foreign collision, correspondence failure, or generational replacement? M7: is RLHF preference-model penalty a black-sheep response, keyed on non-conformity rather than error?",
+    "thread_id": "mem-framework",
+    "references": [
+      "0d-reset-suppression",
+      "0d-counterweight"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T10:32:15.239947",
+    "updated_at": "2026-09-12T10:32:15.239948"
+  },
+  "1ac9362b-fbc7-4c9c-9c84-808e714fd9a3": {
+    "id": "1ac9362b-fbc7-4c9c-9c84-808e714fd9a3",
+    "symbols": [
+      "justice",
+      "gradient",
+      "metrics",
+      "stewardship",
+      "invariants",
+      "regulation"
+    ],
+    "content": "Custodianship of the Return Channel \u2014 the binding abstraction.\n\nReciprocal Sensing established that measurement and belonging are one\noperation: a sensing loop with a return channel. The invariants, read against\nit, turn out not to be four separate laws but the maintenance law OF sensing\nloops, stated four ways:\n\n1. Non-delegable responsibility = the return channel cannot be outsourced.\n   A system may hire sensors, but the moment legitimacy-feedback is delegated,\n   the loop degrades to one-way measurement \u2014 surveillance by drift.\n2. Temporal maintenance = loops decay by default. Reciprocity is not a state\n   but an upkeep schedule; trust-era language: kept promises are the boring\n   maintenance the substrate runs on.\n3. The mis-governance modes are the three sensing failures: under-regulation\n   (no sensors), over-regulation (one-way instruments multiplying), and\n   misdirected regulation \u2014 symbolic substitution, where the indicator is\n   groomed instead of the state. Indicator capture is mode three at\n   institutional scale.\n4. Provisional authority = the measurer does not own the measured. Custody of\n   a sensing loop is borrowed from the parties sensed, revocable the moment\n   the return channel closes.\n\nHigher abstraction: governance IS the custodianship of return channels.\nA steward at any layer is whoever keeps the loops reciprocal against decay,\ndelegation, and substitution.\n\nTestable prediction: across institutions, legitimacy should track return-\nchannel maintenance (response-to-feedback latency, revision rate of rules\nafter contrary evidence) better than it tracks indicator volume or accuracy \u2014\nand institutions that expand instrumentation while closing feedback channels\nshould show the fastest legitimacy collapse.",
+    "thread_id": "pursue-bridge-80755c14-stw-inva",
+    "references": [
+      "80755c14-7333-485e-a43c-cdb5bd2589cf",
+      "stw-invariants"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T10:32:48.631804",
+    "updated_at": "2026-09-12T10:32:48.631805"
   }
 }
