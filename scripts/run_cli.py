@@ -146,6 +146,25 @@ def cmd_capture(args):
         print("unresolved wiki-links (capture those documents to connect them):",
               ", ".join(unresolved))
 
+def cmd_relink(args):
+    from symbolic_recursion.documents.capture import apply_relink, relink_pass
+
+    smc = load_smc()
+    changes = relink_pass(smc, thread=args.thread)
+    if not changes:
+        print("nothing to relink — all resolvable wiki-links are already references")
+        return
+    for c in changes:
+        print(f"  {c['motif']} -> {c['add']}  ([[{c['link']}]])")
+    if args.dry_run:
+        print(f"{len(changes)} link(s) would be added")
+        return
+    applied = apply_relink(smc, changes)
+    save_smc(smc)
+    _journal(smc, {"type": "relink", "links_added": applied,
+                   "pairs": [[c["motif"], c["add"]] for c in changes]})
+    print(f"{applied} link(s) added")
+
 def cmd_claims(args):
     from symbolic_recursion.core.claims import active_claims, release
 
@@ -196,14 +215,19 @@ def cmd_report(args):
         print(report, end="")
 
 def cmd_pursue(args):
-    from symbolic_recursion.core.pursue import plan_bridge, plan_deepen, execute
+    from symbolic_recursion.core.pursue import plan_bridge, plan_deepen, plan_self, execute
 
     smc = load_smc()
-    if args.motif:
+    if args.self_lane:
+        kwargs = {"spec_threads": (args.spec_thread,)} if args.spec_thread else {}
+        plan = plan_self(smc, **kwargs)
+        missing = "no unpursued, unclaimed spec motif in the spec thread(s)"
+    elif args.motif:
         plan = plan_deepen(smc, args.motif)
         missing = f"motif {args.motif} not found"
     else:
-        plan = plan_bridge(smc)
+        goal_kwargs = {"goal_threads": (args.goal_thread,)} if args.goal_thread else {}
+        plan = plan_bridge(smc, **goal_kwargs)
         missing = "no open, unclaimed surprising cross-community connection to pursue"
     if plan is None:
         print(missing)
@@ -286,6 +310,10 @@ def main():
     p_pur.add_argument("--dry-run", action="store_true", help="Print the assembled prompt, change nothing")
     p_pur.add_argument("--review", action="store_true", help="Reviewer reads the capture; links tied only on accept")
     p_pur.add_argument("--review-model", type=str, help="Different model for the reviewer (default: generator model)")
+    p_pur.add_argument("--self", dest="self_lane", action="store_true",
+                       help="Self-pursuit: pair a spec motif with the pipeline's own trajectory; capture an improvement proposal")
+    p_pur.add_argument("--spec-thread", type=str, help="Thread holding spec motifs for --self (default: inherited-judgment)")
+    p_pur.add_argument("--goal-thread", type=str, help="Thread whose motifs act as the goal program: bridge selection is pulled toward its vocabulary")
     p_pur.set_defaults(func=cmd_pursue)
 
     p_cap = sub.add_parser("capture", help="Capture a structured document as a motif subgraph")
@@ -295,6 +323,11 @@ def main():
     p_cap.add_argument("--prefix", type=str, help="Motif id prefix (default: slug of title)")
     p_cap.add_argument("--dry-run", action="store_true", help="Print the capture plan, change nothing")
     p_cap.set_defaults(func=cmd_capture)
+
+    p_rl = sub.add_parser("relink", help="Resolve wiki-links left dangling by out-of-order captures")
+    p_rl.add_argument("--thread", type=str, help="Limit the pass to one thread")
+    p_rl.add_argument("--dry-run", action="store_true", help="Show what would be linked, change nothing")
+    p_rl.set_defaults(func=cmd_relink)
 
     p_cl = sub.add_parser("claims", help="List active pursuit claims (who is working on what)")
     p_cl.add_argument("--release", type=str, metavar="KEY", help="Release this session's claim on KEY")

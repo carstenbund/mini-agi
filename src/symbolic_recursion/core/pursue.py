@@ -52,7 +52,21 @@ DEFAULT_TEMPLATES: Dict[str, str] = {
         "Develop it one level of abstraction higher, or state precisely why "
         "it resists integration with the field."
     ),
+    "self": (
+        "You are reasoning about the software that maintains this field — "
+        "the pipeline whose specification the target motif [{spec_symbols}] "
+        "states (its text is in the context above). The pipeline's recent "
+        "observed behavior is in the trajectory section above; the current "
+        "regime reading is: {regime}. "
+        "What revision to the pipeline does the specification imply, given "
+        "the observed behavior? Name the revision, justify it from the spec "
+        "and the behavior both, and end with a concrete implementable change "
+        "(which component, what new behavior) plus one observable that would "
+        "show, after implementation, that it worked."
+    ),
 }
+
+DEFAULT_SPEC_THREADS = ("inherited-judgment",)
 
 
 @dataclass
@@ -145,6 +159,55 @@ def _is_resolved(smc: SymbolicMemoryCore, a: str, b: str) -> bool:
     return False
 
 
+def _failure_block(targets: List[str]) -> str:
+    """Retry-with-verdict: the latest rejected/revise attempt at the same
+    targets, returned as a prompt section so failure is inherited by the
+    next attempt (graded-inheritance Condition 4/6 — failures and
+    consequences as feedback). Empty string when there is none."""
+    from symbolic_recursion.core.flow import load_flow
+    prior = None
+    tset = set(targets)
+    for e in load_flow():
+        verdict = (e.get("review") or {}).get("verdict")
+        if verdict in ("reject", "revise") and set(e.get("targets") or []) == tset:
+            prior = e
+    if prior is None:
+        return ""
+    resp = (prior.get("response") or "").strip()
+    if len(resp) > 900:
+        resp = resp[:900] + " […]"
+    evidence = (prior.get("review") or {}).get("evidence", "")
+    return (
+        f"\n\n## Previous attempt (review: {prior['review']['verdict']})\n"
+        f"{resp}\n\n"
+        f"Reviewer evidence: {evidence}\n"
+        "Address the objection directly; do not resubmit the same synthesis."
+    )
+
+
+def _goal_symbols(smc: SymbolicMemoryCore, goal_threads: tuple) -> frozenset:
+    syms = set()
+    for m in smc.list_motifs():
+        if m.thread_id in goal_threads:
+            syms.update(s.strip().lower() for s in m.symbols if s.strip())
+    return frozenset(syms)
+
+
+def _goal_boost(smc: SymbolicMemoryCore, a: str, b: str,
+                goal_syms: frozenset, weight: float) -> float:
+    """Multiplier >= 1 pulling selection toward the goal program.
+
+    Affinity of an endpoint = fraction of ITS symbols that are goal
+    vocabulary (how much of its identity is goal-relevant); the boost
+    uses the stronger endpoint. weight 0 or empty goals = neutral."""
+    if not goal_syms or weight <= 0.0:
+        return 1.0
+    def _aff(mid: str) -> float:
+        ms = {s.strip().lower() for s in smc.get_motif(mid).symbols if s.strip()}
+        return len(ms & goal_syms) / len(ms) if ms else 0.0
+    return 1.0 + weight * max(_aff(a), _aff(b))
+
+
 def plan_bridge(
     smc: SymbolicMemoryCore,
     analysis: Optional[dict] = None,
@@ -153,25 +216,32 @@ def plan_bridge(
     now: Optional[datetime] = None,
     owner: Optional[str] = None,
     respect_claims: bool = True,
+    goal_threads: Optional[tuple] = None,
+    goal_weight: float = 1.0,
 ) -> Optional[Pursuit]:
     """Plan a pursuit of the best OPEN, UNCLAIMED surprising connection.
 
-    Selection = raw surprise score x recency factor, skipping resolved
-    pairs and pairs another owner currently holds a claim on (see
-    ``core.claims``). None if the field has no open surprise to offer."""
+    Selection = raw surprise score x recency factor x goal boost,
+    skipping resolved pairs and pairs another owner currently holds a
+    claim on (see ``core.claims``). ``goal_threads`` names threads whose
+    motifs act as the goal program: seams sharing their vocabulary are
+    preferred (a pull, never a fence — off-goal seams still compete).
+    None if the field has no open surprise to offer."""
     if analysis is None:
         analysis = analyze_field(smc)
     if now is None:
         now = datetime.utcnow()
     me = owner or agent_id()
     active = active_claims(now) if respect_claims else {}
+    goal_syms = _goal_symbols(smc, goal_threads) if goal_threads else frozenset()
     best, best_key = None, None
     for s in analysis["surprises"]:
         if _is_resolved(smc, s["a"], s["b"]):
             continue
         if claimed_by_other("bridge", target_key([s["a"], s["b"]]), me, active=active):
             continue
-        damped = s["score"] * _recency_factor(smc, s["a"], s["b"], now, half_life_hours)
+        damped = s["score"] * _recency_factor(smc, s["a"], s["b"], now, half_life_hours) \
+            * _goal_boost(smc, s["a"], s["b"], goal_syms, goal_weight)
         key = (-damped, s["a"], s["b"])
         if best_key is None or key < best_key:
             best, best_key = s, key
@@ -189,7 +259,7 @@ def plan_bridge(
     ctx = _context_block(smc, analysis["graph"], [a.id, b.id])
     return Pursuit(
         kind="bridge",
-        prompt=f"{ctx}\n\n## Task\n{task}",
+        prompt=f"{ctx}\n\n## Task\n{task}{_failure_block([a.id, b.id])}",
         symbols=_merge_symbols(a.symbols, b.symbols),
         targets=[a.id, b.id],
         thread_name=f"pursue-bridge-{a.id[:8]}-{b.id[:8]}",
@@ -216,10 +286,79 @@ def plan_deepen(
     ctx = _context_block(smc, analysis["graph"], [m.id])
     return Pursuit(
         kind="deepen",
-        prompt=f"{ctx}\n\n## Task\n{task}",
+        prompt=f"{ctx}\n\n## Task\n{task}{_failure_block([m.id])}",
         symbols=list(m.symbols),
         targets=[m.id],
         thread_name=f"pursue-deepen-{m.id[:8]}",
+    )
+
+
+def plan_self(
+    smc: SymbolicMemoryCore,
+    analysis: Optional[dict] = None,
+    template: str = DEFAULT_TEMPLATES["self"],
+    spec_threads: tuple = DEFAULT_SPEC_THREADS,
+    window: int = 8,
+    owner: Optional[str] = None,
+    respect_claims: bool = True,
+) -> Optional[Pursuit]:
+    """Plan a self-pursuit: the field reasoning about its own pipeline.
+
+    Pairs a specification motif (from ``spec_threads`` — documents that
+    govern this software) with the pipeline's own observed behavior (the
+    trajectory tail and regime verdict), and asks what revision the spec
+    implies. Captures are improvement PROPOSALS — motifs, reviewed like
+    anything else; they cross into code only through a carrier's
+    judgment. Spec motifs are taken most-connected-first, skipping ones
+    already self-pursued (flow ledger) or claimed by another owner.
+    """
+    if analysis is None:
+        analysis = analyze_field(smc)
+    me = owner or agent_id()
+    from symbolic_recursion.core.flow import load_flow
+    already = {tuple(e.get("targets") or []) for e in load_flow()
+               if e.get("kind") == "self"}
+    active = active_claims() if respect_claims else {}
+    g = analysis["graph"]
+    candidates = sorted(
+        (m for m in smc.list_motifs() if m.thread_id in spec_threads),
+        key=lambda m: (-g.weighted_degree(m.id), m.id),
+    )
+    spec = None
+    for c in candidates:
+        if (c.id,) in already:
+            continue
+        if claimed_by_other("self", target_key([c.id]), me, active=active):
+            continue
+        spec = c
+        break
+    if spec is None:
+        return None
+
+    from symbolic_recursion.graph.trajectory import classify_regime, load_events
+    events = load_events()
+    verdict = classify_regime(events, window=window)
+    tail = []
+    for e in events[-window:]:
+        met = e["metrics"]
+        tail.append(f"- {e['ts'][:16]} {e['event'].get('type','?')}: "
+                    f"motifs={met['motif_count']} communities={met['community_count']} "
+                    f"binding={met['narrative_binding']} open_surprises={e.get('open_surprises','?')}")
+    telemetry = (f"## Observed pipeline behavior (trajectory tail)\n"
+                 f"regime: {verdict['regime']} ({'; '.join(verdict['evidence'][-2:])})\n"
+                 + "\n".join(tail))
+
+    task = template.format(
+        spec_symbols=", ".join(spec.symbols),
+        regime=verdict["regime"],
+    )
+    ctx = _context_block(smc, g, [spec.id])
+    return Pursuit(
+        kind="self",
+        prompt=f"{ctx}\n\n{telemetry}\n\n## Task\n{task}{_failure_block([spec.id])}",
+        symbols=list(spec.symbols) + ["proposal"],
+        targets=[spec.id],
+        thread_name=f"pursue-self-{spec.id[:12]}",
     )
 
 

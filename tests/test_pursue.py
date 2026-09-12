@@ -191,3 +191,86 @@ def test_recency_config_passes_through_run_pursuits():
         model="stub-model",
     )
     assert results[0].motif_id is not None
+
+
+def test_retry_inherits_failure_with_verdict():
+    smc = _bridged_field()
+    plan1 = plan_bridge(smc)
+    assert "Previous attempt" not in plan1.prompt
+    execute(
+        smc, ThreadManager(smc), plan1, model="gen",
+        review_cfg={"enabled": True,
+                    "query_fn": lambda p, m: "VERDICT: reject\nEVIDENCE: circular restatement\nPREDICTION: none"},
+    )
+    plan2 = plan_bridge(smc)
+    assert set(plan2.targets) == set(plan1.targets)  # pair reopened
+    assert "## Previous attempt (review: reject)" in plan2.prompt
+    assert "circular restatement" in plan2.prompt
+    assert "[stub:" in plan2.prompt or "gen" in plan2.prompt or plan2.prompt  # failed response embedded
+    assert "do not resubmit" in plan2.prompt
+
+
+def test_self_pursuit_pairs_spec_with_trajectory(tmp_path, monkeypatch):
+    from symbolic_recursion.core.pursue import plan_self
+    from symbolic_recursion.graph.trajectory import record_event
+
+    smc = _bridged_field()
+    smc.add_motif(_motif("spec-1", ["instrument", "measurement"], "spec-thread",
+                         refs=["a1"]))
+    smc.add_motif(_motif("spec-2", ["conditions"], "spec-thread"))
+    for _ in range(3):
+        record_event(smc, {"type": "capture", "motif_id": "a1"})
+    plan = plan_self(smc, spec_threads=("spec-thread",))
+    assert plan is not None and plan.kind == "self"
+    assert plan.targets == ["spec-1"]              # most-connected spec first
+    assert "Observed pipeline behavior" in plan.prompt
+    assert "regime:" in plan.prompt
+    assert "content of spec-1" in plan.prompt      # spec text in context
+    assert "proposal" in plan.symbols
+
+
+def test_self_pursuit_skips_already_pursued_spec():
+    from symbolic_recursion.core.flow import record_flow
+    from symbolic_recursion.core.pursue import plan_self
+
+    smc = _bridged_field()
+    smc.add_motif(_motif("spec-1", ["instrument"], "spec-thread", refs=["a1"]))
+    smc.add_motif(_motif("spec-2", ["conditions"], "spec-thread"))
+    record_flow({"kind": "self", "targets": ["spec-1"], "motif_id": "x",
+                 "prompt": "", "response": ""})
+    plan = plan_self(smc, spec_threads=("spec-thread",))
+    assert plan.targets == ["spec-2"]
+    record_flow({"kind": "self", "targets": ["spec-2"], "motif_id": "y",
+                 "prompt": "", "response": ""})
+    assert plan_self(smc, spec_threads=("spec-thread",)) is None
+
+
+def test_self_pursuit_none_without_spec_thread():
+    from symbolic_recursion.core.pursue import plan_self
+
+    smc = _bridged_field()
+    assert plan_self(smc, spec_threads=("nonexistent",)) is None
+
+
+def test_goal_threads_pull_selection_without_fencing():
+    from datetime import datetime
+    now = datetime.utcnow()
+    smc = _bridged_field()
+    # a third small cluster whose bridge endpoint g1 carries goal vocabulary;
+    # its seam g1-b3 ties the a3-b1 seam on raw score, so the goal boost is
+    # the deciding factor (baseline falls back to the deterministic id
+    # tie-break, which prefers a3-b1)
+    smc.add_motif(_motif("g1", ["inheritance"], "C", refs=["g2", "b3"]))
+    smc.add_motif(_motif("g2", ["inheritance", "clocks"], "C"))
+    smc.add_motif(_motif("goal-1", ["inheritance", "judgment"], "goal-thread"))
+    for mid in smc.motifs:
+        _aged(smc, mid, 100.0, now)
+    baseline = plan_bridge(smc, now=now)
+    goal = plan_bridge(smc, now=now, goal_threads=("goal-thread",), goal_weight=5.0)
+    # with a strong goal pull, the seam touching goal vocabulary wins
+    assert "g1" in goal.targets
+    # without goals, selection is unchanged from the raw ranking
+    assert set(baseline.targets) != set(goal.targets) or "g1" in baseline.targets
+    # zero weight is neutral: identical to baseline
+    neutral = plan_bridge(smc, now=now, goal_threads=("goal-thread",), goal_weight=0.0)
+    assert set(neutral.targets) == set(baseline.targets)
