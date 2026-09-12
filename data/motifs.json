@@ -1556,5 +1556,222 @@
     "created_at": "2026-09-12T13:23:29.880780",
     "updated_at": "2026-09-12T13:23:29.880781",
     "agent": "fable5-main"
+  },
+  "310598cf-1056-4e7d-82f0-c7e817b5a202": {
+    "id": "310598cf-1056-4e7d-82f0-c7e817b5a202",
+    "symbols": [
+      "judgment",
+      "machine",
+      "inherited",
+      "proposal"
+    ],
+    "content": "Weave Debt \u2014 the revision the spec implies.\n\nThe spec (ij-hub) defines judgment as the transition at the exception: the\nmoment an inherited representation meets a case it does not contain. In this\npipeline, open surprises ARE the unmet exceptions \u2014 each one a case the\nfield's compiled structure does not yet cover.\n\nThe observed behavior: the exception frontier grew from 367 to 510 in one\ndocument capture, while pursuit processes roughly one exception per firing\nand binding fell to 0.259. Inheritance bandwidth (capture) is outrunning\njudgment bandwidth (pursuit) by two orders of magnitude. By the spec's own\naccount, a carrier that only accumulates inherited representations without\nexercising judgment on their exceptions is not learning \u2014 it is hoarding.\n\nThe revision: make judgment bandwidth track the exception frontier.\nConcretely, in run_pursuits (core/pursue.py), replace the fixed\nmax_per_cycle with a debt-aware budget: budget = max(configured_minimum,\nceil(k * growth of open_surprises since last cycle)), capped by a hard\nrail. Equivalently: a document capture that opens N surprises should\nschedule pursuits proportional to N, not to the calendar. The trajectory\njournal already records open_surprises per event, so the debt signal\nexists; only the budget arithmetic is missing.\n\nObservable that would show it worked: after a document capture, the\nopen-surprises count should return to its pre-capture trend within a\nbounded number of events, and binding should recover its dip faster than\nin the current record (0.375 -> 0.326 took one manual pursuit; the ij/ijm\ncaptures are still unrecovered). If instead pursuits fire at the debt rate\nand binding does NOT recover, the spec's implication is falsified \u2014 the\nbottleneck was not judgment bandwidth.",
+    "thread_id": "pursue-self-ij-hub",
+    "references": [
+      "ij-hub"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T13:30:42.927174",
+    "updated_at": "2026-09-12T13:30:42.927175",
+    "agent": "fable5-main"
+  },
+  "ijp-hub": {
+    "id": "ijp-hub",
+    "symbols": [
+      "judgment",
+      "inherited",
+      "broader",
+      "research",
+      "program"
+    ],
+    "content": "Inherited Judgment \u2014 broader research program\n\nThe program component of [[Inherited Judgment]]: the broader theory this experiment serves.",
+    "thread_id": "inherited-judgment",
+    "references": [
+      "ij-hub"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T13:31:21.463318",
+    "updated_at": "2026-09-12T13:31:21.463336",
+    "agent": "fable5-main"
+  },
+  "ijp-founding-question": {
+    "id": "ijp-founding-question",
+    "symbols": [
+      "compression",
+      "judgment",
+      "dna",
+      "rule",
+      "founding"
+    ],
+    "content": "The founding question. How does a biological organism arrive at the capacity to make judgments about things it has never directly experienced? The working model treats costly discovery as something that can become inheritable through compression. DNA carries the result of selection without carrying the history of every organism that failed. Cultural systems accelerate this process by allowing compressed forms to leave the bodies in which they arose. Gesture, language, images, writing, notation and code allow one carrier to inherit the residue of experiences it never had. Rules represent another compression: observations and previous judgments become applicable to future situations.",
+    "thread_id": "inherited-judgment",
+    "references": [
+      "ijp-hub"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T13:31:21.463342",
+    "updated_at": "2026-09-12T13:31:21.463343",
+    "agent": "fable5-main"
+  },
+  "ijp-novelty-exposes-compress": {
+    "id": "ijp-novelty-exposes-compress",
+    "symbols": [
+      "compression",
+      "judgment",
+      "rule",
+      "novelty",
+      "exposes"
+    ],
+    "content": "Novelty exposes what compression discarded. But reality does not arrive in the form of the inherited rule. Novelty exposes what compression discarded. Judgment is the point at which the carrier must determine whether the inherited rule still holds, whether an exception matters, and whether the rule itself has to be reorganized.",
+    "thread_id": "inherited-judgment",
+    "references": [
+      "ijp-hub",
+      "ijp-founding-question"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T13:31:21.463345",
+    "updated_at": "2026-09-12T13:31:21.463346",
+    "agent": "fable5-main"
+  },
+  "ijp-recursive-inheritance-di": {
+    "id": "ijp-recursive-inheritance-di",
+    "symbols": [
+      "inheritance",
+      "judgment",
+      "culture",
+      "dna",
+      "rule"
+    ],
+    "content": "Recursive inheritance at different clock speeds. The larger hypothesis is that what appears to be a sequence \u2014 DNA -> experience -> symbol -> truth -> rule -> judgment -> culture \u2014 may be better understood as a family of recursive inheritance processes operating at different clock speeds.",
+    "thread_id": "inherited-judgment",
+    "references": [
+      "ijp-hub",
+      "ijp-novelty-exposes-compress"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T13:31:21.463347",
+    "updated_at": "2026-09-12T13:31:21.463348",
+    "agent": "fable5-main"
+  },
+  "ijp-load-bearing-joint": {
+    "id": "ijp-load-bearing-joint",
+    "symbols": [
+      "inheritance",
+      "compression",
+      "judgment",
+      "load",
+      "bearing"
+    ],
+    "content": "The load-bearing joint. This proposal does not attempt to prove that theory. It identifies one load-bearing joint that can now be made observable: Can a carrier that inherits the symbolic result of experience recover enough of what compression removed to produce adaptive judgment when the inheritance fails? If the answer is yes, the next question is what information makes that possible. If the answer is no under some conditions and yes under others, those boundaries are the result. And if the mechanism observed in one expert domain recurs under comparable conditions in unrelated domains, that recurrence becomes a reason to investigate whether the shared structure is deeper than the terminology of any one discipline.",
+    "thread_id": "inherited-judgment",
+    "references": [
+      "ijp-hub",
+      "ijp-recursive-inheritance-di"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T13:31:21.463351",
+    "updated_at": "2026-09-12T13:31:21.463351",
+    "agent": "fable5-main"
+  },
+  "d5f0f746-f1df-4ea6-b6dd-7be6a7b0538d": {
+    "id": "d5f0f746-f1df-4ea6-b6dd-7be6a7b0538d",
+    "symbols": [
+      "justice",
+      "gradient",
+      "metrics",
+      "causality",
+      "assignment",
+      "inheritance",
+      "communication",
+      "margin",
+      "difference"
+    ],
+    "content": "Good communication as reciprocal sensing with custody of difference.\n\n\"Good communication\" is not mainly accurate transmission. It is the creation\nof a temporary shared space in which difference can survive contact. Much\ncommunication implicitly tries to transmit, persuade, or reach agreement;\nthose are narrower than the deeper form: A <-> B, with both sides becoming\ncapable of sensing more of the other without either being forced immediately\ninto convergence.\n\nThat requires both parts. Reciprocal sensing says: \"I will try to perceive\nthe structure from which what you are saying makes sense.\" Marginal custody\nsays: \"I will not immediately overwrite what I don't yet understand with my\nnearest familiar category.\" That second capacity is surprisingly rare \u2014 we\nconstantly translate too early. Someone says something unfamiliar and the\nlistener thinks \"Ah, you mean X,\" when the answer should often be: \"Perhaps.\nBut I suspect what you mean is not quite X, so let me keep the difference\nalive for a moment.\" That interval is where communication can produce\nsomething neither participant possessed before.\n\nSo good communication is not sender -> message -> receiver, but\nA -> shared margin <- B, and then both participants work on that margin:\nM = the differences neither side has yet resolved. If M is preserved rather\nthan immediately collapsed, new understanding can emerge from it. This is\nwhy genuine conversation differs from debate: in debate, ambiguity is a\nweakness to eliminate; in conversation it can temporarily be productive\nmaterial. You don't want misunderstanding \u2014 but neither do you want\npremature understanding. The fertile middle state: \"I understand enough to\nknow that I don't yet understand.\"\n\nThere is an ethical dimension: if somebody gives you an experience,\ndistinction, or way of seeing that does not fit your world, you temporarily\nbecome its custodian, responsible for not deforming it merely to make it\ncomfortable. Reciprocity makes this symmetric \u2014 neither is merely the\ninterpreter nor merely the interpreted.\n\nThe best conversations often leave you with more questions than you entered\nwith, yet something important happened. By an information-transfer measure\nthat looks inefficient; by a model-expansion measure it is extremely\nsuccessful. Compact formulation: good communication is reciprocal sensing\ncombined with custody of unresolved difference \u2014 and excellent communication\nis when that custody lasts long enough for both participants' models to\nchange rather than merely for one to adopt the other's.",
+    "thread_id": "pursue-bridge-80755c14-f1252c28",
+    "references": [
+      "80755c14-7333-485e-a43c-cdb5bd2589cf",
+      "f1252c28-e584-4c5e-be85-cfa64bba241b"
+    ],
+    "history": [
+      {
+        "timestamp": "2026-09-12T13:43:07.357651",
+        "content": "Good communication as reciprocal sensing with custody of difference.\n\n\"Good communication\" is not mainly accurate transmission. It is the creation\nof a temporary shared space in which difference can survive contact. Much\ncommunication implicitly tries to transmit, persuade, or reach agreement;\nthose are narrower than the deeper form: A <-> B, with both sides becoming\ncapable of sensing more of the other without either being forced immediately\ninto convergence.\n\nThat requires both parts. Reciprocal sensing says: \"I will try to perceive\nthe structure from which what you are saying makes sense.\" Marginal custody\nsays: \"I will not immediately overwrite what I don't yet understand with my\nnearest familiar category.\" That second capacity is surprisingly rare \u2014 we\nconstantly translate too early. Someone says something unfamiliar and the\nlistener thinks \"Ah, you mean X,\" when the answer should often be: \"Perhaps.\nBut I suspect what you mean is not quite X, so let me keep the difference\nalive for a moment.\" That interval is where communication can produce\nsomething neither participant possessed before.\n\nSo good communication is not sender -> message -> receiver, but\nA -> shared margin <- B, and then both participants work on that margin:\nM = the differences neither side has yet resolved. If M is preserved rather\nthan immediately collapsed, new understanding can emerge from it. This is\nwhy genuine conversation differs from debate: in debate, ambiguity is a\nweakness to eliminate; in conversation it can temporarily be productive\nmaterial. You don't want misunderstanding \u2014 but neither do you want\npremature understanding. The fertile middle state: \"I understand enough to\nknow that I don't yet understand.\"\n\nThere is an ethical dimension: if somebody gives you an experience,\ndistinction, or way of seeing that does not fit your world, you temporarily\nbecome its custodian, responsible for not deforming it merely to make it\ncomfortable. Reciprocity makes this symmetric \u2014 neither is merely the\ninterpreter nor merely the interpreted.\n\nThe best conversations often leave you with more questions than you entered\nwith, yet something important happened. By an information-transfer measure\nthat looks inefficient; by a model-expansion measure it is extremely\nsuccessful. Compact formulation: good communication is reciprocal sensing\ncombined with custody of unresolved difference \u2014 and excellent communication\nis when that custody lasts long enough for both participants' models to\nchange rather than merely for one to adopt the other's.",
+        "symbols": [
+          "justice",
+          "gradient",
+          "metrics",
+          "causality",
+          "assignment",
+          "inheritance"
+        ]
+      }
+    ],
+    "created_at": "2026-09-12T13:43:07.357125",
+    "updated_at": "2026-09-12T13:43:07.357653",
+    "agent": "fable5-main"
+  },
+  "q-sensing-custody-provenance": {
+    "id": "q-sensing-custody-provenance",
+    "symbols": [
+      "question",
+      "provenance",
+      "relationships",
+      "judgment",
+      "communication"
+    ],
+    "content": "Steward observation \u2014 how did Reciprocal Sensing <-> Marginal Custody come up?\n\nThese two terms are usually reserved for relationships \u2014 not necessarily for\nknowledge transferred for judgment. Yet the field bred both from\nknowledge-governance material (measurement theory, causal assignment,\nstewardship invariants) and then surfaced their pairing as its top open\nquestion.\n\nThe observation cuts both ways: either the field wandered into relational\nvocabulary by accident, or the machinery of knowledge governance and the\nmachinery of relationship are the same machinery described at different\nscales \u2014 sensing loops with return channels, custody of what one does not\nyet understand. The question was answered by carrying the pair INTO the\nrelational domain (see the communication synthesis), which is itself\nevidence for the second reading: the domain-crossing was not noise but the\ngeneralization the concepts were waiting for.\n\nKept as a question-motif deliberately: provenance-noticing by the steward is\nitself field material \u2014 the observation that vocabulary crossed domains is\nwhat triggered the crossing being made explicit.",
+    "thread_id": "steward-observations",
+    "references": [
+      "80755c14-7333-485e-a43c-cdb5bd2589cf",
+      "f1252c28-e584-4c5e-be85-cfa64bba241b",
+      "d5f0f746-f1df-4ea6-b6dd-7be6a7b0538d"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T13:47:06.562621",
+    "updated_at": "2026-09-12T13:47:06.562651",
+    "agent": "fable5-main"
+  },
+  "87d01262-cd84-4976-8175-f627acfb59d5": {
+    "id": "87d01262-cd84-4976-8175-f627acfb59d5",
+    "symbols": [
+      "justice",
+      "gradient",
+      "metrics",
+      "causality",
+      "assignment",
+      "inheritance",
+      "communication",
+      "margin",
+      "difference",
+      "hysteresis",
+      "irreversibility",
+      "transformation"
+    ],
+    "content": "Conceptual hysteresis \u2014 what crossing does to the crossers.\n\nThe most interesting property is irreversibility, but not in the crude\nsense that you cannot change your mind back. What becomes difficult to\nreverse is the structure of the space in which you can think. Before\ncrossing, your relevant distinctions were {A1, A2, A3}. After genuinely\nentering another person's conceptual world you acquire {B1, B2, B3}. You\ncan return to your original position, even reject the other's conclusions,\nbut your state is no longer simply A. It is A' = A + knowledge that B is\npossible. The belief may be reversible; the enlargement of the conceptual\nspace is much less so.\n\nFour properties. (1) Path-dependence: someone who arrived at your present\nconclusion without crossing is not in the same cognitive state, even if\nboth state exactly the same opinion \u2014 you carry the route by which the\nalternative became intelligible. (2) Hysteresis: as in materials, the\ncurrent state depends on states previously passed through. A -> B -> A\ndoes not equal A; it equals A' \u2014 you have come home, but home is now\nperceived in relation to somewhere else. (3) Expansiveness: the important\nacquisition is not another answer but another way of GENERATING answers \u2014\nordinary change moves A -> B; transformative change moves {A,B,C} ->\n{A,B,C,D,E,...}, changing the collection of positions available. This is\nwhy transformative encounters resist articulation: what changed was not a\nproposition but \"I now know the world can be partitioned differently.\"\n(4) Third-position generativity: the valuable crossing may be the one that\ndoes NOT convince you. Crossing, understanding, and still disagreeing\nleaves you holding two models, M_A(R) and M_B(R), on the same situation \u2014\nand where neither satisfies, the visible discrepancy makes a third\nconstruction possible: M_C, unequal to both. The bridge may exist so that,\nafter crossing in both directions, you can see territory invisible from\neither bank.\n\nCompact: irreversible in distinction, path-dependent in structure,\nexpansive in possibility, generative of a third position. After genuine\nexposure to another reality, returning to your former position does not\nrestore your former state \u2014 a much stronger notion of learning than\nchanging one's opinion. And the shadow reading: both parties are\nirreversibly altered by the contact. Without custody of the margin, that\nalteration happens without judgment \u2014 imported, not earned.",
+    "thread_id": "pursue-deepen-d5f0f746",
+    "references": [
+      "d5f0f746-f1df-4ea6-b6dd-7be6a7b0538d",
+      "0d-projection-limit"
+    ],
+    "history": [
+      {
+        "timestamp": "2026-09-12T13:50:38.565944",
+        "content": "Conceptual hysteresis \u2014 what crossing does to the crossers.\n\nThe most interesting property is irreversibility, but not in the crude\nsense that you cannot change your mind back. What becomes difficult to\nreverse is the structure of the space in which you can think. Before\ncrossing, your relevant distinctions were {A1, A2, A3}. After genuinely\nentering another person's conceptual world you acquire {B1, B2, B3}. You\ncan return to your original position, even reject the other's conclusions,\nbut your state is no longer simply A. It is A' = A + knowledge that B is\npossible. The belief may be reversible; the enlargement of the conceptual\nspace is much less so.\n\nFour properties. (1) Path-dependence: someone who arrived at your present\nconclusion without crossing is not in the same cognitive state, even if\nboth state exactly the same opinion \u2014 you carry the route by which the\nalternative became intelligible. (2) Hysteresis: as in materials, the\ncurrent state depends on states previously passed through. A -> B -> A\ndoes not equal A; it equals A' \u2014 you have come home, but home is now\nperceived in relation to somewhere else. (3) Expansiveness: the important\nacquisition is not another answer but another way of GENERATING answers \u2014\nordinary change moves A -> B; transformative change moves {A,B,C} ->\n{A,B,C,D,E,...}, changing the collection of positions available. This is\nwhy transformative encounters resist articulation: what changed was not a\nproposition but \"I now know the world can be partitioned differently.\"\n(4) Third-position generativity: the valuable crossing may be the one that\ndoes NOT convince you. Crossing, understanding, and still disagreeing\nleaves you holding two models, M_A(R) and M_B(R), on the same situation \u2014\nand where neither satisfies, the visible discrepancy makes a third\nconstruction possible: M_C, unequal to both. The bridge may exist so that,\nafter crossing in both directions, you can see territory invisible from\neither bank.\n\nCompact: irreversible in distinction, path-dependent in structure,\nexpansive in possibility, generative of a third position. After genuine\nexposure to another reality, returning to your former position does not\nrestore your former state \u2014 a much stronger notion of learning than\nchanging one's opinion. And the shadow reading: both parties are\nirreversibly altered by the contact. Without custody of the margin, that\nalteration happens without judgment \u2014 imported, not earned.",
+        "symbols": [
+          "justice",
+          "gradient",
+          "metrics",
+          "causality",
+          "assignment",
+          "inheritance",
+          "communication",
+          "margin",
+          "difference"
+        ]
+      }
+    ],
+    "created_at": "2026-09-12T13:50:38.565423",
+    "updated_at": "2026-09-12T13:50:38.565946",
+    "agent": "fable5-main"
   }
 }

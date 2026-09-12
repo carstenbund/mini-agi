@@ -1,2 +1,8 @@
 {"ts": "2026-09-12T13:21:08.444169", "kind": "bridge", "key": "0a-4b-ease-selection-signal|a0d057d0-d7d8-4c0b-85f6-a252b4a81694", "owner": "fable5-main", "expires": "2026-09-12T14:21:08.444169", "released": false}
 {"ts": "2026-09-12T13:21:08.444940", "kind": "bridge", "key": "0a-4b-ease-selection-signal|a0d057d0-d7d8-4c0b-85f6-a252b4a81694", "owner": "fable5-main", "expires": "2026-09-12T13:21:08.444940", "released": true}
+{"ts": "2026-09-12T13:30:42.927073", "kind": "self", "key": "ij-hub", "owner": "fable5-main", "expires": "2026-09-12T14:30:42.927073", "released": false}
+{"ts": "2026-09-12T13:30:42.927653", "kind": "self", "key": "ij-hub", "owner": "fable5-main", "expires": "2026-09-12T13:30:42.927653", "released": true}
+{"ts": "2026-09-12T13:43:07.356974", "kind": "bridge", "key": "80755c14-7333-485e-a43c-cdb5bd2589cf|f1252c28-e584-4c5e-be85-cfa64bba241b", "owner": "fable5-main", "expires": "2026-09-12T14:43:07.356974", "released": false}
+{"ts": "2026-09-12T13:43:07.357622", "kind": "bridge", "key": "80755c14-7333-485e-a43c-cdb5bd2589cf|f1252c28-e584-4c5e-be85-cfa64bba241b", "owner": "fable5-main", "expires": "2026-09-12T13:43:07.357622", "released": true}
+{"ts": "2026-09-12T13:50:38.565285", "kind": "deepen", "key": "d5f0f746-f1df-4ea6-b6dd-7be6a7b0538d", "owner": "fable5-main", "expires": "2026-09-12T14:50:38.565285", "released": false}
+{"ts": "2026-09-12T13:50:38.565913", "kind": "deepen", "key": "d5f0f746-f1df-4ea6-b6dd-7be6a7b0538d", "owner": "fable5-main", "expires": "2026-09-12T13:50:38.565913", "released": true}
