@@ -370,7 +370,9 @@ and `trace` names the agent in the generation record. Unset, everything is
 `data/claims.jsonl` for the length of the model call, then releases it.
 The bridge planner skips pairs another owner currently holds, and the loop
 skips queued motifs another owner is deepening. Claims expire after an hour
-by default, so a crashed session cannot hold a target forever.
+by default, so a crashed session cannot hold a target forever. If another
+writer resolves the planned pair between planning and execution, the
+pursuit is skipped rather than doubled.
 
 ```bash
 SMC_AGENT=carsten python scripts/run_cli.py pursue --review

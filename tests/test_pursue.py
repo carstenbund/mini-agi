@@ -167,6 +167,19 @@ def test_constructed_edges_are_resolved():
         assert set(plan.targets) != {"p1", "b1"}
 
 
+def test_stale_plan_is_skipped_not_doubled():
+    smc = _bridged_field()
+    plan = plan_bridge(smc)
+    # another writer bridges the pair between planning and execution
+    smc.add_motif(_motif("rival", ["justice", "recursion"], "pursue-rival",
+                         refs=list(plan.targets)))
+    before = len(smc.motifs)
+    result = execute(smc, ThreadManager(smc), plan, model="stub-model")
+    assert result.skipped == "pair resolved since planning"
+    assert result.motif_id is None
+    assert len(smc.motifs) == before  # no capture was made
+
+
 def test_recency_config_passes_through_run_pursuits():
     smc = _bridged_field()
     tm = ThreadManager(smc)
