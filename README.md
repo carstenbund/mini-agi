@@ -358,11 +358,6 @@ together, boosting chunks whose tags overlap the active motifs' symbols.
 
 ## Known gaps
 
-- **Semantic novelty is scored after the motif is already in the field**, so
-  the new motif matches itself and the semantic term is always zero. The
-  remaining terms cannot reach the default `novelty_threshold` of 0.55, so
-  the loop's pursue queue stays empty and deepen pursuits only fire via
-  `pursue --motif`. See `utils/novelty.py` and step 2 of `run_loop_novelty`.
 - The confidence heuristic in `utils/confidence.py` is computed nowhere in
   the current loop; the reviewer has taken over the quality role.
 - `Project-vision.md` predates most of this and its roadmap is stale.
