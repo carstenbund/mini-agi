@@ -56,6 +56,7 @@ def run_exhaust(
     CLI uses it to persist and journal incrementally)."""
     cfg = cfg or {}
     max_pursuits = int(cfg.get("max_pursuits", DEFAULT_MAX_PURSUITS))
+    context_chars = int(cfg.get("context_chars", 2000))
     min_score = float(cfg.get("min_score", DEFAULT_MIN_SCORE))
     patience = int(cfg.get("patience", DEFAULT_PATIENCE))
     novelty_strike = float(cfg.get("novelty_strike", DEFAULT_NOVELTY_STRIKE))
@@ -66,7 +67,8 @@ def run_exhaust(
     while report.fired < max_pursuits:
         analysis = analyze_field(smc)
         plan = plan_bridge(smc, analysis, templates["bridge"],
-                           goal_threads=goal_threads)
+                           goal_threads=goal_threads,
+                           context_chars=context_chars)
         if plan is None or plan.score < min_score:
             report.stop_reason = "settled"
             break

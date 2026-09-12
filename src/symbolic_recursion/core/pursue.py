@@ -165,21 +165,60 @@ def _merge_symbols(a: List[str], b: List[str], per_side: int = 3) -> List[str]:
     return out
 
 
+DEFAULT_CONTEXT_CHARS = 2000
+
+
 def _context_block(
-    smc: SymbolicMemoryCore, graph, seed_ids: List[str], k: int = 5
+    smc: SymbolicMemoryCore, graph, seed_ids: List[str], k: int = 5,
+    max_chars: int = DEFAULT_CONTEXT_CHARS,
 ) -> str:
-    """Structure-driven context: the seeds plus their strongest graph
-    neighbors, rendered through the existing render_context()."""
-    picked, seen = [], set()
+    """Structure-driven context, tiered to teach the topic before asking.
+
+    Tier 1: the seeds (targets), in full within budget — the question's
+            own material.
+    Tier 2: their strongest graph neighbors — the local topic.
+    Tier 3: their threads' hub motifs — each document's axis statement.
+    Tier 4: up to two esteemed exemplars — accepted pursuit syntheses
+            (pursue-* thread, links tied, highest weighted degree) — the
+            field showing the carrier what a good answer looked like.
+
+    ``max_chars`` is the inheritance budget: 2000 keeps the historical
+    lean prompt; a real model with a full window deserves 6000+."""
+    sections: List[tuple] = []   # (motif, score) in priority order
+    seen = set(seed_ids)
     for mid in seed_ids:
-        ranked = [(mid, 1.0)] + sorted(
-            graph.adj.get(mid, {}).items(), key=lambda kv: (-kv[1], kv[0])
-        )
-        for cand, w in ranked:
+        m = smc.get_motif(mid)
+        if m:
+            sections.append((m, 1.0))
+    for mid in seed_ids:
+        for cand, w in sorted(graph.adj.get(mid, {}).items(),
+                              key=lambda kv: (-kv[1], kv[0])):
             if cand not in seen:
                 seen.add(cand)
-                picked.append((smc.get_motif(cand), min(w, 1.0)))
-    return render_context(picked[:k])
+                m = smc.get_motif(cand)
+                if m:
+                    sections.append((m, min(w, 1.0)))
+    # thread hubs: the axis statement of each seed's document
+    for mid in seed_ids:
+        seed = smc.get_motif(mid)
+        if seed is None:
+            continue
+        for m in smc.list_motifs():
+            if m.thread_id == seed.thread_id and m.id.endswith("-hub")                     and m.id not in seen:
+                seen.add(m.id)
+                sections.append((m, 0.5))
+    # esteemed exemplars: accepted pursuit syntheses, most-connected first
+    exemplars = sorted(
+        (m for m in smc.list_motifs()
+         if m.thread_id.startswith("pursue") and m.references
+         and m.id not in seen),
+        key=lambda m: (-graph.weighted_degree(m.id), m.id),
+    )[:2]
+    for m in exemplars:
+        seen.add(m.id)
+        sections.append((m, 0.4))
+    return render_context(sections[: max(k, len(seed_ids) + 8)],
+                          max_chars=max_chars)
 
 
 def _age_hours(smc: SymbolicMemoryCore, motif_id: str, now: datetime) -> float:
@@ -281,6 +320,7 @@ def plan_bridge(
     respect_claims: bool = True,
     goal_threads: Optional[tuple] = None,
     goal_weight: float = 1.0,
+    context_chars: int = DEFAULT_CONTEXT_CHARS,
 ) -> Optional[Pursuit]:
     """Plan a pursuit of the best OPEN, UNCLAIMED surprising connection.
 
@@ -320,7 +360,7 @@ def plan_bridge(
         b_thread=b.thread_id,
         reasons="; ".join(top["reasons"]),
     )
-    ctx = _context_block(smc, analysis["graph"], [a.id, b.id])
+    ctx = _context_block(smc, analysis["graph"], [a.id, b.id], max_chars=context_chars)
     return Pursuit(
         kind="bridge",
         prompt=f"{ctx}\n\n## Task\n{task}{MINT_INSTRUCTION}{_failure_block([a.id, b.id])}",
@@ -336,6 +376,7 @@ def plan_deepen(
     motif_id: str,
     analysis: Optional[dict] = None,
     template: str = DEFAULT_TEMPLATES["deepen"],
+    context_chars: int = DEFAULT_CONTEXT_CHARS,
 ) -> Optional[Pursuit]:
     """Plan a deepening pursuit of one (typically high-novelty) motif."""
     m = smc.get_motif(motif_id)
@@ -348,7 +389,7 @@ def plan_deepen(
         symbols=", ".join(m.symbols),
         thread=m.thread_id,
     )
-    ctx = _context_block(smc, analysis["graph"], [m.id])
+    ctx = _context_block(smc, analysis["graph"], [m.id], max_chars=context_chars)
     return Pursuit(
         kind="deepen",
         prompt=f"{ctx}\n\n## Task\n{task}{MINT_INSTRUCTION}{_failure_block([m.id])}",
@@ -568,11 +609,13 @@ def run_pursuits(
         budget = _debt_budget(smc, analysis, budget, debt_cfg)
 
     half_life = float(cfg.get("recency_half_life_hours", DEFAULT_RECENCY_HALF_LIFE_HOURS))
+    context_chars = int(cfg.get("context_chars", DEFAULT_CONTEXT_CHARS))
     review_cfg = cfg.get("review")
     me = owner or agent_id()
 
     results: List[PursuitResult] = []
-    bridge = plan_bridge(smc, analysis, templates["bridge"], half_life_hours=half_life, owner=me)
+    bridge = plan_bridge(smc, analysis, templates["bridge"], half_life_hours=half_life,
+                         owner=me, context_chars=context_chars)
     if bridge is not None and budget > 0:
         results.append(execute(smc, tm, bridge, model, review_cfg=review_cfg, owner=me))
         budget -= 1
@@ -585,7 +628,8 @@ def run_pursuits(
         if other:
             results.append(PursuitResult(kind="deepen", skipped=f"{mid} claimed by {other}"))
             continue
-        plan = plan_deepen(smc, mid, analysis, templates["deepen"])
+        plan = plan_deepen(smc, mid, analysis, templates["deepen"],
+                           context_chars=context_chars)
         if plan is None:
             results.append(PursuitResult(kind="deepen", skipped=f"unknown motif {mid}"))
             continue

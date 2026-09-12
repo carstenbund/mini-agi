@@ -274,3 +274,19 @@ def test_goal_threads_pull_selection_without_fencing():
     # zero weight is neutral: identical to baseline
     neutral = plan_bridge(smc, now=now, goal_threads=("goal-thread",), goal_weight=0.0)
     assert set(neutral.targets) == set(baseline.targets)
+
+
+def test_context_budget_expands_and_includes_exemplar():
+    smc = _bridged_field()
+    # give the field real bulk so a lean budget actually truncates
+    for m in smc.list_motifs():
+        m.content = (m.content + " — with substantial elaboration text") * 12
+    # an esteemed exemplar: accepted pursuit capture with ties
+    smc.add_motif(_motif("exemplar", ["justice", "recursion"], "pursue-old",
+                         refs=["a1", "b2"]))
+    smc.get_motif("exemplar").content = "EXEMPLAR SYNTHESIS with real grounding"
+    lean = plan_bridge(smc, context_chars=600)
+    rich = plan_bridge(smc, context_chars=8000)
+    assert len(rich.prompt) > len(lean.prompt)
+    assert "EXEMPLAR SYNTHESIS" in rich.prompt   # tier 4 teaching material
+    assert "EXEMPLAR SYNTHESIS" not in lean.prompt  # starved out by the budget

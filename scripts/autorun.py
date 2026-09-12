@@ -107,7 +107,8 @@ def one_cycle(args) -> str:
     report = run_exhaust(
         smc, tm, model=args.model,
         cfg={"max_pursuits": args.max_pursuits, "min_score": args.min_score,
-             "patience": args.patience, "templates": templates},
+             "patience": args.patience, "templates": templates,
+             "context_chars": args.context_chars},
         review_cfg=review_cfg, goal_threads=goal, on_fire=on_fire)
     save_motifs(smc.motifs)
     record_event(smc, {"type": "exhaust-stop", "reason": report.stop_reason,
@@ -153,6 +154,8 @@ def main():
     p.add_argument("--max-pursuits", type=int, default=8)
     p.add_argument("--min-score", type=float, default=0.02)
     p.add_argument("--patience", type=int, default=2)
+    p.add_argument("--context-chars", type=int, default=6000,
+                   help="Context budget per prompt (chars). The library default is a lean 2000; a real model with a full window deserves 6000+.")
     p.add_argument("--templates", help="JSON file of template overrides, e.g. {\"bridge\": \"...\"} — iterate on query specificity without code edits")
     p.add_argument("--interval", type=int, default=0,
                    help="Seconds between cycles; 0 runs once. Use hours — fresh captures must season.")
