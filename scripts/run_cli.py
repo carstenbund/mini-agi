@@ -146,6 +146,59 @@ def cmd_capture(args):
         print("unresolved wiki-links (capture those documents to connect them):",
               ", ".join(unresolved))
 
+def cmd_exhaust(args):
+    from symbolic_recursion.core.exhaust import run_exhaust
+
+    smc = load_smc()
+    if args.stub:
+        from symbolic_recursion.core.model_stub import stub_response
+        import symbolic_recursion.threads.manager as tmgr
+        tmgr.query_ollama = lambda prompt, model=args.model, timeout=None: stub_response(prompt, model, timeout)
+    review_cfg = None
+    if args.review:
+        review_cfg = {"enabled": True}
+        if args.review_model:
+            review_cfg["model"] = args.review_model
+    cfg = {"max_pursuits": args.max_pursuits, "min_score": args.min_score,
+           "patience": args.patience}
+    goal = (args.goal_thread,) if args.goal_thread else None
+
+    def on_fire(result):
+        save_smc(smc)
+        event = {"type": "pursuit", "kind": result.kind,
+                 "motif_id": result.motif_id, "targets": result.targets}
+        if result.review:
+            event["review"] = result.review
+        if result.minted:
+            event["minted"] = result.minted
+        _journal(smc, event)
+        line = f"  fired {result.motif_id} -> {result.targets}"
+        if result.review:
+            line += f" (review: {result.review})"
+        if result.minted:
+            line += f" (minted: {', '.join(result.minted)})"
+        print(line)
+
+    tm = ThreadManager(smc)
+    report = run_exhaust(smc, tm, model=args.model, cfg=cfg,
+                         review_cfg=review_cfg, goal_threads=goal, on_fire=on_fire)
+    save_smc(smc)
+    _journal(smc, {"type": "exhaust-stop", "reason": report.stop_reason,
+                   "fired": report.fired})
+    print(f"exhaust stopped: {report.stop_reason} after {report.fired} pursuit(s)")
+
+def cmd_nursery(args):
+    from symbolic_recursion.utils.calibration import nursery_pass
+
+    smc = load_smc()
+    rows = nursery_pass(smc)
+    if not rows:
+        print("nursery is empty")
+        return
+    for r in rows:
+        extra = f" age={r['age_hours']}h" if "age_hours" in r else                 (f" at {r['at'][:16]}" if "at" in r else "")
+        print(f"  {r['status']:<10} {r['motif']}{extra}")
+
 def cmd_relink(args):
     from symbolic_recursion.documents.capture import apply_relink, relink_pass
 
@@ -323,6 +376,20 @@ def main():
     p_cap.add_argument("--prefix", type=str, help="Motif id prefix (default: slug of title)")
     p_cap.add_argument("--dry-run", action="store_true", help="Print the capture plan, change nothing")
     p_cap.set_defaults(func=cmd_capture)
+
+    p_ex = sub.add_parser("exhaust", help="Pursue until quiescence: settled, diminishing returns, or budget")
+    p_ex.add_argument("--max-pursuits", type=int, default=10)
+    p_ex.add_argument("--min-score", type=float, default=0.02, help="Stop when no open seam scores above this (damped)")
+    p_ex.add_argument("--patience", type=int, default=2, help="Consecutive weak captures before diminishing-returns stop")
+    p_ex.add_argument("--model", type=str, default="llama3:instruct")
+    p_ex.add_argument("--stub", action="store_true", help="Deterministic stub model (no Ollama)")
+    p_ex.add_argument("--review", action="store_true")
+    p_ex.add_argument("--review-model", type=str)
+    p_ex.add_argument("--goal-thread", type=str)
+    p_ex.set_defaults(func=cmd_exhaust)
+
+    p_nu = sub.add_parser("nursery", help="Review nursery custody: graduate bound residents, flag stale ones")
+    p_nu.set_defaults(func=cmd_nursery)
 
     p_rl = sub.add_parser("relink", help="Resolve wiki-links left dangling by out-of-order captures")
     p_rl.add_argument("--thread", type=str, help="Limit the pass to one thread")

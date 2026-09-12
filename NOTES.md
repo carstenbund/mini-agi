@@ -23,6 +23,16 @@ Landed on main. See README "Running from several sessions".
 can tell us apart. Concurrent saves are safe; concurrent pursuits of the
 same pair are prevented while the claim is held.
 
+## 2026-09-12 — DONE: exhaust, calibration/nursery, weave debt, minting (session fable5-main)
+
+- `core/exhaust.py`: run-until-quiescence with three stop reasons; CLI `exhaust`.
+- `utils/calibration.py`: banded novelty profile + nursery (custody at
+  admission) + cold-start floor; loop-gated via `"calibration"`; CLI `nursery`.
+- Weave Debt budget in `run_pursuits` (`"debt"` config) — implements the
+  field's own self-proposal (motif 310598cf, review-accepted).
+- Symbol minting in `_execute_claimed`: SYMBOLS line parsed, validated,
+  applied only when links are tied; visible in flow + journal.
+
 ## Open follow-ups (unclaimed)
 
 - The `bc` (book-coherence) note was captured before the `0a` document, so

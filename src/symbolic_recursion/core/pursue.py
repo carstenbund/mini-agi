@@ -69,6 +69,38 @@ DEFAULT_TEMPLATES: Dict[str, str] = {
 DEFAULT_SPEC_THREADS = ("inherited-judgment",)
 
 
+MINT_INSTRUCTION = (
+    "\n\nIf your synthesis names a distinction not already in the context "
+    "vocabulary, end with one line: SYMBOLS: word, word (at most three; "
+    "single words or hyphenated, lowercase)."
+)
+
+_MINT_RE = None  # compiled lazily in _parse_minted
+
+
+def _parse_minted(response: str, existing: List[str], cap: int = 3) -> List[str]:
+    """Validated symbol minting: parse a trailing ``SYMBOLS:`` line, keep
+    only well-formed, genuinely new symbols. The license for expansion —
+    a capture may open vocabulary its parents did not carry."""
+    global _MINT_RE
+    import re
+    if _MINT_RE is None:
+        _MINT_RE = re.compile(r"^SYMBOLS:\s*(.+)$", re.MULTILINE)
+    m = _MINT_RE.search(response or "")
+    if not m:
+        return []
+    have = {s.strip().lower() for s in existing}
+    out: List[str] = []
+    for raw in m.group(1).split(","):
+        sym = raw.strip().lower()
+        if re.fullmatch(r"[a-z][a-z0-9-]{2,23}", sym) and sym not in have:
+            have.add(sym)
+            out.append(sym)
+        if len(out) >= cap:
+            break
+    return out
+
+
 @dataclass
 class Pursuit:
     """A planned pursuit: everything but the model response."""
@@ -77,6 +109,7 @@ class Pursuit:
     symbols: List[str]
     targets: List[str]          # motif ids the new capture will link to
     thread_name: str
+    score: float = 0.0          # damped selection score (bridge only)
 
 
 @dataclass
@@ -88,6 +121,7 @@ class PursuitResult:
     skipped: Optional[str] = None  # reason, when nothing fired
     review: Optional[str] = None   # "accept" | "revise" | "reject" when reviewed
     review_evidence: str = ""
+    minted: List[str] = field(default_factory=list)  # symbols the capture opened
     owner: str = ""                # agent id that fired it
 
 
@@ -245,6 +279,7 @@ def plan_bridge(
         key = (-damped, s["a"], s["b"])
         if best_key is None or key < best_key:
             best, best_key = s, key
+            best_damped = damped
     if best is None:
         return None
     top = best
@@ -259,10 +294,11 @@ def plan_bridge(
     ctx = _context_block(smc, analysis["graph"], [a.id, b.id])
     return Pursuit(
         kind="bridge",
-        prompt=f"{ctx}\n\n## Task\n{task}{_failure_block([a.id, b.id])}",
+        prompt=f"{ctx}\n\n## Task\n{task}{MINT_INSTRUCTION}{_failure_block([a.id, b.id])}",
         symbols=_merge_symbols(a.symbols, b.symbols),
         targets=[a.id, b.id],
         thread_name=f"pursue-bridge-{a.id[:8]}-{b.id[:8]}",
+        score=best_damped,
     )
 
 
@@ -286,7 +322,7 @@ def plan_deepen(
     ctx = _context_block(smc, analysis["graph"], [m.id])
     return Pursuit(
         kind="deepen",
-        prompt=f"{ctx}\n\n## Task\n{task}{_failure_block([m.id])}",
+        prompt=f"{ctx}\n\n## Task\n{task}{MINT_INSTRUCTION}{_failure_block([m.id])}",
         symbols=list(m.symbols),
         targets=[m.id],
         thread_name=f"pursue-deepen-{m.id[:8]}",
@@ -355,7 +391,7 @@ def plan_self(
     ctx = _context_block(smc, g, [spec.id])
     return Pursuit(
         kind="self",
-        prompt=f"{ctx}\n\n{telemetry}\n\n## Task\n{task}{_failure_block([spec.id])}",
+        prompt=f"{ctx}\n\n{telemetry}\n\n## Task\n{task}{MINT_INSTRUCTION}{_failure_block([spec.id])}",
         symbols=list(spec.symbols) + ["proposal"],
         targets=[spec.id],
         thread_name=f"pursue-self-{spec.id[:12]}",
@@ -414,14 +450,20 @@ def _execute_claimed(smc, tm, pursuit, model, review_cfg, me) -> PursuitResult:
             query_fn=review_cfg.get("query_fn"),
         )
 
+    minted: List[str] = []
     if review is None or review.verdict == "accept":
         for target in pursuit.targets:
             smc.link_motifs(m.id, target)
+        minted = _parse_minted(resp, pursuit.symbols)
+        if minted:
+            m.symbols = list(pursuit.symbols) + minted
 
     from symbolic_recursion.core.flow import record_flow
     entry = {"kind": pursuit.kind, "thread": pursuit.thread_name, "agent": me,
              "model": model, "motif_id": m.id, "targets": pursuit.targets,
              "prompt": pursuit.prompt, "response": resp}
+    if minted:
+        entry["minted"] = minted
     if review is not None:
         entry["review"] = {"verdict": review.verdict, "evidence": review.evidence,
                            "prediction": review.prediction, "reviewer_agent": me}
@@ -433,8 +475,26 @@ def _execute_claimed(smc, tm, pursuit, model, review_cfg, me) -> PursuitResult:
         thread_name=pursuit.thread_name,
         review=(review.verdict if review else None),
         review_evidence=(review.evidence if review else ""),
+        minted=minted,
         owner=me,
     )
+
+
+def _debt_budget(smc: SymbolicMemoryCore, analysis: dict,
+                 base_budget: int, debt_cfg: dict) -> int:
+    """Weave Debt: scale the cycle budget with the growth of the
+    open-surprise frontier since the last journaled event. The debt
+    signal already exists in the trajectory journal; this is only the
+    budget arithmetic the field's self-proposal asked for."""
+    import math
+    from symbolic_recursion.graph.trajectory import _open_surprises, load_events
+    current = _open_surprises(smc, analysis)
+    events = load_events()
+    previous = events[-1].get("open_surprises", current) if events else current
+    growth = max(0, current - previous)
+    factor = float(debt_cfg.get("factor", 0.05))
+    rail = int(debt_cfg.get("max_budget", 5))
+    return max(base_budget, min(rail, math.ceil(factor * growth)))
 
 
 def run_pursuits(
@@ -454,6 +514,13 @@ def run_pursuits(
       templates      {kind: template} overrides, merged over defaults
       recency_half_life_hours  float, default 24 — fresh edges must season
                      before they can be pursued (see _recency_factor)
+      debt           {"enabled": bool, "factor": float, "max_budget": int} —
+                     the Weave Debt budget (the field's own proposal):
+                     when the open-surprise frontier grew since the last
+                     journaled event, the cycle budget scales with the
+                     growth (budget = max(max_per_cycle, ceil(factor *
+                     growth)), capped by max_budget). Judgment bandwidth
+                     tracks the exception frontier.
 
     Fires at most one bridge (top surprise), then deepens motifs from the
     queue until the per-cycle budget is spent. The queue is consumed
@@ -466,6 +533,10 @@ def run_pursuits(
     templates = {**DEFAULT_TEMPLATES, **cfg.get("templates", {})}
     if analysis is None:
         analysis = analyze_field(smc)
+
+    debt_cfg = cfg.get("debt", {})
+    if debt_cfg.get("enabled", False):
+        budget = _debt_budget(smc, analysis, budget, debt_cfg)
 
     half_life = float(cfg.get("recency_half_life_hours", DEFAULT_RECENCY_HALF_LIFE_HOURS))
     review_cfg = cfg.get("review")

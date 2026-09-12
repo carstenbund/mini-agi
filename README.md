@@ -187,6 +187,34 @@ crossing communities (+1 for a shared-symbol edge), +1 for crossing threads,
 up to +1 for symbol disjointness, +0.5 for a peripheral motif reaching a hub.
 Library API: `symbolic_recursion.graph.analyze_field(smc)` / `render_report(smc)`.
 
+## Exhaust loop, calibration, and symbol minting
+
+**Exhaust** (`exhaust`): pursue until the field says stop — `settled` (no
+open seam above `--min-score`), `diminishing-returns` (`--patience`
+consecutive weak captures: review reject/revise or novelty below the strike
+threshold), or `budget` (`--max-pursuits`, the hard rail). Each firing
+re-reads the field, so selection migrates as captures land. Journaled per
+firing plus a final `exhaust-stop` event.
+
+**Calibration** (loop config `"calibration": {"enabled": true}`): replaces
+the scalar novelty gate with the banded profile — `redundant` (skip),
+`band` (queue for deepen), `unbound` (into the NURSERY: marginal custody at
+admission; `nursery` reviews custody — residents graduate when the field
+binds to them, go stale after a week, are never silently deleted), `seed`
+(cold-start floor: below 15 motifs nothing is gated).
+
+**Weave Debt** (pursue config `"debt": {"enabled": true, "factor": 0.05,
+"max_budget": 5}`): the field's own self-proposal — the per-cycle pursuit
+budget scales with the growth of the open-surprise frontier since the last
+journaled event. Judgment bandwidth tracks the exception frontier.
+
+**Symbol minting**: pursuit prompts invite a trailing `SYMBOLS:` line
+proposing up to three new symbols. Minted only when the capture's links are
+tied (review accept, or unreviewed), validated (`[a-z][a-z0-9-]{2,23}`,
+genuinely new), recorded in the flow ledger and journal so the trajectory
+panel can watch the expansion — minting is the license for opening new
+territory, and also the door to fragmentation.
+
 ## Pursue step
 
 Motifs initiating their own follow-up exploration. You supply the epistemic

@@ -85,8 +85,19 @@ def run(cfg_path: str):
             entry = {"id": mid, **n, "linked": linked_any}
             cycle_log["new_motifs"].append(entry)
 
-            # pursuit decision
-            if n["novelty_index"] >= novelty_threshold:
+            # pursuit decision — banded profile when calibration is on,
+            # scalar threshold otherwise
+            cal_cfg = cfg.get("calibration", {})
+            if cal_cfg.get("enabled", False):
+                from symbolic_recursion.utils.calibration import (
+                    novelty_profile, nursery_enter)
+                prof = novelty_profile(smc, m)
+                entry["profile"] = prof
+                if prof["verdict"] in ("band", "seed"):
+                    pursue_queue.append(mid)
+                elif prof["verdict"] == "unbound":
+                    nursery_enter(smc, mid)
+            elif n["novelty_index"] >= novelty_threshold:
                 pursue_queue.append(mid)
 
         # 3) Pursue (opt-in): consume intentions — bridge the top surprise,
