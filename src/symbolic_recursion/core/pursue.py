@@ -222,7 +222,16 @@ def execute(
     read by the reviewer BEFORE the strings are tied: links to the
     targets are made only on ``accept``. The card stays in the field and
     the flow ledger either way; a rejected bridge leaves the surprise
-    unresolved — an open question for a better attempt."""
+    unresolved — an open question for a better attempt.
+
+    Stale-plan guard: on a shared field another writer may bridge the
+    planned pair between planning and execution. A bridge whose pair is
+    already resolved is skipped rather than doubled."""
+    if pursuit.kind == "bridge" and len(pursuit.targets) == 2 \
+            and _is_resolved(smc, pursuit.targets[0], pursuit.targets[1]):
+        return PursuitResult(kind=pursuit.kind, targets=list(pursuit.targets),
+                             thread_name=pursuit.thread_name,
+                             skipped="pair resolved since planning")
     thread = tm.new_thread(pursuit.thread_name, model=model)
     resp = thread.ask(pursuit.prompt)
     m = tm.capture_as_motif(thread, pursuit.symbols, resp)
