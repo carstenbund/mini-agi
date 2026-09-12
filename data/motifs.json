@@ -657,5 +657,25 @@
     "history": [],
     "created_at": "2026-09-12T10:32:48.631804",
     "updated_at": "2026-09-12T10:32:48.631805"
+  },
+  "f1252c28-e584-4c5e-be85-cfa64bba241b": {
+    "id": "f1252c28-e584-4c5e-be85-cfa64bba241b",
+    "symbols": [
+      "causality",
+      "assignment",
+      "inheritance",
+      "manager",
+      "stewardship",
+      "regulation"
+    ],
+    "content": "Marginal Custody \u2014 the binding abstraction.\n\nThe manager premise and the takeover correction are the same claim at two\nscales. The manager does not author the organism; it assumes custody of a\nrunning system and regulates at the margin. The causal reasoner does not\nauthor its assignments; it takes over a compiled graph and redefines a\nlittle, from one level up, with faculties the inheritance supplied.\n\nGeneralized: ALL GOVERNANCE IS MARGINAL EDITING OF INHERITED RUNTIME.\nNo governing function \u2014 manager, reasoner, group recogniser, institution \u2014\never starts its system; each awakens inside one already moving, which is\nwhy responsibility is always retroactive and why authorship is the\ncharacteristic illusion of every governing layer (fantasy autonomy at the\norganism scale, perceived causation at the assignment scale).\n\nThe two failure modes of Layer 0 map exactly onto assignment: moralism is\nblaming the carrier for the inherited graph; fantasy autonomy is the carrier\nmistaking takeover for authorship. And the projection ceiling (revise the\nrule, not the apparatus) is the invariant of provisional authority read\ncognitively: custody is borrowed, and the terms of custody \u2014 what counts as\na reason \u2014 are part of what is borrowed.\n\nTestable prediction: framing responsibility as custodial (you maintain and\nmay amend a running arrangement) versus authorial (you chose this) should\nshift blame-attribution and repair behavior measurably \u2014 custodial framing\nincreasing willingness to revise inherited rules while decreasing punitive\nresponse to inherited outcomes.",
+    "thread_id": "pursue-bridge-0d-takeo-stw-prem",
+    "references": [
+      "0d-takeover",
+      "stw-premise"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T10:42:11.004146",
+    "updated_at": "2026-09-12T10:42:11.004147"
   }
 }
