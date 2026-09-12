@@ -49,6 +49,10 @@ def load_smc() -> SymbolicMemoryCore:
     smc.motifs = load_motifs()
     return smc
 
+def _journal(smc, event: dict) -> None:
+    from symbolic_recursion.graph.trajectory import record_event
+    record_event(smc, event)
+
 def save_smc(smc: SymbolicMemoryCore) -> None:
     save_motifs(smc.motifs)
 
@@ -62,6 +66,7 @@ def cmd_add(args):
     )
     smc.add_motif(m)
     save_smc(smc)
+    _journal(smc, {"type": "capture", "motif_id": m.id, "via": "add"})
     print("Added motif:", m.id)
 
 def cmd_list(args):
@@ -73,6 +78,8 @@ def cmd_link(args):
     smc = load_smc()
     ok = smc.link_motifs(args.a, args.b)
     save_smc(smc)
+    if ok:
+        _journal(smc, {"type": "link", "a": args.a, "b": args.b})
     print("Linked." if ok else "Link failed (check IDs).")
 
 def cmd_query(args):
@@ -103,12 +110,24 @@ def cmd_chat(args):
     if args.capture:
         m = tm.capture_as_motif(thread=t, symbols=[s.strip() for s in args.capture.split(",")], content=resp)
         save_smc(smc)
+        _journal(smc, {"type": "capture", "motif_id": m.id, "via": "chat"})
         print("Captured motif:", m.id)
     print("--- Response ---")
     print(resp)
 
 def cmd_report(args):
     from symbolic_recursion.graph import analyze_field, render_report
+
+    if args.trajectory:
+        from symbolic_recursion.graph.trajectory import load_events, render_trajectory
+        out = render_trajectory(load_events(), window=args.window)
+        if args.out:
+            with open(args.out, "w", encoding="utf-8") as f:
+                f.write(out)
+            print("Trajectory written to", args.out)
+        else:
+            print(out, end="")
+        return
 
     smc = load_smc()
     analysis = analyze_field(
@@ -123,6 +142,36 @@ def cmd_report(args):
         print("Report written to", args.out)
     else:
         print(report, end="")
+
+def cmd_pursue(args):
+    from symbolic_recursion.core.pursue import plan_bridge, plan_deepen, execute
+
+    smc = load_smc()
+    if args.motif:
+        plan = plan_deepen(smc, args.motif)
+        missing = f"motif {args.motif} not found"
+    else:
+        plan = plan_bridge(smc)
+        missing = "no surprising cross-community connection to pursue"
+    if plan is None:
+        print(missing)
+        return
+    print(f"[{plan.kind}] thread={plan.thread_name} targets={plan.targets}")
+    if args.dry_run:
+        print("--- prompt the model would receive ---")
+        print(plan.prompt)
+        return
+    if args.stub:
+        import symbolic_recursion.core.ollama_interface as oi
+        from symbolic_recursion.core.model_stub import stub_response
+        import symbolic_recursion.threads.manager as tmgr
+        tmgr.query_ollama = lambda prompt, model=args.model, timeout=None: stub_response(prompt, model, timeout)
+    tm = ThreadManager(smc)
+    result = execute(smc, tm, plan, model=args.model)
+    save_smc(smc)
+    _journal(smc, {"type": "pursuit", "kind": result.kind,
+                   "motif_id": result.motif_id, "targets": result.targets})
+    print(f"captured {result.motif_id} linked -> {result.targets}")
 
 def main():
     p = argparse.ArgumentParser(description="Symbolic Memory Core CLI")
@@ -165,10 +214,19 @@ def main():
     p_chat.add_argument("--capture", type=str, help="Comma-separated symbols to store result as motif")
     p_chat.set_defaults(func=cmd_chat)
 
+    p_pur = sub.add_parser("pursue", help="Fire one pursuit: bridge the top surprise, or deepen a motif")
+    p_pur.add_argument("--motif", type=str, help="Motif id to deepen (default: bridge the top surprise)")
+    p_pur.add_argument("--model", type=str, default="llama3:instruct")
+    p_pur.add_argument("--stub", action="store_true", help="Use the deterministic model stub (no Ollama)")
+    p_pur.add_argument("--dry-run", action="store_true", help="Print the assembled prompt, change nothing")
+    p_pur.set_defaults(func=cmd_pursue)
+
     p_rep = sub.add_parser("report", help="Motif field report: communities, god motifs, surprises")
     p_rep.add_argument("--out", type=str, help="Write markdown to this path instead of stdout")
     p_rep.add_argument("--resolution", type=float, default=1.0, help=">1.0 more/smaller communities")
     p_rep.add_argument("--no-symbol-edges", action="store_true", help="Use only explicit references")
+    p_rep.add_argument("--trajectory", action="store_true", help="Render the trajectory panel instead of the field report")
+    p_rep.add_argument("--window", type=int, default=8, help="Trajectory window (events)")
     p_rep.set_defaults(func=cmd_report)
 
     args = p.parse_args()

@@ -5,6 +5,10 @@
   "novelty_threshold": 0.55,
   "low_confidence_threshold": 0.40,
   "cycles": 2,
+  "pursue": {
+    "enabled": false,
+    "max_per_cycle": 1
+  },
   "prompts": [
     {
       "name": "justice-taxonomy",

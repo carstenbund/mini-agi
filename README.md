@@ -83,6 +83,38 @@ field cluster even before many explicit links exist; explicit references always
 outweigh them. Disable with `--no-symbol-edges`. Library API:
 `symbolic_recursion.graph.analyze_field(smc)` / `render_report(smc)`.
 
+## Pursue Step
+
+Motifs initiating their own follow-up exploration — the consumer of the
+novelty loop's `pursue_queue` and of the field report's surprising
+connections. You supply the epistemic move once as a template; the field
+fills in the specifics (motifs, symbols, threads, context) per firing.
+
+```bash
+python scripts/run_cli.py pursue --dry-run          # show the prompt for the top surprise
+python scripts/run_cli.py pursue                    # bridge pursuit via Ollama
+python scripts/run_cli.py pursue --motif <id>       # deepen one motif
+python scripts/run_cli.py pursue --stub             # deterministic stub model (no Ollama)
+```
+
+In the novelty loop, enable per scenario (off by default):
+
+```json
+"pursue": { "enabled": true, "max_per_cycle": 1,
+            "templates": { "bridge": "...{a_symbols}...{b_symbols}..." } }
+```
+
+Bridge templates may use `{a_symbols} {b_symbols} {a_thread} {b_thread}
+{reasons}`; deepen templates `{content} {symbols} {thread}`. Captures go
+through the normal ask → capture → link path and land in a new
+`pursue-*` thread, linked to their target motifs.
+
+Target selection explores the frontier, not its own tail: surprises are
+damped by the age of their younger endpoint (`recency_half_life_hours`,
+default 24 — a fresh edge must season before it can be pursued), and
+pairs already bridged by a capture referencing both endpoints are
+skipped as resolved.
+
 ## Experiments
 
 The novelty harness generates motifs with an LLM and scores semantic novelty.

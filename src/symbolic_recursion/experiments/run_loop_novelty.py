@@ -85,7 +85,23 @@ def run(cfg_path: str):
             if n["novelty_index"] >= novelty_threshold:
                 pursue_queue.append(mid)
 
-        # 3) Metrics + state
+        # 3) Pursue (opt-in): consume intentions — bridge the top surprise,
+        # deepen queued high-novelty motifs — before metrics, so metrics
+        # reflect the post-pursuit field.
+        pursue_cfg = cfg.get("pursue", {})
+        if pursue_cfg.get("enabled", False):
+            from symbolic_recursion.core.pursue import run_pursuits
+            pursued = run_pursuits(smc, tm, pursue_queue, cfg=pursue_cfg, model=model)
+            for r in pursued:
+                if r.motif_id and router:
+                    router.add_motif(smc, smc.get_motif(r.motif_id))
+            cycle_log["pursuits"] = [
+                {"kind": r.kind, "motif_id": r.motif_id,
+                 "targets": r.targets, "skipped": r.skipped}
+                for r in pursued
+            ]
+
+        # 4) Metrics + state
         g = graph_stats(smc)
         s = semantic_stats(smc, prev_centroid=state.get("prev_centroid", {}))
         cycle_log.update({
@@ -103,10 +119,14 @@ def run(cfg_path: str):
         LOGS_DIR.mkdir(parents=True, exist_ok=True)
         json.dump(cycle_log, open(LOGS_DIR / f"novelty_cycle_{t}.json", "w"), indent=2)
 
-        # 4) Persist
+        # 5) Persist + journal
         state["prev_centroid"] = s["centroid"]
         _save_state(state)
         save_motifs(smc.motifs)
+        from symbolic_recursion.graph.trajectory import record_event
+        record_event(smc, {"type": "cycle", "cycle": t,
+                           "captures": len(new_ids),
+                           "pursuits": len(cycle_log.get("pursuits", []))})
 
         print(f"[cycle {t}] V={int(g['V'])} nov_candidates={len(pursue_queue)} "
               f"rec={g['recurrence_rate']:.2f} lcc={g['lcc_fraction']:.2f} "
