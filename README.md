@@ -77,6 +77,25 @@ Persisted state lives under `data/`:
 | `motif_report.md` | last rendered field report |
 | `chroma/` | Chroma persistence, when that router is used |
 
+## Autonomous run
+
+Fresh clone, one command, an Ollama port — no dependencies beyond the
+standard library:
+
+```bash
+git clone <repo> && cd mini-agi
+python3 scripts/autorun.py --host 127.0.0.1:11434 --model llama3:instruct
+```
+
+One cycle: preflight (model present?) -> exhaust (pursue until settled /
+diminishing-returns / budget, reviewer gating every link) -> optional
+`--self` (the field proposes its own revision) -> nursery review ->
+report. `--review-model` gives the reviewer a second opinion;
+`--goal-thread` pulls selection toward a program; `--interval 7200`
+repeats every two hours (use hours: fresh captures must season before
+they can be pursued). Everything lands in the ledgers; inspect any
+capture with `python3 scripts/run_cli.py trace <id>`.
+
 ## Installation
 
 ```bash
