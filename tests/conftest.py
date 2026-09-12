@@ -15,6 +15,9 @@ def _isolate_ledgers(monkeypatch, tmp_path):
     monkeypatch.setenv("SMC_FLOW_PATH", str(tmp_path / "flow.jsonl"))
     monkeypatch.setenv("SMC_TRAJECTORY_PATH", str(tmp_path / "trajectory.jsonl"))
     monkeypatch.setenv("SMC_DOC_REGISTRY", str(tmp_path / "doc_registry.json"))
+    monkeypatch.setenv("SMC_DATA_PATH", str(tmp_path / "motifs.json"))
+    monkeypatch.setenv("SMC_CLAIMS_PATH", str(tmp_path / "claims.jsonl"))
+    monkeypatch.setenv("SMC_AGENT", "test-agent")
 
 
 def _motif(mid: str, symbols, content: str) -> MotifNode:

@@ -6,6 +6,7 @@ from symbolic_recursion.core.storage import save_motifs, load_motifs
 from symbolic_recursion.core.router import rank_similar, suggest_links
 from symbolic_recursion.threads.manager import ThreadManager
 from symbolic_recursion.utils.id_gen import generate_id
+from symbolic_recursion.core.agent import agent_id
 
 
 def _init_router(kind: str, smc: SymbolicMemoryCore):
@@ -62,7 +63,8 @@ def cmd_add(args):
         id=generate_id(),
         symbols=[s.strip() for s in args.symbols.split(",")] if args.symbols else [],
         content=args.content,
-        thread_id=args.thread
+        thread_id=args.thread,
+        agent=agent_id(),
     )
     smc.add_motif(m)
     save_smc(smc)
@@ -144,6 +146,21 @@ def cmd_capture(args):
         print("unresolved wiki-links (capture those documents to connect them):",
               ", ".join(unresolved))
 
+def cmd_claims(args):
+    from symbolic_recursion.core.claims import active_claims, release
+
+    if args.release:
+        release(args.kind, args.release, agent_id())
+        print(f"released {args.kind} {args.release} for {agent_id()}")
+        return
+    active = active_claims()
+    if not active:
+        print("no active claims")
+        return
+    print(f"{'kind':<8} {'owner':<16} {'expires':<20} key")
+    for (kind, key), r in sorted(active.items(), key=lambda kv: kv[1]["ts"]):
+        print(f"{kind:<8} {r['owner']:<16} {r['expires'][:19]:<20} {key}")
+
 def cmd_trace(args):
     from symbolic_recursion.core.flow import render_trace
 
@@ -187,11 +204,11 @@ def cmd_pursue(args):
         missing = f"motif {args.motif} not found"
     else:
         plan = plan_bridge(smc)
-        missing = "no surprising cross-community connection to pursue"
+        missing = "no open, unclaimed surprising cross-community connection to pursue"
     if plan is None:
         print(missing)
         return
-    print(f"[{plan.kind}] thread={plan.thread_name} targets={plan.targets}")
+    print(f"[{plan.kind}] thread={plan.thread_name} targets={plan.targets} owner={agent_id()}")
     if args.dry_run:
         print("--- prompt the model would receive ---")
         print(plan.prompt)
@@ -278,6 +295,11 @@ def main():
     p_cap.add_argument("--prefix", type=str, help="Motif id prefix (default: slug of title)")
     p_cap.add_argument("--dry-run", action="store_true", help="Print the capture plan, change nothing")
     p_cap.set_defaults(func=cmd_capture)
+
+    p_cl = sub.add_parser("claims", help="List active pursuit claims (who is working on what)")
+    p_cl.add_argument("--release", type=str, metavar="KEY", help="Release this session's claim on KEY")
+    p_cl.add_argument("--kind", type=str, default="bridge", help="Claim kind for --release (bridge|deepen)")
+    p_cl.set_defaults(func=cmd_claims)
 
     p_tr = sub.add_parser("trace", help="Show the flow of text around one motif (prompt, response, lineage)")
     p_tr.add_argument("motif_id", type=str)

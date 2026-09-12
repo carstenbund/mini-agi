@@ -29,6 +29,10 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, List, Optional
 
+from symbolic_recursion.core.agent import agent_id
+from symbolic_recursion.core.claims import (
+    DEFAULT_TTL_HOURS, active_claims, claim, claimed_by_other, release, target_key,
+)
 from symbolic_recursion.core.motif import SymbolicMemoryCore
 from symbolic_recursion.graph import analyze_field
 from symbolic_recursion.utils.context import render_context
@@ -70,6 +74,7 @@ class PursuitResult:
     skipped: Optional[str] = None  # reason, when nothing fired
     review: Optional[str] = None   # "accept" | "revise" | "reject" when reviewed
     review_evidence: str = ""
+    owner: str = ""                # agent id that fired it
 
 
 def _merge_symbols(a: List[str], b: List[str], per_side: int = 3) -> List[str]:
@@ -146,18 +151,25 @@ def plan_bridge(
     template: str = DEFAULT_TEMPLATES["bridge"],
     half_life_hours: float = DEFAULT_RECENCY_HALF_LIFE_HOURS,
     now: Optional[datetime] = None,
+    owner: Optional[str] = None,
+    respect_claims: bool = True,
 ) -> Optional[Pursuit]:
-    """Plan a pursuit of the best OPEN surprising connection.
+    """Plan a pursuit of the best OPEN, UNCLAIMED surprising connection.
 
     Selection = raw surprise score x recency factor, skipping resolved
-    pairs. None if the field has no open surprise to offer."""
+    pairs and pairs another owner currently holds a claim on (see
+    ``core.claims``). None if the field has no open surprise to offer."""
     if analysis is None:
         analysis = analyze_field(smc)
     if now is None:
         now = datetime.utcnow()
+    me = owner or agent_id()
+    active = active_claims(now) if respect_claims else {}
     best, best_key = None, None
     for s in analysis["surprises"]:
         if _is_resolved(smc, s["a"], s["b"]):
+            continue
+        if claimed_by_other("bridge", target_key([s["a"], s["b"]]), me, active=active):
             continue
         damped = s["score"] * _recency_factor(smc, s["a"], s["b"], now, half_life_hours)
         key = (-damped, s["a"], s["b"])
@@ -214,15 +226,32 @@ def plan_deepen(
 def execute(
     smc: SymbolicMemoryCore, tm, pursuit: Pursuit, model: str,
     review_cfg: Optional[dict] = None,
+    owner: Optional[str] = None,
+    claim_ttl_hours: float = DEFAULT_TTL_HOURS,
 ) -> PursuitResult:
     """Fire a planned pursuit through the existing ask -> capture -> link
     path. ``tm`` is a threads.manager.ThreadManager.
+
+    The owner claims the target for the duration of the model call
+    (``core.claims``) so a concurrent session's planner skips it, and
+    releases the claim when done — a rejected pair is immediately open
+    for another attempt.
 
     With ``review_cfg = {"enabled": True, "model": ...}`` the capture is
     read by the reviewer BEFORE the strings are tied: links to the
     targets are made only on ``accept``. The card stays in the field and
     the flow ledger either way; a rejected bridge leaves the surprise
     unresolved — an open question for a better attempt."""
+    me = owner or agent_id()
+    key = target_key(pursuit.targets)
+    claim(pursuit.kind, key, me, ttl_hours=claim_ttl_hours)
+    try:
+        return _execute_claimed(smc, tm, pursuit, model, review_cfg, me)
+    finally:
+        release(pursuit.kind, key, me)
+
+
+def _execute_claimed(smc, tm, pursuit, model, review_cfg, me) -> PursuitResult:
     thread = tm.new_thread(pursuit.thread_name, model=model)
     resp = thread.ask(pursuit.prompt)
     m = tm.capture_as_motif(thread, pursuit.symbols, resp)
@@ -241,12 +270,12 @@ def execute(
             smc.link_motifs(m.id, target)
 
     from symbolic_recursion.core.flow import record_flow
-    entry = {"kind": pursuit.kind, "thread": pursuit.thread_name,
+    entry = {"kind": pursuit.kind, "thread": pursuit.thread_name, "agent": me,
              "model": model, "motif_id": m.id, "targets": pursuit.targets,
              "prompt": pursuit.prompt, "response": resp}
     if review is not None:
         entry["review"] = {"verdict": review.verdict, "evidence": review.evidence,
-                           "prediction": review.prediction}
+                           "prediction": review.prediction, "reviewer_agent": me}
     record_flow(entry)
     return PursuitResult(
         kind=pursuit.kind,
@@ -255,6 +284,7 @@ def execute(
         thread_name=pursuit.thread_name,
         review=(review.verdict if review else None),
         review_evidence=(review.evidence if review else ""),
+        owner=me,
     )
 
 
@@ -265,6 +295,7 @@ def run_pursuits(
     cfg: Optional[dict] = None,
     model: str = "llama3:instruct",
     analysis: Optional[dict] = None,
+    owner: Optional[str] = None,
 ) -> List[PursuitResult]:
     """Consume pursuit intentions for one cycle.
 
@@ -289,21 +320,26 @@ def run_pursuits(
 
     half_life = float(cfg.get("recency_half_life_hours", DEFAULT_RECENCY_HALF_LIFE_HOURS))
     review_cfg = cfg.get("review")
+    me = owner or agent_id()
 
     results: List[PursuitResult] = []
-    bridge = plan_bridge(smc, analysis, templates["bridge"], half_life_hours=half_life)
+    bridge = plan_bridge(smc, analysis, templates["bridge"], half_life_hours=half_life, owner=me)
     if bridge is not None and budget > 0:
-        results.append(execute(smc, tm, bridge, model, review_cfg=review_cfg))
+        results.append(execute(smc, tm, bridge, model, review_cfg=review_cfg, owner=me))
         budget -= 1
     else:
-        results.append(PursuitResult(kind="bridge", skipped="no surprising connection"))
+        results.append(PursuitResult(kind="bridge", skipped="no open, unclaimed surprising connection"))
 
     while budget > 0 and pursue_queue:
         mid = pursue_queue.pop(0)
+        other = claimed_by_other("deepen", mid, me)
+        if other:
+            results.append(PursuitResult(kind="deepen", skipped=f"{mid} claimed by {other}"))
+            continue
         plan = plan_deepen(smc, mid, analysis, templates["deepen"])
         if plan is None:
             results.append(PursuitResult(kind="deepen", skipped=f"unknown motif {mid}"))
             continue
-        results.append(execute(smc, tm, plan, model, review_cfg=review_cfg))
+        results.append(execute(smc, tm, plan, model, review_cfg=review_cfg, owner=me))
         budget -= 1
     return results

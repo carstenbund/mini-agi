@@ -29,6 +29,7 @@ import os
 from datetime import datetime
 from typing import Dict, List, Optional
 
+from symbolic_recursion.core.agent import agent_id
 from symbolic_recursion.core.motif import SymbolicMemoryCore
 from symbolic_recursion.graph.analytics import analyze_field
 
@@ -77,6 +78,7 @@ def record_event(
         )
     line = {
         "ts": (now or datetime.utcnow()).isoformat(),
+        "agent": agent_id(),
         "event": event,
         "metrics": analysis["metrics"],
         "open_surprises": _open_surprises(smc, analysis),
@@ -179,8 +181,8 @@ def render_trajectory(events: List[Dict], window: int = 8) -> str:
     lines += [
         f"{len(events)} events journaled; showing last {len(recent)}.",
         "",
-        "| ts | event | motifs | refs | communities | binding | open surprises |",
-        "|---|---|---|---|---|---|---|",
+        "| ts | agent | event | motifs | refs | communities | binding | open surprises |",
+        "|---|---|---|---|---|---|---|---|",
     ]
     for e in recent:
         m = e["metrics"]
@@ -188,7 +190,7 @@ def render_trajectory(events: List[Dict], window: int = 8) -> str:
         detail = e["event"].get("kind") or e["event"].get("motif_id", "")
         label = f"{etype}{':' + str(detail)[:12] if detail else ''}"
         lines.append(
-            f"| {e['ts'][:16]} | {label} | {m['motif_count']} | {m['reference_edges']} "
+            f"| {e['ts'][:16]} | {e.get('agent', '?')} | {label} | {m['motif_count']} | {m['reference_edges']} "
             f"| {m['community_count']} | {m['narrative_binding']} | {e.get('open_surprises', '?')} |"
         )
     verdict = classify_regime(events, window=window)

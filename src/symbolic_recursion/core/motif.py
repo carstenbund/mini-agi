@@ -19,6 +19,7 @@ class MotifNode:
     history: List[Revision] = field(default_factory=list)
     created_at: str = field(default_factory=lambda: datetime.utcnow().isoformat())
     updated_at: str = field(default_factory=lambda: datetime.utcnow().isoformat())
+    agent: str = ""   # which session captured it (SMC_AGENT); "" for legacy motifs
 
     def to_dict(self) -> Dict[str, Any]:
         d = asdict(self)
@@ -37,6 +38,7 @@ class MotifNode:
             history=hist,
             created_at=d.get("created_at"),
             updated_at=d.get("updated_at"),
+            agent=d.get("agent", ""),
         )
 
 class SymbolicMemoryCore:
