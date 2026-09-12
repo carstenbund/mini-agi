@@ -6,3 +6,13 @@
 {"ts": "2026-09-12T13:43:07.357622", "kind": "bridge", "key": "80755c14-7333-485e-a43c-cdb5bd2589cf|f1252c28-e584-4c5e-be85-cfa64bba241b", "owner": "fable5-main", "expires": "2026-09-12T13:43:07.357622", "released": true}
 {"ts": "2026-09-12T13:50:38.565285", "kind": "deepen", "key": "d5f0f746-f1df-4ea6-b6dd-7be6a7b0538d", "owner": "fable5-main", "expires": "2026-09-12T14:50:38.565285", "released": false}
 {"ts": "2026-09-12T13:50:38.565913", "kind": "deepen", "key": "d5f0f746-f1df-4ea6-b6dd-7be6a7b0538d", "owner": "fable5-main", "expires": "2026-09-12T13:50:38.565913", "released": true}
+{"ts": "2026-09-12T14:41:23.175993", "kind": "bridge", "key": "56f2194d-f416-4484-b0e8-36866ee2261e|a0d057d0-d7d8-4c0b-85f6-a252b4a81694", "owner": "autorun", "expires": "2026-09-12T15:41:23.175993", "released": false}
+{"ts": "2026-09-12T14:42:47.588736", "kind": "bridge", "key": "56f2194d-f416-4484-b0e8-36866ee2261e|a0d057d0-d7d8-4c0b-85f6-a252b4a81694", "owner": "autorun", "expires": "2026-09-12T14:42:47.588736", "released": true}
+{"ts": "2026-09-12T14:42:47.667480", "kind": "bridge", "key": "a0d057d0-d7d8-4c0b-85f6-a252b4a81694|bc-0a-counter-case-japan-15", "owner": "autorun", "expires": "2026-09-12T15:42:47.667480", "released": false}
+{"ts": "2026-09-12T14:42:54.025208", "kind": "bridge", "key": "a0d057d0-d7d8-4c0b-85f6-a252b4a81694|bc-0a-counter-case-japan-15", "owner": "autorun", "expires": "2026-09-12T14:42:54.025208", "released": true}
+{"ts": "2026-09-12T14:42:54.096249", "kind": "bridge", "key": "0a-4a-split-second-flash-fe|84f6011d-59ab-4210-b6d5-0e8178a916a2", "owner": "autorun", "expires": "2026-09-12T15:42:54.096249", "released": false}
+{"ts": "2026-09-12T14:43:01.291251", "kind": "bridge", "key": "0a-4a-split-second-flash-fe|84f6011d-59ab-4210-b6d5-0e8178a916a2", "owner": "autorun", "expires": "2026-09-12T14:43:01.291251", "released": true}
+{"ts": "2026-09-12T14:43:01.366618", "kind": "bridge", "key": "84f6011d-59ab-4210-b6d5-0e8178a916a2|bc-4-one-real-asymmetry-mar", "owner": "autorun", "expires": "2026-09-12T15:43:01.366618", "released": false}
+{"ts": "2026-09-12T14:43:07.109472", "kind": "bridge", "key": "84f6011d-59ab-4210-b6d5-0e8178a916a2|bc-4-one-real-asymmetry-mar", "owner": "autorun", "expires": "2026-09-12T14:43:07.109472", "released": true}
+{"ts": "2026-09-12T14:43:07.187150", "kind": "bridge", "key": "80755c14-7333-485e-a43c-cdb5bd2589cf|ijr-reciprocal-sensing-margi", "owner": "autorun", "expires": "2026-09-12T15:43:07.187150", "released": false}
+{"ts": "2026-09-12T14:43:12.069248", "kind": "bridge", "key": "80755c14-7333-485e-a43c-cdb5bd2589cf|ijr-reciprocal-sensing-margi", "owner": "autorun", "expires": "2026-09-12T14:43:12.069248", "released": true}
