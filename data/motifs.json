@@ -1794,5 +1794,166 @@
     "created_at": "2026-09-12T14:00:23.015132",
     "updated_at": "2026-09-12T14:00:23.015161",
     "agent": "fable5-main"
+  },
+  "ijr-hub": {
+    "id": "ijr-hub",
+    "symbols": [
+      "judgment",
+      "compression",
+      "experiment",
+      "inherited",
+      "research"
+    ],
+    "content": "Inherited Judgment \u2014 research direction\n\nThe crystallized research direction of [[Inherited Judgment]]: the theory narrowed to one experimentally accessible joint \u2014 what must survive compression for inherited knowledge to remain adaptive when the inherited rule fails.",
+    "thread_id": "inherited-judgment",
+    "references": [
+      "ij-hub"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T14:11:18.592003",
+    "updated_at": "2026-09-12T14:11:18.592020",
+    "agent": "fable5-main"
+  },
+  "ijr-recurring-structural-pri": {
+    "id": "ijr-recurring-structural-pri",
+    "symbols": [
+      "inheritance",
+      "compression",
+      "revision",
+      "recurring",
+      "structural"
+    ],
+    "content": "The recurring structural principle. The larger program is no longer \"can machines learn like biology?\" It is: are there recurring structural principles by which adaptive systems preserve useful consequences of past experience while discarding most of the experience itself? The common structure: pressure -> variation/experience -> selection -> compression -> inheritance -> application -> mismatch -> revision. The clocks and substrates differ \u2014 biological inheritance in generations; individual learning in seconds to decades; cultural inheritance in conversations to centuries; symbolic-machine revision in milliseconds to training cycles \u2014 but the logic of adaptation under compressed inheritance may recur. That is a much safer and more interesting claim than saying symbolic systems replicate biology.",
+    "thread_id": "inherited-judgment",
+    "references": [
+      "ijr-hub"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T14:11:18.592025",
+    "updated_at": "2026-09-12T14:11:18.592025",
+    "agent": "fable5-main"
+  },
+  "ijr-two-questions-exception": {
+    "id": "ijr-two-questions-exception",
+    "symbols": [
+      "judgment",
+      "inheritance",
+      "two",
+      "questions",
+      "exception"
+    ],
+    "content": "Two questions, and the exception. Two questions hide in the original formulation. First: can a symbolic machine inherit judgment without inheriting the experience that produced it? That already happens constantly \u2014 models inherit mathematical procedures, legal principles, diagnostic heuristics, engineering conventions, social norms, without the histories through which those forms emerged. Ordinary cultural inheritance. The second, deeper question: can a symbolic machine reconstruct enough of the missing experiential structure when inherited judgment stops working? The hard problem appears at the exception. The rule says x -> y; the system encounters x' that does not go to y. At that moment repetition is insufficient. The carrier must discriminate among: noise, exception, misclassification, boundary condition, failure of the rule itself. That discrimination is judgment.",
+    "thread_id": "inherited-judgment",
+    "references": [
+      "ijr-hub",
+      "ijr-recurring-structural-pri"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T14:11:18.592028",
+    "updated_at": "2026-09-12T14:11:18.592028",
+    "agent": "fable5-main"
+  },
+  "ijr-reciprocal-sensing-margi": {
+    "id": "ijr-reciprocal-sensing-margi",
+    "symbols": [
+      "judgment",
+      "inheritance",
+      "revision",
+      "sensing",
+      "custody"
+    ],
+    "content": "Reciprocal sensing and marginal custody in the mechanism. The inherited symbolic representation contains a compressed world-model; novelty introduces something outside it. The system needs two capacities. Reciprocal Sensing: the ability to detect information from the new situation that the inherited representation did not already encode \u2014 can the carrier perceive evidence that contradicts or exceeds its inherited rule? Marginal Custody: the ability to preserve that anomalous information without immediately forcing it back into the inherited symbolic scheme \u2014 can the carrier retain unresolved discrepancy long enough to revise the representation instead of explaining the discrepancy away? The compact mechanism: inheritance -> application -> exception -> reciprocal sensing -> marginal custody -> judgment -> revision. Judgment is then not mysterious: it is the reorganization of inherited representation under evidence that cannot be adequately absorbed by the existing rule. Reciprocal sensing and marginal custody are two conditions that may be necessary for that reorganization.",
+    "thread_id": "inherited-judgment",
+    "references": [
+      "ijr-hub",
+      "ijr-two-questions-exception",
+      "80755c14-7333-485e-a43c-cdb5bd2589cf",
+      "f1252c28-e584-4c5e-be85-cfa64bba241b",
+      "d5f0f746-f1df-4ea6-b6dd-7be6a7b0538d"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T14:11:18.592030",
+    "updated_at": "2026-09-12T14:11:18.592030",
+    "agent": "fable5-main"
+  },
+  "ijr-graded-inheritance-sharp": {
+    "id": "ijr-graded-inheritance-sharp",
+    "symbols": [
+      "judgment",
+      "inheritance",
+      "revision",
+      "graded",
+      "sharpened"
+    ],
+    "content": "Graded inheritance, sharpened. Vary what the carrier inherits. Condition A: rule only. B: rule + examples of successful application. C: rule + boundary cases. D: rule + failed cases. E: rule + rationale. F: rule + consequences of following or violating it. G: rule + expert uncertainty. H: rule + history of revision. Confront every carrier with the same genuinely novel exception. The question is no longer which prompt performs best; it is which residue of experience makes reconstruction of judgment possible. Measure structure, not mere correctness: J = f(anomaly detection, uncertainty preservation, causal reconstruction, rule revision, transfer). A successful system should (1) notice the inherited rule is inadequate; (2) avoid prematurely assimilating the anomaly; (3) identify what feature matters; (4) revise the rule minimally or appropriately; (5) generalize that revision to another unseen case \u2014 without the fifth, one may be measuring case-specific improvisation.",
+    "thread_id": "inherited-judgment",
+    "references": [
+      "ijr-hub",
+      "ijr-reciprocal-sensing-margi"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T14:11:18.592032",
+    "updated_at": "2026-09-12T14:11:18.592032",
+    "agent": "fable5-main"
+  },
+  "ijr-transmission-chains-cult": {
+    "id": "ijr-transmission-chains-cult",
+    "symbols": [
+      "inheritance",
+      "revision",
+      "transmission",
+      "experiment",
+      "culture"
+    ],
+    "content": "Transmission chains: cultural evolution experimentally. A revised rule can be transferred to another carrier and tested again: C1 -> C2 -> C3 -> C4. Carrier 1 receives the original compressed inheritance, meets novelty, revises. Carrier 2 receives only Carrier 1's revised representation, meets another exception. Across generations of symbolic inheritance: does the representation become more robust, accumulate exceptions, grow more abstract, become brittle, grow unnecessarily complicated, rediscover previously discarded information, lose the rationale behind earlier revisions, eventually encode something resembling experience? This approaches the deeper question: what does cumulative culture actually preserve? Perhaps culture does not merely transmit rules \u2014 it may progressively preserve compressed traces of previous rule failures.",
+    "thread_id": "inherited-judgment",
+    "references": [
+      "ijr-hub",
+      "ijr-graded-inheritance-sharp"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T14:11:18.592034",
+    "updated_at": "2026-09-12T14:11:18.592034",
+    "agent": "fable5-main"
+  },
+  "ijr-cycle-made-recursive": {
+    "id": "ijr-cycle-made-recursive",
+    "symbols": [
+      "judgment",
+      "inheritance",
+      "compression",
+      "revision",
+      "experiment"
+    ],
+    "content": "The cycle, made recursive. The earlier sequence DNA -> experience -> symbol -> truth -> rule -> judgment -> culture reads too much like a single historical staircase. The revision: a recursive cycle \u2014 pressure/world -> experience/variation -> selection -> compression -> inheritance -> application -> mismatch -> judgment -> revision -> new inheritance \u2014 instantiated by different carriers side by side: genetic, individual, social, symbolic, institutional, machine. The substrates change, but each system may instantiate a related inheritance-mismatch-revision cycle. Experimentally defensible.",
+    "thread_id": "inherited-judgment",
+    "references": [
+      "ijr-hub",
+      "ijr-transmission-chains-cult"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T14:11:18.592035",
+    "updated_at": "2026-09-12T14:11:18.592036",
+    "agent": "fable5-main"
+  },
+  "ijr-research-direction-state": {
+    "id": "ijr-research-direction-state",
+    "symbols": [
+      "judgment",
+      "inheritance",
+      "compression",
+      "revision",
+      "transmission"
+    ],
+    "content": "Research direction statement. The present work treats symbolic inheritance as a compression problem. Biological, individual and cultural systems all preserve consequences of earlier encounters without preserving those encounters in full. Compression is efficient precisely because information is discarded; the cost of that efficiency appears under novelty. When a new case falls outside the inherited representation, the carrier must determine whether the discrepancy is irrelevant, exceptional, or evidence that the inherited rule itself is inadequate. This project calls that transition judgment. The immediate experimental question: what information must survive compression for an inheriting carrier to detect the failure of a rule, preserve the unresolved discrepancy, and reorganize the inherited representation into one that remains adaptive? First phase: vary the inherited residue (rules, examples, failures, consequences, uncertainty, boundary conditions, revision history) and measure which combinations permit adaptation to unseen exceptions. Next phase: test whether revised representations remain adaptive across multiple inheritance cycles and carriers. The broader question: whether recurring structures in these symbolic transmission experiments resemble adaptive inheritance at other biological and cultural scales \u2014 not because substrates are identical, but because they may solve a shared problem: how can a system inherit the value of experience without inheriting the experience itself? And the inversion inside it: perhaps judgment is precisely the capacity required when inheritance has been too successful at forgetting how it was made.",
+    "thread_id": "inherited-judgment",
+    "references": [
+      "ijr-hub",
+      "ijr-cycle-made-recursive"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T14:11:18.592037",
+    "updated_at": "2026-09-12T14:11:18.592038",
+    "agent": "fable5-main"
   }
 }
