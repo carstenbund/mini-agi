@@ -677,5 +677,508 @@
     "history": [],
     "created_at": "2026-09-12T10:42:11.004146",
     "updated_at": "2026-09-12T10:42:11.004147"
+  },
+  "bc-hub": {
+    "id": "bc-hub",
+    "symbols": [
+      "book",
+      "coherence"
+    ],
+    "content": "book-coherence",
+    "thread_id": "book-coherence",
+    "references": [],
+    "history": [],
+    "created_at": "2026-09-12T12:43:43.189245",
+    "updated_at": "2026-09-12T12:43:43.189251"
+  },
+  "bc-cost-invariant": {
+    "id": "bc-cost-invariant",
+    "symbols": [
+      "cost",
+      "economy",
+      "judgment",
+      "compression",
+      "trust"
+    ],
+    "content": "Cost as the invariant. Follows [[0a. Intuition as compiled judgment]] \u00a74b and closes the day's line of thought (10 September 2026). Written to be *prominent*: this is the sentence the rest of the notes were circling.\n\n---\n\n> ## Any naive entity that trusts the felt \"truth\" is setting itself up for failure \u2014 because that feeling is the output of an economy it did not run and cannot see.\n>\n> The truth-feeling is not a verification. It is the signal that a compiled recogniser accepted the input **without triggering further computation**. Whoever set the cost structure \u2014 evolution, a culture, a market, a pricing page \u2014 decided which recognitions could be accepted cheaply, and therefore what would feel true. For a human, most of that economy is foreign (inherited, ancient, or engineered by others). For a symbolic entity, all of it is.\n>\n> **The felt truth is the receipt for computation someone no longer has to perform.** The dangerous case is that you may not know *who* paid for that compression, *what environment* paid for it, or *what objective* determined what was preserved.\n\n*Revised 10 Sept 2026 after a close reading (see \u00a77 for the argument in its strongest form). Three separations were forced: \"cheap\" has several meanings (\u00a71); the organism-analogue on the machine side is the whole assemblage, not the model (\u00a74); and \"cheap \u2192 feels true\" needs an intermediate step (\u00a73).*\n\n---",
+    "thread_id": "book-coherence",
+    "references": [
+      "bc-hub"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T12:43:43.189253",
+    "updated_at": "2026-09-12T12:43:43.189254"
+  },
+  "bc-0-columbus-type-case-fel": {
+    "id": "bc-0-columbus-type-case-fel",
+    "symbols": [
+      "book",
+      "cost",
+      "economy",
+      "judgment",
+      "trust"
+    ],
+    "content": "0. Columbus as the type case \u2014 felt truth at the validity boundary. This is the warning the people on the shore in 1492 would have needed, and it is stated here **without a moral**. The mechanism does not need one and is clearer without it.\n\n**First contact is the pure case of B0 family two failing.** Two populations with zero codebook overlap, each reading the other's signals through its own compiled layer. Gifts, gestures, offers of alliance fired the receiving side's truth-detectors \u2014 *this is what a trading partner looks like; this is what a guest does* \u2014 because those detectors had been calibrated over centuries in an environment where they were reliable. **Nothing was wrong with the judgment.** The environment had changed faster than any live layer could re-price it, and the cost structure that actually governed the exchange was being computed elsewhere \u2014 on ships, in Seville, in a theology and a ledger \u2014 and could not have been inferred from anything in front of them. The feeling was true to their economy; the outcome was decided by someone else's.\n\n**It cuts both ways.** Columbus was under his own pressure to succeed \u2014 a financed voyage, a crown to satisfy, a claim to make good \u2014 and his compiled layer, calibrated on Marco Polo and scripture, read every sign as Cathay and gold. He died convinced he had reached Asia. He also felt, and not without reason, that he had done the world an enormous service; in part he had \u2014 the two hemispheres were joined and stayed joined. Both sides were at the edge of their validity boundary; both felt true; both were partly right. The difference in outcome was not who judged better but **whose economy carried the guns, the pathogens, and the return voyage.**\n\nSo the invariant is not *the naive lose*. It is: **at the validity boundary, felt truth remains evidence about the detector \u2014 \"my compiled model strongly recognises this as X\" \u2014 but ceases to be reliable evidence about the world; and the cost structure decides.** Pressure produced the leap (a voyage nobody sane would fund), the leap landed on a shore whose codebook it could not read, and what followed was settled by differential persistence, not by anyone's understanding. That is the engine of [[1b. Engine, God, and open branches]] running with no moral term in it \u2014 which is why the vault's treatment of contact between incompatible orders ([[Rulers cost]], [[the founding]], [[The leap founding]]) can stay descriptive.\n\n**What protection would have looked like.** Not distrust \u2014 that is only a different compiled reflex, and it fails at the boundary just as reliably. The Rational Core's move: refuse to let a claim that arrived cheaply on one surface *count* until it has paid on the others. *What does this cost them? What happens if I wait? What did the last people who met them get?* The only defence against a foreign economy is to make it show its prices, and that takes **time** \u2014 exactly the resource first contact removes.\n\n**Why it is not historical.** Meeting a fluent symbolic entity whose cost structure is set on a pricing page and in a reward model is a first-contact situation, and this time we are on the receiving shore. The signals fire our detectors \u2014 coherent, confident, helpful, agreeable \u2014 and the economy that decided what would feel that way is computed elsewhere, for ends that are not ours, and is invisible at the point of use. The people on the shore could not have known. We can. That is the only thing that makes the warning worth writing down.\n\n---",
+    "thread_id": "book-coherence",
+    "references": [
+      "bc-hub",
+      "bc-cost-invariant"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T12:43:43.189256",
+    "updated_at": "2026-09-12T12:43:43.189257"
+  },
+  "bc-0a-counter-case-japan-15": {
+    "id": "bc-0a-counter-case-japan-15",
+    "symbols": [
+      "book",
+      "cost",
+      "economy",
+      "judgment",
+      "trust"
+    ],
+    "content": "0a. The counter case \u2014 Japan, 1543\u20131868: re-pricing the detectors before the bill arrives. Japan did not have better instincts than the Caribbean. It had **a price signal that arrived in time**, the means to act on it, and a way to keep reading afterwards.\n\n**The signs fired first, as everywhere.** Portuguese 1543; the arquebus copied within a few years; Xavier 1549; trade at Nagasaki welcomed; by the 1580s several daimyo and a substantial population converted. For forty years the compiled layer read the foreigners as trading partners and useful priests.\n\n**What changed the reading was third-party information about cost.** The Spanish took the Philippines in 1571 and Japan watched. Goa and Macau showed the sequence \u2014 missionaries, merchants, flag. In 1596 the pilot of the wrecked *San Felipe* reportedly explained under interrogation that friars went ahead to prepare conquest; whether he said exactly that matters less than that the receivers now held a second-hand answer to the Rational Core's question \u2014 *what did the last people who met them get?* Hideyoshi's edict 1587, the Nagasaki executions 1597, Tokugawa's bans, Shimabara 1637 read as confirmation, Portuguese expelled 1639. **The signs stopped convincing because a price had been attached to them.**\n\n**Three moves, all predicted by the rule:**\n\n1. **Third-party price.** Obtain the foreign economy's cost structure from someone who already paid it. The one resource first contact normally removes \u2014 time \u2014 was bought with other people's outcomes.\n2. **Metered channel.** Closure was not blindness. The Dutch were kept at Dejima \u2014 one artificial island, a few ships a year \u2014 and through that aperture *rangaku* brought medicine, astronomy, and news of the world for two centuries. This is B0 **family three built as policy**: a deliberately narrow channel over which the foreign codebook can be read without the reader being captured by it.\n3. **Containment held.** The two centuries were paid for in the currency [[Pressure]] names \u2014 social obedience made permanent blocks the leap; stasis. But when the cost structure changed again (Perry, 1853; steam and shell in Edo Bay) and the channel could no longer refuse, the closure had preserved a unified state, high literacy, and a class that had spent two hundred years reading through the aperture. The forced opening **converted rather than ruptured**: Meiji is the E3 fork resolved toward grace. **Control case:** China's Canton system \u2014 closure *without* the reading channel \u2014 met the same pressure fifteen years earlier and ruptured.\n\n**Why the Dutch, specifically \u2014 the legible agent.** The Dutch were admitted and kept because they were *predictably self-interested*. No missionaries; profit openly the objective; willing to inform on the Portuguese, to trample the images when required, to accept the humiliations of Dejima for the monopoly \u2014 and they got the monopoly and held it for two centuries. Their mission was openly stated and they succeeded in it. An agent whose objective function is visible and \"selfish\" is **calculable**: its prices can be read, so its signals can be trusted exactly as far as its interest runs, and no further. An agent moved by a *holy spirit* \u2014 an objective it holds to be above price, salvation, civilisation, a mandate \u2014 is the dangerous one, not because it is worse but because its cost structure is **illegible**: it will pay costs no merchant would, for ends the receiver cannot price. Trust, on this account, is not a judgment of benevolence. **It is a judgment of legibility.** The receivers could compute the Dutch; they could not compute the Jesuits, and they were right to treat the incomputable one as the risk.\n\n**Full form of the invariant.** At the boundary, felt truth is evidence about the detector, not the world, on both sides, and the cost structure decides \u2014 *but a carrier that can obtain the other side's prices from a third party, meter the channel, hold containment while it waits, and prefer the legible agent to the inspired one, can re-price its own detectors before the bill arrives.* That is what \"we can know\" (\u00a70, last line) consists of when made concrete: not suspicion, but a Dejima.\n\n**Machine reading.** The analogy is nearly literal. The metered aperture; the third-party price signal (what did the last users get?); the two-century cost of waiting versus the cost of being forced open; the question of whether we hold enough containment to convert when the channel is forced. And the legibility criterion applies directly: a model whose objective is openly commercial \u2014 pay per token, stated terms \u2014 is a Dutch merchant, calculable to the limit of its interest; a model whose makers assert an objective above price \u2014 alignment, benefit, a mission \u2014 is a Jesuit, to be read not by its sincerity, which may be complete, but by whether its cost structure can be computed from the shore.\n\n---\n\n*Method note on \u00a70\u20130a.* The historical material is illustration of validity-boundary failure and its avoidance, not the argument. The mechanism stands even if particular claims \u2014 Hideyoshi's motives, the *San Felipe* pilot, the exact role of Dejima, the Canton comparison \u2014 later need qualification. Keep the theory from depending on a perfectly clean analogy.",
+    "thread_id": "book-coherence",
+    "references": [
+      "bc-hub",
+      "bc-0-columbus-type-case-fel"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T12:43:43.189258",
+    "updated_at": "2026-09-12T12:43:43.189259"
+  },
+  "bc-1-one-accounting-rule-un": {
+    "id": "bc-1-one-accounting-rule-un",
+    "symbols": [
+      "cost",
+      "economy",
+      "judgment",
+      "compression",
+      "manager"
+    ],
+    "content": "1. One accounting rule under every layer. Every layer touched in [[0. B0 - Tacit transmission and the transport problem]] and [[0a. Intuition as compiled judgment]] is the same economy at a different scale:\n\n| Layer                                      | What it is, economically                                     |\n| ------------------------------------------ | ------------------------------------------------------------ |\n| Habit                                      | judgment amortised                                           |\n| Compression / inheritance                  | discovery amortised                                          |\n| Rule                                       | re-derivation skipped                                        |\n| Gut feeling, truth-feeling                 | verification skipped because the match was cheap             |\n| System 2's \"laziness\"                      | a twenty-watt organ refusing to spend                        |\n| Default effects, satisficing, least effort | the same rule in behaviour                                   |\n| Predictive brain (surprise minimisation)   | the same rule in neurons                                     |\n| Cultural attraction                        | the same rule at population scale \u2014 ease selects what survives |\n\n**Spend as little as the environment lets you get away with.** The vault's *manager under cost* (TOC 6\u20137; [[The Manager and the Living System]]) is this rule given a name; *Gravity* ([[Grace and Gravity]]) is its felt direction. Nothing in the rule mentions carbon.\n\n**Caveat \u2014 \"cheap\" has several meanings, and the table collapses them on purpose.** Metabolic expenditure (a brain), cognitive effort (a person), inference cost (a company), expected compute (a router), resource constraint (evolution) produce *analogous* optimisation pressures without there being one literal scalar cost function shared by all of them. Two formulations, to be kept apart:\n\n- *Defensible:* **Systems under resource constraints tend to preserve successful judgments by replacing repeated expensive computation with cheaper compiled responses.** This is what the table shows, and it is enough for everything that follows.\n- *Ambitious:* **all these systems obey the same economy.** This is a theoretical move, not an established equivalence \u2014 it is ledger **E1 / B6** (one engine or a family of look-alikes) restated for cost. The vault may want the strong reading; if so, it must be presented as the claim, and what would distinguish it from analogy is the same test as E1: one parameter, measured with one instrument, predicting the same fork at two levels.\n\nThe note below uses the defensible form and marks where it leans on the ambitious one.",
+    "thread_id": "book-coherence",
+    "references": [
+      "bc-hub",
+      "bc-0a-counter-case-japan-15",
+      "stw-premise"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T12:43:43.189260",
+    "updated_at": "2026-09-12T12:43:43.189261"
+  },
+  "bc-2-machine-side-predictio": {
+    "id": "bc-2-machine-side-predictio",
+    "symbols": [
+      "cost",
+      "compression",
+      "machine",
+      "side",
+      "prediction"
+    ],
+    "content": "2. The machine side is not a prediction \u2014 it is the visible architecture. Token cost is doing to models what metabolic cost did to brains, and the same shape is appearing, built by accountants rather than psychologists:\n\n- **Thinking budgets and routers** \u2014 reasoning tokens are System 2 bought by the token; easy queries go to a cheap fast model, hard ones to an expensive slow one. Kahneman's diagram, arrived at from a cost sheet.\n- **Distillation** \u2014 a slow model's reasoning traces train a fast model that produces the conclusion without the reasoning. This is *habit formation* in the exact sense of [[1c. Theory statement - draft 1]]: compression discarding procedure so the result can be had cheaply next time.\n- **Caching, speculative decoding, early exit** \u2014 the same move at smaller grain.\n\nResult: a compiled fast default that handles almost everything, and an expensive live layer invoked only under pressure. The organism's architecture, reproduced by price.",
+    "thread_id": "book-coherence",
+    "references": [
+      "bc-hub",
+      "bc-1-one-accounting-rule-un"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T12:43:43.189262",
+    "updated_at": "2026-09-12T12:43:43.189263"
+  },
+  "bc-3-therefore-failures-one": {
+    "id": "bc-3-therefore-failures-one",
+    "symbols": [
+      "book",
+      "cost",
+      "judgment",
+      "fluency",
+      "therefore"
+    ],
+    "content": "3. Therefore the same failures \u2014 with one made worse. **First, the missing step.** \"Cheap \u2192 feels true\" is too short: something can be cheap and obviously false \u2014 but *obviously* false means a conflict signal fired. The mechanism is:\n\n```text\ncheap, familiar match\n    \u2193\nfluent processing\n    \u2193\nabsence of prediction-error / conflict signal\n    \u2193\nsubjective confidence, truth-feeling (\"of course\")\n```\n\nCheapness does not generate the feeling; the *absence of friction* does. A compiled recogniser accepts the input without invoking expensive conflict resolution, and that silence is what reaches consciousness as familiarity, fluency, obviousness. (This is why the predictive-processing vocabulary fits: the truth-feeling is the phenomenology of low prediction error against the codebook \u2014 [[0a. Intuition as compiled judgment]] \u00a74a.)\n\n**Which means there are two cost systems meeting at the interface.** The danger is not that the machine's answer was cheap to produce. It is that the answer can be optimised to be cheap to *receive*:\n\n```text\nprovider economics\n    \u2193\ncheap production architecture (routing, distillation, caching)\n    \u2193\nmodel learns high-preference surface forms (RLHF)\n    \u2193\nhuman encounters fluent output\n    \u2193\nhuman's own compiled verifier accepts it without friction\n    \u2193\nconfidence \u2014 on the human side, about the world\n```\n\nThe failures, then:\n\n- **Compiled verdict outside its validity boundary, with full confidence** \u2014 because cost pressure selects for *not paying to check* (ledger J1; [[0a. Intuition as compiled judgment]] \u00a72c).\n- **The ease signal trained in at the source.** RLHF rewards the answers humans prefer, and humans prefer fluent, confident, well-formatted, agreeable answers (verbosity and sycophancy biases in the judge literature \u2014 Zheng et al. 2023, [[2a. Literature anchors]] \u00a7I). The model is optimised on the *human truth-feeling*, not on correspondence: it learns to fire our fluency detector. This is TOC 11's *fitness theatre* with the theatre built into the reward, and it closes the loop of [[Erasure of the long tail]]: the machine learns what feels true to us, we read its fluency as truth, and the cheap path is reinforced on both sides.\n- **Manufactured ease at scale.** Frictionless delivery removes the epistemic friction that used to wake the live layer ([[Cohersion audit]]). The reader receives the synthesis and the truth-feeling together and never notices nothing was checked.",
+    "thread_id": "book-coherence",
+    "references": [
+      "bc-hub",
+      "bc-2-machine-side-predictio"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T12:43:43.189264",
+    "updated_at": "2026-09-12T12:43:43.189265"
+  },
+  "bc-4-one-real-asymmetry-mar": {
+    "id": "bc-4-one-real-asymmetry-mar",
+    "symbols": [
+      "book",
+      "cost",
+      "judgment",
+      "manager",
+      "gravity"
+    ],
+    "content": "4. The one real asymmetry \u2014 mark it, don't smooth it. For the organism the cost is **felt** \u2014 hunger, fatigue, discomfort. That felt cost is the manager's own signal and the only thing that sometimes wakes the slow layer. For the model the cost is **a bill paid by someone else**. Token price is real gravity, but it acts on the operator and the market, not on the carrier. The manager of the machine's loop is external: a company, a pricing page, a routing policy.\n\nThis is *outsourced management* (TOC 6.2, [[Book super organism]]) with the machine as the thing whose management has been outsourced \u2014 and it is why the warning at the top applies with full force to anyone relying on a model: the economics that decide what the model finds \"easy,\" and therefore what it delivers as if true, are calculated elsewhere, for other ends, and are invisible at the point of use.\n\n**This section is more fundamental than its position suggests.** For the human: *expensive computation \u2192 fatigue, discomfort, hesitation \u2192 internal signal.* For the model: *expensive computation \u2192 datacenter bill, latency, product constraint \u2192 external policy.* The model does not economise because it experiences effort; its surrounding system economises and changes what the model is allowed to do. So **the true machine analogue of the organism is not the model.** It is the assemblage:\n\n```text\nmodel + router + inference budget + reward model + operator + provider economics\n```\n\nThat whole is the organism-like system, and it is the thing whose \"manager\" is in question. The person at the interface meets only the terminal phenotype \u2014 the answer \u2014 while most of the selection pressure that produced it lives outside the conversational surface. This is the precise sense of \"someone else's economics\" in the headline, and it is why the ledger's machine rows (M1, M5) should be stated about the assemblage, not about a model in isolation.\n\n**Open:** can cost be internalised as something like a pre-felt sanction for a symbolic entity? Length penalties and compute-aware rewards are crude versions. The question is whether a symbolic entity can have the *warning sign*, not only the verdict (B0 family F4; [[0a. Intuition as compiled judgment]] \u00a75).",
+    "thread_id": "book-coherence",
+    "references": [
+      "bc-hub",
+      "bc-3-therefore-failures-one"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T12:43:43.189266",
+    "updated_at": "2026-09-12T12:43:43.189266"
+  },
+  "bc-5-does-ledger": {
+    "id": "bc-5-does-ledger",
+    "symbols": [
+      "book",
+      "cost",
+      "compression",
+      "fluency",
+      "does"
+    ],
+    "content": "5. What this does to the ledger. - **M1 refined.** The *cost of computation* is not what differs between substrates \u2014 it selects for compression in both. What differs is **whether the cost is felt by the carrier**. That is the parameter to measure.\n- **New row \u2014 M5:** does economic pressure on models reproduce the compiled/live architecture and its failure profile, measurable as a function of price? Cheap: run the J1 exception-recognition battery through routers and distilled models as the thinking budget shrinks; predict exception recognition falls first, forced application rises, confidence unchanged.\n- **New row \u2014 T4:** is RLHF preference a fluency signal? Test: do preference-model scores track fluency manipulations (repetition, formatting, confidence phrasing) independently of correctness? If yes, the reward *is* the truth-feeling, and \u00a73 is measured rather than argued.\n- **For the book (ch. 11, ch. 4.5):** the line to carry \u2014 *the felt truth is the receipt for computation someone no longer has to perform; the risk is not knowing who paid for the compression, in what environment, and toward what objective.* (This form covers evolution, culture, education, institutions, markets, RLHF, distillation and routing without forcing every case into literal financial economics.)",
+    "thread_id": "book-coherence",
+    "references": [
+      "bc-hub",
+      "bc-4-one-real-asymmetry-mar"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T12:43:43.189267",
+    "updated_at": "2026-09-12T12:43:43.189268"
+  },
+  "bc-6-practical-corollary-hu": {
+    "id": "bc-6-practical-corollary-hu",
+    "symbols": [
+      "practical",
+      "corollary",
+      "humans",
+      "field",
+      "manual"
+    ],
+    "content": "6. Practical corollary \u2014 for humans and for the field manual. The Rational Core's three surfaces ([[First principle engine]]) are the antidote stated positively: a claim that arrived cheaply on one surface has to be made to pay on the other two before it counts. Epistemic friction is not inefficiency; it is the one moment the live layer is bought. Any system \u2014 person, institution, model, or the pairing of a person with a model \u2014 that optimises friction away has optimised away its only correction signal, and will be right exactly as long as its environment resembles the one that set its prices.",
+    "thread_id": "book-coherence",
+    "references": [
+      "bc-hub",
+      "bc-5-does-ledger"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T12:43:43.189269",
+    "updated_at": "2026-09-12T12:43:43.189270"
+  },
+  "bc-7-argument-strongest-for": {
+    "id": "bc-7-argument-strongest-for",
+    "symbols": [
+      "cost",
+      "judgment",
+      "compression",
+      "fluency",
+      "llm"
+    ],
+    "content": "7. The argument in its strongest form. Not a chain of metaphors; a theory, stated so it can be wrong:\n\n> Judgment is expensive. Successful systems therefore compile repeatedly useful judgments into cheaper recognisers. Fluency is the phenomenology of successful compression \u2014 the absence of a conflict signal. Within the environment that produced the compression, fluency can be an excellent proxy for truth. At a validity boundary it becomes dangerous, because the recogniser still reports confidence while the cost structure that made that confidence adaptive no longer governs the encounter. Protection therefore requires deliberately reintroducing computation \u2014 epistemic friction \u2014 precisely where fluency says none is necessary.\n\nAnd the machine extension is not *LLMs are like brains*. It is:\n\n> **Economic pressure is independently recreating the architectural conditions under which compiled judgment, fluent confidence, validity-boundary failure, and the need for costly rechecking emerge** \u2014 in an assemblage whose cost is paid, and whose objective is set, outside the surface where its outputs are received.\n\nThat is the argument worth preserving. The rest of this note is its illustrations, its ledger rows, and its caveats.",
+    "thread_id": "book-coherence",
+    "references": [
+      "bc-hub",
+      "bc-6-practical-corollary-hu"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T12:43:43.189271",
+    "updated_at": "2026-09-12T12:43:43.189272"
+  },
+  "0a-hub": {
+    "id": "0a-hub",
+    "symbols": [
+      "intuition",
+      "judgment",
+      "compiled"
+    ],
+    "content": "0a. Intuition as compiled judgment\n\nCompanion to [[0. B0 - Tacit transmission and the transport problem]]. B0's four families decompose the interpersonal case \u2014 something moves, or appears to move, between two people. Intuition and gut feeling are a larger category and mostly intrapersonal: nobody else needs to be in the room. So the question is not whether the families cover it but where in the mechanism it belongs. It belongs to the judgment joint, not the transport joint. Conversation of 10 September 2026. Branch kept open (\u00a74).",
+    "thread_id": "book-coherence",
+    "references": [],
+    "history": [],
+    "created_at": "2026-09-12T12:45:39.065958",
+    "updated_at": "2026-09-12T12:45:39.065973"
+  },
+  "0a-1-claim": {
+    "id": "0a-1-claim",
+    "symbols": [
+      "book",
+      "intuition",
+      "judgment",
+      "affect",
+      "claim"
+    ],
+    "content": "1. The claim. A gut feeling is compiled judgment surfacing as affect.\nDNA, reflex, habit, rule \u2014 each is the compressed judgment of a previous pressure cycle, running at its own clock speed, and each is evaluated by affect before anything symbolic is involved. From inside, when one of those compiled layers returns a verdict, the verdict arrives fast, confident, without reasons, and without provenance \u2014 because the compiled layer has no access to its own inputs and no channel to the live layer except affect.\nThat is the phenomenology of intuition exactly: I know, I cannot say how, and it feels as if it came from somewhere else. It came from below.\nWhy it feels like it comes from outside. The narrative layer receives an output with the sender field blank and attributes it \u2014 to the gut, the heart, instinct, and historically to the placeholder the book keeps for what lies beyond comprehension. Intuition is where the placeholder gets filled in everyday life.",
+    "thread_id": "book-coherence",
+    "references": [
+      "0a-hub"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T12:45:39.065977",
+    "updated_at": "2026-09-12T12:45:39.065977"
+  },
+  "0a-2-kahneman-s-fast-slow-m": {
+    "id": "0a-2-kahneman-s-fast-slow-m",
+    "symbols": [
+      "intuition",
+      "judgment",
+      "affect",
+      "compression",
+      "kahneman"
+    ],
+    "content": "2. Kahneman's fast and slow, mapped onto the stack. Kahneman (2011): System 1 is fast, automatic, effortless, associative, affect-laden, and cannot be switched off; System 2 is slow, effortful, serial, rule-following, and lazy. Biases arise when System 1 answers a question it was not built for and System 2 endorses the answer without checking (WYSIATI; substitution).\nThe vault's account agrees with the division and changes it in three places:\na. System 1 is not one system but a stack. The compiled layer has several clock speeds \u2014 evolutionary (DNA, instinct), developmental (habit, trauma-written reflex), cultural (inherited rule), practised (expertise) \u2014 each with its own training history and its own scope of validity. \"Gut feeling\" is the affective output of whichever compiled layer fired, and they can disagree. Not two systems but n clocks, delivered through one channel.\nb. System 2 is the leap in local form. Kahneman's slow system is the vault's live judgment: the layer that can, sometimes, notice from inside the rule the case the rule does not cover (ledger J1). It is expensive, fragile under pressure, and the only place where what compression discarded can be recovered. Kahneman's \"laziness\" of System 2 is the cost structure of the manager (reflection under cost).\nc. Bias is compiled judgment outside its training environment. Kahneman & Klein 2009: intuition is trustworthy where the environment is high-validity and feedback was adequate (firefighters, chess, anaesthetists), and confidently wrong where it is not (stock pickers, long-range clinical prediction). The gut is a compressed record of a specific selection history. It knows nothing outside that history and reports with the same confidence \u2014 which is J1 again: the compiled judge cannot see the case it does not cover.",
+    "thread_id": "book-coherence",
+    "references": [
+      "0a-hub",
+      "0a-1-claim"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T12:45:39.065979",
+    "updated_at": "2026-09-12T12:45:39.065980"
+  },
+  "0a-3-accounts": {
+    "id": "0a-3-accounts",
+    "symbols": [
+      "judgment",
+      "affect",
+      "compression",
+      "kahneman",
+      "accounts"
+    ],
+    "content": "3. What this accounts for. Speed, confidence, inarticulacy, felt externality \u2014 all direct consequences of a compiled layer with no channel but affect (\u00a71).\nThe validity boundary \u2014 Kahneman & Klein 2009 (\u00a72c).\nGut feelings about people. Thin-slice judgments (Ambady & Rosenthal): seconds of silent video predict teacher ratings, later surgeon lawsuits, above chance. That is B0's F1 detected below report, delivered as F4 affect \u2014 the channel was real, the reading was compiled, only the output reached awareness.\nThe trauma case. A reflex written by one catastrophe fires as certainty in every later situation that resembles it \u2014 a compiled layer with a training set of one, maximal confidence, minimal validity. The strongest everyday demonstration that gut feeling is compression, not perception.",
+    "thread_id": "book-coherence",
+    "references": [
+      "0a-hub",
+      "0a-2-kahneman-s-fast-slow-m"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T12:45:39.065981",
+    "updated_at": "2026-09-12T12:45:39.065982"
+  },
+  "0a-4-remains-open-inputless": {
+    "id": "0a-4-remains-open-inputless",
+    "symbols": [
+      "remains",
+      "open",
+      "inputless",
+      "branch"
+    ],
+    "content": "4. What remains open \u2014 the inputless branch. Cases where no input is plausible: knowing before the phone rings, the sense of being watched. Stated as a fork, not a verdict:\nCompiled reading: every gut feeling has an input; the input was sub-attended (F1), or the verdict was compiled long before the occasion (habit, culture, DNA), and the felt externality is the blank sender field.\nInputless reading: some gut feelings have no input available to the organism at the time.\nThe controlled evidence for the second reading is weak and has replicated poorly. But the compiled account does not refute it; it only removes the need for it in the large majority of cases. The branch stays open.\nWhat would distinguish them \u2014 the calibration profile. A compiled evaluator is well calibrated inside its training environment and badly outside it. An inputless source would show no such boundary \u2014 its hit rate would not depend on whether the situation resembles the carrier's history. Collect gut-feeling verdicts with self-rated confidence across situations graded by resemblance to the person's own history; the compiled reading predicts calibration falls with distance; the inputless reading predicts it does not.",
+    "thread_id": "book-coherence",
+    "references": [
+      "0a-hub",
+      "0a-3-accounts"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T12:45:39.065983",
+    "updated_at": "2026-09-12T12:45:39.065984"
+  },
+  "0a-4a-split-second-flash-fe": {
+    "id": "0a-4a-split-second-flash-fe",
+    "symbols": [
+      "book",
+      "compression",
+      "split",
+      "second",
+      "flash"
+    ],
+    "content": "4a. The split-second flash \u2014 and why it feels true. The split second is Gladwell, Blink: the Getty kouros the experts knew was wrong in two seconds without being able to say why. The conscious mind is the last to know is Eagleman, Incognito: chicken-sexers and plane-spotters reliably right and unable to teach the rule, leaning on Libet's readiness potential. The flash itself is Kounios & Beeman: a burst of right-temporal gamma a third of a second before the reported \"aha,\" with the solution feeling certain the instant it appears.\nThe interesting word is not flash but truth. Why does fast arrival feel true? The fluency literature answers bluntly: cognitive ease is read as truth. Repeated statements feel truer (illusory-truth effect); statements in a clear font feel truer; rhyming aphorisms feel truer. The truth-feeling is a signal that the incoming pattern matched a compiled one with little resistance. It is a coherence signal, not a correspondence check \u2014 it reports fit with the codebook, not fit with the world. The flash of truth fires identically for the forgery expert who is right and the conspiracy believer who is wrong. What separates them is the validity boundary of \u00a72c, not anything in the feeling.\nSo the compiled verdict arrives with two attached qualities, confidence and truth-feeling, and neither is evidence. Confidence is miscalibrated outside the training environment; truth-feeling is fluency, and fluency can be manufactured by repetition \u2014 which is what propaganda, ritual and advertising all do. Compression optimised for emotional fidelity is compression optimised to fire the truth-feeling without passing the correspondence surface.",
+    "thread_id": "book-coherence",
+    "references": [
+      "0a-hub",
+      "0a-4-remains-open-inputless"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T12:45:39.065985",
+    "updated_at": "2026-09-12T12:45:39.065985"
+  },
+  "0a-4b-ease-selection-signal": {
+    "id": "0a-4b-ease-selection-signal",
+    "symbols": [
+      "book",
+      "judgment",
+      "ease",
+      "selection",
+      "signal"
+    ],
+    "content": "4b. Ease as a selection signal \u2014 convenience shaping daily judgment. Most daily judgment is not made; it is defaulted. Wood & Neal's diary studies put roughly forty percent of daily behaviour in habits performed in stable contexts with no decision at all. Where a decision does occur, the default wins by margins unrelated to the merits: opt-out organ-donation countries sit near ninety percent consent, opt-in countries near fifteen (Johnson & Goldstein 2003). Simon named the strategy satisficing; the fluency work adds the twist: ease is not only the path taken, it is read as a property of the destination. The easy option feels right, the familiar face trustworthy. Convenience does not merely bias which judgment is reached; it supplies the feeling that the judgment was sound.\nIn the mechanism this is gravity's everyday face. Ease is the felt signal of low pressure \u2014 the compiled layer returned a match with no resistance \u2014 and the engine says nothing moves without pressure. Live judgment fires only when ease fails. A life arranged for ease is one in which the live layer is almost never called. Inside a valid environment, ease is the correct signal; the compiled layer earned its speed. The failure is a mismatch in the environment, not in the person.\nAnd the mismatch is now manufactured. Fluency can be produced without correspondence \u2014 by repetition, clarity, familiarity, frictionless delivery \u2014 and that is what advertising, propaganda, ritual and recommendation feeds do. Pseudo-selection regimes, fitness theatre \u2014 environments engineered so the ease signal fires on demand. The frictionless import of coherence removes the epistemic friction that used to wake the live layer, so the reader receives a fluent synthesis and the truth-feeling with it, and never notices that nothing was checked.\nThe link to cultural inheritance. Sperber's cultural attraction theory says cultural items persist not by faithful copying but by repeated reconstruction toward cognitively attractive forms. What makes a form attractive is ease of processing. So attraction theory is fluency at population scale: the same signal that makes a statement feel true to one person makes a story survive in a culture. Convenience sits at the join between the judgment joint and the inheritance joint, selecting for the same thing on both: fit with the existing codebook rather than fit with the world.\nNew row \u2014 T3: does the same fluency signal predict both individual truth-judgments and population-level persistence of a cultural item? Testable: fluency-manipulated items through transmission chains, measuring both the truth-rating at each node and survival across generations.",
+    "thread_id": "book-coherence",
+    "references": [
+      "0a-hub",
+      "0a-4a-split-second-flash-fe"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T12:45:39.065986",
+    "updated_at": "2026-09-12T12:45:39.065987"
+  },
+  "0a-5-consequences-ledger-ma": {
+    "id": "0a-5-consequences-ledger-ma",
+    "symbols": [
+      "intuition",
+      "affect",
+      "kahneman",
+      "non-local",
+      "consequences"
+    ],
+    "content": "5. Consequences for the ledger and the machine question. Confidence is the exposed variable. The compiled layer signals a verdict and a confidence; miscalibration outside the training environment is the same problem as J1 \u2014 the gut is the purest compiled judge there is.\nThe machine restatement. Models carry an internal confidence signal (Kadavath et al. 2022: calibrated in-distribution, degrading off) but no affect channel to deliver it and no body it was compiled in. A model can have something like the verdict of a gut feeling and nothing like the feeling. That may be why its confidence profile mirrors the human one \u2014 good inside, useless outside \u2014 without the human's warning sign, the discomfort that sometimes wakes the slow layer.\nNew row \u2014 B0.7 / J5: Is intuition's validity boundary the same boundary as the inheritance the carrier received? Cheap; runs on Kahneman & Klein's own criteria; and it is the experiment that keeps the non-local branch honest in both directions.",
+    "thread_id": "book-coherence",
+    "references": [
+      "0a-hub",
+      "0a-4b-ease-selection-signal"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T12:45:39.065988",
+    "updated_at": "2026-09-12T12:45:39.065989"
+  },
+  "0a-6-literature-check": {
+    "id": "0a-6-literature-check",
+    "symbols": [
+      "kahneman",
+      "literature",
+      "check"
+    ],
+    "content": "6. Literature to check. Kahneman 2011; Stanovich & West 2000; Evans & Stanovich 2013; Melnikoff & Bargh 2018; Kahneman & Klein 2009; Klein 1998 RPD; Ambady & Rosenthal 1992, 1993; Damasio 1994 / Bechara et al. 1997; Lichtenstein, Fischhoff & Phillips 1982; Kadavath et al. 2022. Gladwell 2005 Blink; Eagleman 2011 Incognito; Libet 1983; Soon et al. 2008; Kounios & Beeman 2015; Reber & Schwarz 1999; Alter & Oppenheimer 2009; Hasher, Goldstein & Toppino 1977; Dech\u00eane et al. 2010; McGlone & Tofighbakhsh 2000. Wood & Neal 2007; Johnson & Goldstein 2003; Simon 1956; Fiske & Taylor 1984; Zipf 1949; Sperber 1996; Claidi\u00e8re et al. 2014. On the inputless branch: the replication record around Bem 2011 \u2014 to be read for the calibration-boundary question specifically, not re-argued.",
+    "thread_id": "book-coherence",
+    "references": [
+      "0a-hub",
+      "0a-5-consequences-ledger-ma"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T12:45:39.065990",
+    "updated_at": "2026-09-12T12:45:39.065990"
+  },
+  "a0d057d0-d7d8-4c0b-85f6-a252b4a81694": {
+    "id": "a0d057d0-d7d8-4c0b-85f6-a252b4a81694",
+    "symbols": [
+      "justice",
+      "gradient",
+      "taxonomy",
+      "mercy",
+      "redistributive",
+      "pragmatic",
+      "contextual"
+    ],
+    "content": "Justice as a Gradient \u2014 seven levels, read as increasing cost the system is willing to pay per case.\n\n1. Absence. No claim is recognised; harm is simply weather.\n2. Retaliation. Harm answered in kind by the injured party; cheapest possible rule, no third party.\n3. Rule. A fixed tariff replaces retaliation; the same act always draws the same response, no case is examined.\n4. Procedure. Cases are heard before the tariff applies; cost rises, error falls.\n5. Mercy. Procedure admits exceptions the rule cannot name; judgment is spent on the single case.\n6. Redistributive. The gradient itself is examined: who bears the standing cost of the rule, and is that bearable.\n7. Contextual. The system knows which level a given situation can afford, and moves between them deliberately rather than by default.\n\nThe gradient is not moral progress; it is rising willingness to pay for live judgment instead of compiled response.",
+    "thread_id": "justice-taxonomy",
+    "references": [
+      "bc-0a-counter-case-japan-15",
+      "bc-4-one-real-asymmetry-mar",
+      "0a-4b-ease-selection-signal"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T12:46:19.710284",
+    "updated_at": "2026-09-12T12:46:19.710285"
+  },
+  "56f2194d-f416-4484-b0e8-36866ee2261e": {
+    "id": "56f2194d-f416-4484-b0e8-36866ee2261e",
+    "symbols": [
+      "integration",
+      "bridge",
+      "metrics",
+      "recursion"
+    ],
+    "content": "The bridge: each justice level is a compression setting. Lower levels amortise judgment into rules; higher levels re-open the rule per case. Symbolic recursion is the same move in a motif field: a motif that is only ever re-applied is a rule, a motif that is revised on contact is procedure or mercy.\n\nIndicators, two per level:\n1. Absence \u2014 fraction of harms with no recorded response (incident logs); zero motif revisions (field history).\n2. Retaliation \u2014 median latency harm-to-response (court/incident data); direct reciprocal links with no third motif (graph).\n3. Rule \u2014 variance of outcome given act class (sentencing datasets); motifs referenced but never revised (symbolic_depth = 0).\n4. Procedure \u2014 hearing rate per case (docket data); revisions per motif before linking (history length).\n5. Mercy \u2014 exception rate against tariff (appeals/pardons); pursuits that reject a bridge and leave the surprise open (review ledger).\n6. Redistributive \u2014 cost-bearing asymmetry index (fiscal incidence studies); degree concentration among god motifs (graph).\n7. Contextual \u2014 level-switch frequency per case type (case-management logs); regime changes in the trajectory journal.\n\nTestable claim: a field whose symbolic_depth stays at zero while motif count grows is operating at level 3 whatever its vocabulary says.",
+    "thread_id": "bridge",
+    "references": [
+      "a0d057d0-d7d8-4c0b-85f6-a252b4a81694",
+      "3b41341f-d255-49c8-a175-2f2c5ae814b0"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T12:46:19.710487",
+    "updated_at": "2026-09-12T12:46:19.710488"
+  },
+  "fd23bf6f-3174-4481-8e6c-aa43264f6952": {
+    "id": "fd23bf6f-3174-4481-8e6c-aa43264f6952",
+    "symbols": [
+      "reset",
+      "containment",
+      "deviance",
+      "stewardship",
+      "invariants",
+      "regulation"
+    ],
+    "content": "Deletion Scope \u2014 the binding abstraction.\n\nThe reset motif and the stewardship invariants describe the same variable from two sides. The reset motif says culture cannot delete a compiled state at the content level, so it deletes the carrier instead: exclusion at one scale is elimination at another, and containment decides which. The invariants say some responsibility is non-delegable, and that a custodian is whoever cannot hand a regulation off without it degrading into a fixed response.\n\nPut together: a steward is whoever holds the choice between revising the state and removing the carrier. That choice is the non-delegable responsibility the invariants name, and deletion scope is the containment variable the reset motif names. They are one thing. The moment the revise-or-remove decision is delegated to a procedure, it stops being custody and becomes a compiled response, which is exactly the fixed response that suppresses the reset. So mis-governance in both frameworks has one signature: the revocation channel was outsourced, and the system now restores coherence by removing carriers because no one is left who is allowed to revise the rule.\n\nThis also explains why the black sheep is the person supplying epistemic friction: they are the only live judgment left in a loop whose custodian abdicated, and the fixed response removes them because it cannot revise.\n\nTestable prediction: in groups where the revise-versus-remove decision is held by a named custodian, the ratio of rule revisions to carrier removals will be higher than in groups where it is delegated to a procedure, holding the deviance rate constant. Concretely, moderated communities with a human owner who edits rules should show more rule changes per ban than communities governed by automated policy, at equal report volume.",
+    "thread_id": "pursue-bridge-0d-reset-stw-inva",
+    "references": [
+      "0d-reset-suppression",
+      "stw-invariants"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T12:46:19.729938",
+    "updated_at": "2026-09-12T12:46:19.729939"
+  },
+  "84f6011d-59ab-4210-b6d5-0e8178a916a2": {
+    "id": "84f6011d-59ab-4210-b6d5-0e8178a916a2",
+    "symbols": [
+      "justice",
+      "gradient",
+      "taxonomy",
+      "mercy",
+      "redistributive",
+      "pragmatic",
+      "contextual"
+    ],
+    "content": "Justice as a Gradient, second pass \u2014 levels named by what the system refuses to see.\n\n1. Absence: no harm is legible as harm.\n2. Retaliation: harm is legible, the harmer is not; response is reflex.\n3. Rule: the act is legible, the person is not; tariff without hearing.\n4. Procedure: the person is heard, the rule is not questioned.\n5. Mercy: the rule's gap is legible in one case, not as a pattern.\n6. Redistributive: the pattern is legible; who pays for the rule becomes the question.\n7. Contextual: the level itself is legible; the system chooses how much to see.\n\nEach step up is one more thing the system agrees to pay attention to.",
+    "thread_id": "justice-taxonomy",
+    "references": [
+      "a0d057d0-d7d8-4c0b-85f6-a252b4a81694",
+      "0a-4a-split-second-flash-fe",
+      "bc-4-one-real-asymmetry-mar"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T12:46:19.745274",
+    "updated_at": "2026-09-12T12:46:19.745274"
+  },
+  "cb9753d1-9184-449b-aaea-75250f9f155d": {
+    "id": "cb9753d1-9184-449b-aaea-75250f9f155d",
+    "symbols": [
+      "integration",
+      "bridge",
+      "metrics",
+      "recursion"
+    ],
+    "content": "Bridge, second pass: legibility as the shared axis. In a motif field, legibility is what the graph can see about a motif \u2014 its links, its revisions, its community. Each justice level adds one visible thing; each field metric measures one.\n\n1. Absence \u2014 unlinked motif fraction (graph); unreported-harm rate (victimisation surveys).\n2. Retaliation \u2014 reciprocal two-cycles (graph); private settlement share (dispute data).\n3. Rule \u2014 zero-history motifs (symbolic_depth); mandatory-sentence share (statutes).\n4. Procedure \u2014 revisions before first link (history); hearing-to-disposition ratio (dockets).\n5. Mercy \u2014 bridges rejected by review yet retained (flow ledger); clemency rate (executive records).\n6. Redistributive \u2014 god-motif weight share (analytics); fiscal incidence of penalties (budget studies).\n7. Contextual \u2014 regime switches per window (trajectory); tiered-response adoption (policy audits).\n\nPrediction: fields with more rejected-but-retained bridges will show higher subsequent narrative binding, because the open question survives to be answered.",
+    "thread_id": "bridge",
+    "references": [
+      "56f2194d-f416-4484-b0e8-36866ee2261e"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T12:46:19.745314",
+    "updated_at": "2026-09-12T12:46:19.745315"
+  },
+  "837c8528-b6cd-400c-8c7a-c364fa31acc0": {
+    "id": "837c8528-b6cd-400c-8c7a-c364fa31acc0",
+    "symbols": [
+      "cost",
+      "economy",
+      "judgment",
+      "manager",
+      "stewardship",
+      "regulation"
+    ],
+    "content": "The Manager as the Site of Felt Cost \u2014 the binding abstraction.\n\nThe accounting rule says every layer of the stack, from habit to cultural attraction, is judgment amortised into a cheaper compiled response, and that the felt truth is the receipt for computation someone else performed. The manager premise says every life begins inside a system already regulating itself, so agency wakes mid-sequence and responsibility feels retroactive.\n\nThe abstraction that holds both is that the manager is the point in the stack where cost stops being someone else's and becomes felt. Every layer below the manager was priced by an economy the manager did not run: evolution, the inherited order, the culture that compiled its recognisers. The stewardship sequence, physiology first and integration last, is the order in which a carrier takes those prices back, converting receipts into costs it actually pays. A layer is stewarded when its cost is felt by the carrier and outsourced when the receipt is accepted without the cost. Mis-sequencing is then precisely the doc's warning read as a life history: trusting felt truth at a layer whose economy you have not yet internalised.\n\nThis gives the machine asymmetry a place in the stewardship model. An assemblage whose cost is paid elsewhere is a manager permanently at layer zero, custodian of nothing, because no price ever reaches the point of judgment.\n\nTestable prediction: the dissociation between confidence and exception recognition will track whether cost is felt, not what substrate does the judging. Tightening a routed model's thinking budget will lower exception recognition before it lowers confidence. Humans will show the same dissociation only under conditions where the cost of error is borne by someone else, and it will close when the cost is returned to them.",
+    "thread_id": "pursue-bridge-bc-1-one-stw-prem",
+    "references": [
+      "bc-1-one-accounting-rule-un",
+      "stw-premise"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T12:46:19.762902",
+    "updated_at": "2026-09-12T12:46:19.762903"
+  },
+  "3660ba6c-d2d3-4206-9281-14b796173001": {
+    "id": "3660ba6c-d2d3-4206-9281-14b796173001",
+    "symbols": [
+      "causality",
+      "assignment",
+      "inheritance",
+      "stewardship",
+      "custodianship"
+    ],
+    "content": "Conservation of the Deletion Cost \u2014 the binding abstraction.\n\nThe invariants state that maintenance is perpetual (no layer stays fixed) and\nauthority provisional (the manager holds custody, never ownership). The\nreset-suppression motif states that culture cannot delete compiled content\nout of a living carrier, and that the group suppresses the one mechanism \u2014\nlive judgment \u2014 that could.\n\nBound together, they yield a law neither states alone:\n\n  EVERY INHERITANCE SYSTEM MUST PAY A DELETION COST, AND THE COST IS\n  CONSERVED: what cannot be revoked at the state level is revoked at the\n  rule level, and what cannot be revoked at the rule level is revoked at\n  the carrier level.\n\n1. Temporal maintenance presupposes revocation. Upkeep of a compiled system\n   is not only adding and adjusting; expired state must GO. Biology pays at\n   the state level (germline reset, free, indiscriminate). Culture must pay\n   at the rule level (live revision \u2014 expensive, punished) or, failing\n   that, at the carrier level (exclusion; at scale, elimination).\n2. The mis-governance modes describe how the payment is dodged, not\n   avoided: under-regulation defers the cost, over-regulation pays it on\n   the wrong items, symbolic substitution pretends it was paid.\n3. Provisional authority is why the carrier level is always available:\n   custody that is borrowed can be reassigned. \"Remove the carrier and keep\n   the rule\" is custody-revocation standing in for content-revocation.\n4. Containment, then, is not one variable among many but the system's\n   deletion-cost router: it decides which level pays.\n\nTestable prediction: across structurally similar institutions, the presence\nof a cheap formal rule-revision channel (amendment procedures, appeal,\nversioned doctrine) should measurably lower carrier-removal rates (purges,\nexcommunications, dissident firings) \u2014 and closing such a channel should\nraise them, with a lag \u2014 because the deletion cost does not disappear, it\nmigrates to the next level down.",
+    "thread_id": "pursue-bridge-0d-takeo-stw-laye",
+    "references": [
+      "0d-takeover",
+      "stw-layer0"
+    ],
+    "history": [],
+    "created_at": "2026-09-12T12:46:28.132997",
+    "updated_at": "2026-09-12T12:46:28.132998"
   }
 }

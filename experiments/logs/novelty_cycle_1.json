@@ -2,30 +2,42 @@
   "cycle": 1,
   "new_motifs": [
     {
-      "id": "2e5e4922-7116-48d8-8207-9f6dd6dca48e",
-      "semantic": 2.220446049250313e-16,
+      "id": "84f6011d-59ab-4210-b6d5-0e8178a916a2",
+      "semantic": 0.22763088593517833,
       "symbolic": 0.0,
-      "structural": 0.25,
-      "novelty_index": 0.07500000000000011,
+      "structural": 0.7419354838709677,
+      "novelty_index": 0.33639608812887944,
       "linked": true
     },
     {
-      "id": "3e0ec69c-3f53-42fd-8213-0fa250a83392",
-      "semantic": 0.0,
+      "id": "cb9753d1-9184-449b-aaea-75250f9f155d",
+      "semantic": 0.47283903152910256,
       "symbolic": 0.0,
-      "structural": 0.5,
-      "novelty_index": 0.15,
+      "structural": 0.03225806451612903,
+      "novelty_index": 0.24609693511939,
       "linked": true
     }
   ],
-  "V": 4.0,
-  "E": 6.0,
-  "edge_density": 1.0,
-  "recurrence_rate": 1.0,
-  "lcc_fraction": 1.0,
-  "clustering_coeff": 1.0,
-  "avg_shortest_path": 1.0,
-  "centroid_shift": 0.10283402005274744,
-  "cohesion": 0.7396708146570287,
+  "pursuits": [
+    {
+      "kind": "bridge",
+      "motif_id": "837c8528-b6cd-400c-8c7a-c364fa31acc0",
+      "targets": [
+        "bc-1-one-accounting-rule-un",
+        "stw-premise"
+      ],
+      "skipped": null,
+      "review": "accept"
+    }
+  ],
+  "V": 64.0,
+  "E": 114.0,
+  "edge_density": 0.05654761904761905,
+  "recurrence_rate": 0.0625,
+  "lcc_fraction": 0.875,
+  "clustering_coeff": 0.5739998507239886,
+  "avg_shortest_path": 4.3090909090909095,
+  "centroid_shift": 0.0005264408884221305,
+  "cohesion": 0.6334641706643855,
   "pursue_queue": []
 }

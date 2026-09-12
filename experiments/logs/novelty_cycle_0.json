@@ -2,30 +2,42 @@
   "cycle": 0,
   "new_motifs": [
     {
-      "id": "3665df34-bea7-4ada-bcdf-6f9ca32c1fbf",
-      "semantic": 0.0,
+      "id": "a0d057d0-d7d8-4c0b-85f6-a252b4a81694",
+      "semantic": 0.298788349442375,
       "symbolic": 0.0,
-      "structural": 0.0,
-      "novelty_index": 0.0,
+      "structural": 0.7288135593220338,
+      "novelty_index": 0.3680382425177976,
       "linked": true
     },
     {
-      "id": "3fbcfcf2-e19c-4163-8e41-2b7931d7f97d",
-      "semantic": 0.0,
+      "id": "56f2194d-f416-4484-b0e8-36866ee2261e",
+      "semantic": 0.45904198909837146,
       "symbolic": 0.0,
-      "structural": 0.0,
-      "novelty_index": 0.0,
+      "structural": 0.4406779661016949,
+      "novelty_index": 0.36172438437969423,
       "linked": true
     }
   ],
-  "V": 2.0,
-  "E": 1.0,
-  "edge_density": 1.0,
-  "recurrence_rate": 1.0,
-  "lcc_fraction": 1.0,
-  "clustering_coeff": 0.0,
-  "avg_shortest_path": 1.0,
-  "centroid_shift": 0.0,
-  "cohesion": 0.8060146975860311,
+  "pursuits": [
+    {
+      "kind": "bridge",
+      "motif_id": "fd23bf6f-3174-4481-8e6c-aa43264f6952",
+      "targets": [
+        "0d-reset-suppression",
+        "stw-invariants"
+      ],
+      "skipped": null,
+      "review": "accept"
+    }
+  ],
+  "V": 61.0,
+  "E": 108.0,
+  "edge_density": 0.05901639344262295,
+  "recurrence_rate": 0.06557377049180328,
+  "lcc_fraction": 0.8688524590163934,
+  "clustering_coeff": 0.5762639146567717,
+  "avg_shortest_path": 4.346153846153846,
+  "centroid_shift": 0.5672618605051746,
+  "cohesion": 0.6319748689267173,
   "pursue_queue": []
 }
