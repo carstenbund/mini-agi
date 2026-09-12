@@ -28,7 +28,7 @@ def run(cfg_path: str):
     model = cfg.get("model", "llama2")
     use_stub = bool(cfg.get("use_stub", False))
     link_threshold = float(cfg.get("capture_threshold", 0.35))
-    novelty_threshold = float(cfg.get("novelty_threshold", 0.55))   # pursue threshold
+    novelty_threshold = float(cfg.get("novelty_threshold", 0.45))   # pursue threshold
     cycles = int(cfg.get("cycles", 3))
     prompts = cfg.get("prompts", [])
 
