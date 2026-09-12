@@ -100,10 +100,14 @@ def one_cycle(args) -> str:
         print(f"  [{datetime.now():%H:%M:%S}] {result.kind}: {result.motif_id}"
               f" -> {result.targets}{tail}")
 
+    templates = {}
+    if args.templates:
+        with open(args.templates, "r", encoding="utf-8") as f:
+            templates = json.load(f)
     report = run_exhaust(
         smc, tm, model=args.model,
         cfg={"max_pursuits": args.max_pursuits, "min_score": args.min_score,
-             "patience": args.patience},
+             "patience": args.patience, "templates": templates},
         review_cfg=review_cfg, goal_threads=goal, on_fire=on_fire)
     save_motifs(smc.motifs)
     record_event(smc, {"type": "exhaust-stop", "reason": report.stop_reason,
@@ -149,6 +153,7 @@ def main():
     p.add_argument("--max-pursuits", type=int, default=8)
     p.add_argument("--min-score", type=float, default=0.02)
     p.add_argument("--patience", type=int, default=2)
+    p.add_argument("--templates", help="JSON file of template overrides, e.g. {\"bridge\": \"...\"} — iterate on query specificity without code edits")
     p.add_argument("--interval", type=int, default=0,
                    help="Seconds between cycles; 0 runs once. Use hours — fresh captures must season.")
     p.add_argument("--agent", default=os.getenv("SMC_AGENT", "autorun"))

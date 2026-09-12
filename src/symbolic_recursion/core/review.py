@@ -46,6 +46,15 @@ produced by restating either target with its vocabulary swapped? Ignore
 eloquence; look for an actual claim that subsumes both and adds a
 consequence neither target already states.
 
+Mechanical rejection checklist — reject if ANY of these hold:
+1. The claimed abstraction is a one- or two-word generic category
+   (complexity, coherence, connection, balance, integration, resonance,
+   accountability, emergence, systems).
+2. The synthesis does not cite a specific element from EACH target.
+3. The stated consequence merely restates something a target already says.
+4. The claim would bind two randomly chosen texts equally well.
+Accept only when none hold AND the claim genuinely subsumes both targets.
+
 Answer in exactly this format (three lines):
 VERDICT: accept | revise | reject
 EVIDENCE: <one line naming the strongest reason for your verdict>
