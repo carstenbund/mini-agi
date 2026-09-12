@@ -64,6 +64,25 @@ To enable it:
 
 Chroma data is stored under `data/chroma/`.
 
+## Motif Field Report
+
+Graph analytics over the motif field — community detection (pure-Python Louvain),
+god motifs (dominant attractors), surprising cross-community connections, and the
+Project-vision metrics (recurrence rate, symbolic depth, narrative binding, symbol
+drift). Standard library only; deterministic.
+
+```bash
+python scripts/run_cli.py report                  # print markdown report
+python scripts/run_cli.py report --out data/motif_report.md
+python scripts/run_cli.py report --resolution 1.5 # more, smaller communities
+python scripts/run_cli.py report --no-symbol-edges # explicit references only
+```
+
+Implicit `shared_symbol` edges (weight = 0.5 × Jaccard of symbol sets) let the
+field cluster even before many explicit links exist; explicit references always
+outweigh them. Disable with `--no-symbol-edges`. Library API:
+`symbolic_recursion.graph.analyze_field(smc)` / `render_report(smc)`.
+
 ## Experiments
 
 The novelty harness generates motifs with an LLM and scores semantic novelty.

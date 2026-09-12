@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Symbolic Memory Core — proto-AGI skeleton with novelty/confidence harness"
 requires-python = ">=3.9"
 readme = "README.md"
-dependencies = ["numpy", "sentence-transformers>=2.2.2"]
+dependencies = ["numpy"]
 
 [build-system]
 requires = ["setuptools>=68", "wheel"]
@@ -16,6 +16,7 @@ packages = ["symbolic_recursion"]
 include-package-data = true
 
 [project.optional-dependencies]
+sbert = ["sentence-transformers>=2.2.2"]
 faiss = ["faiss-cpu"]
 chroma = ["chromadb>=0.5.0"]
 test = ["pytest>=8.0"]

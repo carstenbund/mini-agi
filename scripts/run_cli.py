@@ -107,6 +107,23 @@ def cmd_chat(args):
     print("--- Response ---")
     print(resp)
 
+def cmd_report(args):
+    from symbolic_recursion.graph import analyze_field, render_report
+
+    smc = load_smc()
+    analysis = analyze_field(
+        smc,
+        include_symbol_edges=not args.no_symbol_edges,
+        resolution=args.resolution,
+    )
+    report = render_report(smc, analysis)
+    if args.out:
+        with open(args.out, "w", encoding="utf-8") as f:
+            f.write(report)
+        print("Report written to", args.out)
+    else:
+        print(report, end="")
+
 def main():
     p = argparse.ArgumentParser(description="Symbolic Memory Core CLI")
     p.add_argument(
@@ -147,6 +164,12 @@ def main():
     p_chat.add_argument("--prompt", type=str, required=True)
     p_chat.add_argument("--capture", type=str, help="Comma-separated symbols to store result as motif")
     p_chat.set_defaults(func=cmd_chat)
+
+    p_rep = sub.add_parser("report", help="Motif field report: communities, god motifs, surprises")
+    p_rep.add_argument("--out", type=str, help="Write markdown to this path instead of stdout")
+    p_rep.add_argument("--resolution", type=float, default=1.0, help=">1.0 more/smaller communities")
+    p_rep.add_argument("--no-symbol-edges", action="store_true", help="Use only explicit references")
+    p_rep.set_defaults(func=cmd_report)
 
     args = p.parse_args()
     args.func(args)
