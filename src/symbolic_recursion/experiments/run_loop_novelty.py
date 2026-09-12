@@ -59,6 +59,10 @@ def run(cfg_path: str):
             thr = tm.new_thread(p.get("name","session"), model=model)
             resp = thr.ask(p["prompt"])
             m = tm.capture_as_motif(thr, p.get("symbols", []), resp)
+            from symbolic_recursion.core.flow import record_flow
+            record_flow({"kind": "cycle-seed", "thread": thr.name, "model": model,
+                         "motif_id": m.id, "targets": [],
+                         "prompt": p["prompt"], "response": resp})
             new_ids.append(m.id)
             if router:
                 router.add_motif(smc, m)

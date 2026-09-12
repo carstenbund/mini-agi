@@ -111,9 +111,19 @@ def cmd_chat(args):
         m = tm.capture_as_motif(thread=t, symbols=[s.strip() for s in args.capture.split(",")], content=resp)
         save_smc(smc)
         _journal(smc, {"type": "capture", "motif_id": m.id, "via": "chat"})
+        from symbolic_recursion.core.flow import record_flow
+        record_flow({"kind": "chat", "thread": t.name, "model": args.model,
+                     "motif_id": m.id, "targets": [],
+                     "prompt": args.prompt, "response": resp})
         print("Captured motif:", m.id)
     print("--- Response ---")
     print(resp)
+
+def cmd_trace(args):
+    from symbolic_recursion.core.flow import render_trace
+
+    smc = load_smc()
+    print(render_trace(smc, args.motif_id, full=not args.short), end="")
 
 def cmd_report(args):
     from symbolic_recursion.graph import analyze_field, render_report
@@ -220,6 +230,11 @@ def main():
     p_pur.add_argument("--stub", action="store_true", help="Use the deterministic model stub (no Ollama)")
     p_pur.add_argument("--dry-run", action="store_true", help="Print the assembled prompt, change nothing")
     p_pur.set_defaults(func=cmd_pursue)
+
+    p_tr = sub.add_parser("trace", help="Show the flow of text around one motif (prompt, response, lineage)")
+    p_tr.add_argument("motif_id", type=str)
+    p_tr.add_argument("--short", action="store_true", help="Excerpt prompt/response instead of full text")
+    p_tr.set_defaults(func=cmd_trace)
 
     p_rep = sub.add_parser("report", help="Motif field report: communities, god motifs, surprises")
     p_rep.add_argument("--out", type=str, help="Write markdown to this path instead of stdout")

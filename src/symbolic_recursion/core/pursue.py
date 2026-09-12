@@ -217,6 +217,10 @@ def execute(smc: SymbolicMemoryCore, tm, pursuit: Pursuit, model: str) -> Pursui
     m = tm.capture_as_motif(thread, pursuit.symbols, resp)
     for target in pursuit.targets:
         smc.link_motifs(m.id, target)
+    from symbolic_recursion.core.flow import record_flow
+    record_flow({"kind": pursuit.kind, "thread": pursuit.thread_name,
+                 "model": model, "motif_id": m.id, "targets": pursuit.targets,
+                 "prompt": pursuit.prompt, "response": resp})
     return PursuitResult(
         kind=pursuit.kind,
         motif_id=m.id,

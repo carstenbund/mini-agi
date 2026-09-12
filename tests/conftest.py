@@ -9,6 +9,13 @@ import pytest
 from symbolic_recursion.core.motif import MotifNode, SymbolicMemoryCore
 
 
+@pytest.fixture(autouse=True)
+def _isolate_ledgers(monkeypatch, tmp_path):
+    """Keep tests from writing to the real data/ ledgers."""
+    monkeypatch.setenv("SMC_FLOW_PATH", str(tmp_path / "flow.jsonl"))
+    monkeypatch.setenv("SMC_TRAJECTORY_PATH", str(tmp_path / "trajectory.jsonl"))
+
+
 def _motif(mid: str, symbols, content: str) -> MotifNode:
     return MotifNode(
         id=mid,
