@@ -59,3 +59,21 @@ def test_only_motif_in_graph_is_not_scored_against_itself():
     smc.add_motif(m)
     assert semantic_novelty(smc, m) == pytest.approx(1.0)
     assert structural_novelty(smc, m) == 0.0
+
+
+def test_semantic_novelty_still_sees_real_overlap():
+    """Excluding self must not exclude a genuine duplicate elsewhere."""
+    smc = SymbolicMemoryCore()
+    smc.add_motif(_motif("a", ["fruit"], "apples and oranges"))
+    dup = _motif("b", ["fruit"], "apples and oranges")
+    smc.add_motif(dup)
+    assert semantic_novelty(smc, dup) == pytest.approx(0.0)
+
+
+def test_symbolic_novelty_counts_only_others_symbols():
+    """Half of the new motif's symbols are already in the field."""
+    smc = SymbolicMemoryCore()
+    smc.add_motif(_motif("a", ["fruit"], "x"))
+    new = _motif("b", ["zebra", "fruit"], "y")
+    smc.add_motif(new)
+    assert symbolic_novelty(smc, new) == pytest.approx(0.5)
