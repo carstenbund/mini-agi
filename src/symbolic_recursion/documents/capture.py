@@ -214,3 +214,37 @@ def capture_document(
     registry[plan["registered_as"]] = plan["motifs"][0]["id"]
     _save_registry(registry)
     return plan
+
+
+def relink_pass(smc: SymbolicMemoryCore, thread: Optional[str] = None) -> List[Dict]:
+    """Resolve wiki-links that were unresolved at capture time.
+
+    A document captured before the document it cites leaves its
+    ``[[links]]`` dangling in the motif content. Once the cited document
+    is captured (and registered), this pass re-scans motif content
+    against the current registry and returns the missing references as a
+    plan: ``[{"motif": id, "add": hub_id, "link": title}, ...]``.
+    Apply with ``apply_relink``. Idempotent: existing references are
+    never duplicated.
+    """
+    registry = _load_registry()
+    changes: List[Dict] = []
+    seen: set = set()
+    for m in smc.list_motifs():
+        if thread and m.thread_id != thread:
+            continue
+        for link in _WIKILINK_RE.findall(m.content or ""):
+            hub = registry.get(_norm_title(link))
+            if hub and hub != m.id and hub not in m.references \
+                    and (m.id, hub) not in seen and smc.get_motif(hub):
+                seen.add((m.id, hub))
+                changes.append({"motif": m.id, "add": hub, "link": link.strip()})
+    return changes
+
+
+def apply_relink(smc: SymbolicMemoryCore, changes: List[Dict]) -> int:
+    applied = 0
+    for c in changes:
+        if smc.link_motifs(c["motif"], c["add"]):
+            applied += 1
+    return applied

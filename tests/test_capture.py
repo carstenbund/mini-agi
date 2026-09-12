@@ -80,3 +80,30 @@ def test_plan_is_side_effect_free():
     smc = SymbolicMemoryCore()
     plan_capture(smc, DOC)
     assert smc.list_motifs() == []
+
+
+def test_relink_pass_wires_links_captured_out_of_order():
+    from symbolic_recursion.documents.capture import apply_relink, relink_pass
+
+    smc = SymbolicMemoryCore()
+    # DOC cites [[Prior Document]] which is not yet captured
+    capture_document(smc, DOC)
+    assert relink_pass(smc) == []            # nothing resolvable yet
+    prior = capture_document(smc, PRIOR, title="Prior Document")
+    prior_hub = prior["motifs"][0]["id"]
+    changes = relink_pass(smc)
+    assert changes and all(c["add"] == prior_hub for c in changes)
+    assert apply_relink(smc, changes) == len(changes)
+    hub = smc.get_motif("test-doc-hub")
+    assert prior_hub in hub.references
+    # idempotent: a second pass finds nothing
+    assert relink_pass(smc) == []
+
+
+def test_relink_respects_thread_filter():
+    from symbolic_recursion.documents.capture import relink_pass
+
+    smc = SymbolicMemoryCore()
+    capture_document(smc, DOC)
+    capture_document(smc, PRIOR, title="Prior Document")
+    assert relink_pass(smc, thread="unrelated-thread") == []
