@@ -2,6 +2,7 @@ from typing import List, Optional
 from symbolic_recursion.core.motif import MotifNode, SymbolicMemoryCore
 from symbolic_recursion.core.ollama_interface import query_ollama
 from symbolic_recursion.utils.id_gen import generate_id
+from symbolic_recursion.core.agent import agent_id
 from datetime import datetime
 
 class ChatThread:
@@ -31,7 +32,8 @@ class ThreadManager:
             id=generate_id(),
             symbols=symbols,
             content=content,
-            thread_id=thread.name
+            thread_id=thread.name,
+            agent=agent_id(),
         )
         self.smc.add_motif(m)
         return m

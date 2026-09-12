@@ -16,6 +16,7 @@ import os
 from datetime import datetime
 from typing import Dict, List, Optional
 
+from symbolic_recursion.core.agent import agent_id
 from symbolic_recursion.core.motif import SymbolicMemoryCore
 
 
@@ -31,7 +32,7 @@ def record_flow(entry: Dict, path: Optional[str] = None,
     "chat", "cycle-seed", ...), ``thread``, ``model``, ``motif_id``,
     ``targets`` (context/link ids), ``prompt``, ``response``."""
     path = path or flow_path()
-    line = {"ts": (now or datetime.utcnow()).isoformat(), **entry}
+    line = {"ts": (now or datetime.utcnow()).isoformat(), "agent": agent_id(), **entry}
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "a", encoding="utf-8") as f:
         f.write(json.dumps(line, ensure_ascii=False) + "\n")
@@ -93,7 +94,8 @@ def render_trace(
     gen = [e for e in flow_events if e.get("motif_id") == motif_id]
     if gen:
         e = gen[-1]
-        lines += [f"## Generation record ({e.get('kind', '?')} · model {e.get('model', '?')} · {e.get('ts', '')[:16]})", ""]
+        lines += [f"## Generation record ({e.get('kind', '?')} · model {e.get('model', '?')} · "
+                  f"agent {e.get('agent', '?')} · {e.get('ts', '')[:16]})", ""]
         prompt = e.get("prompt", "")
         response = e.get("response", "")
         if full:

@@ -36,7 +36,9 @@ field is taking and shows its evidence, but never steers.
 src/symbolic_recursion/
   core/
     motif.py            MotifNode + SymbolicMemoryCore (in-memory graph, revisions, links)
-    storage.py          JSON persistence (data/motifs.json)
+    storage.py          JSON persistence (data/motifs.json), merge-on-save, locked
+    agent.py            session identity (SMC_AGENT) stamped into every record
+    claims.py           claims ledger: which owner is pursuing which target
     router.py           term-frequency similarity + link suggestion (no deps)
     vector_router.py    SBERT/FAISS/numpy vector search, legacy sparse fallback
     chroma_router.py    persistent vector search via Chroma
@@ -71,6 +73,7 @@ Persisted state lives under `data/`:
 | `doc_registry.json` | document title → hub motif id, for `[[wiki-link]]` resolution |
 | `trajectory.jsonl` | one line per field mutation: event + metrics after it |
 | `flow.jsonl` | one line per generation: full prompt, response, provenance, review |
+| `claims.jsonl` | which owner is working on which pursuit target, with expiry |
 | `motif_report.md` | last rendered field report |
 | `chroma/` | Chroma persistence, when that router is used |
 
@@ -138,6 +141,7 @@ python scripts/run_cli.py pursue --review --review-model qwen2.5
 python scripts/run_cli.py report
 python scripts/run_cli.py report --trajectory --window 8
 python scripts/run_cli.py trace <motif-id>
+python scripts/run_cli.py claims
 ```
 
 Pass `--router vector` or `--router chroma` (or set `SMC_ROUTER`) to use a
@@ -343,6 +347,44 @@ deterministically with overlap, `documents.indexer` holds an in-memory
 sparse chunk index, and `skills.knowledge_search` ranks motifs and chunks
 together, boosting chunks whose tags overlap the active motifs' symbols.
 
+## Running from several sessions
+
+Several sessions can work the same field at once: a person capturing
+documents, a loop run, a second session reviewing. Three pieces make that
+safe.
+
+**Merge-on-save.** The store is one JSON file written whole. A save takes
+an advisory lock, re-reads the file, merges, and writes atomically. Motifs
+only on disk are kept, so another session's captures survive. Motifs
+present on both sides take the saving session's content, with the reference
+lists unioned so nobody's links are dropped. Deletion is not a persisted
+operation. Pass `merge=False` to the save function to overwrite on purpose.
+
+**Agent identity.** Set `SMC_AGENT` per session. It is stamped onto every
+motif at capture, every trajectory journal line, every flow ledger entry,
+and every pursuit and review. The trajectory panel shows an agent column
+and `trace` names the agent in the generation record. Unset, everything is
+`anonymous`.
+
+**Claims.** Before a pursuit fires, its owner claims the target in
+`data/claims.jsonl` for the length of the model call, then releases it.
+The bridge planner skips pairs another owner currently holds, and the loop
+skips queued motifs another owner is deepening. Claims expire after an hour
+by default, so a crashed session cannot hold a target forever. If another
+writer resolves the planned pair between planning and execution, the
+pursuit is skipped rather than doubled.
+
+```bash
+SMC_AGENT=carsten python scripts/run_cli.py pursue --review
+SMC_AGENT=loop     python -m symbolic_recursion.experiments.run_loop_novelty scenario.json
+python scripts/run_cli.py claims                       # who is working on what
+python scripts/run_cli.py claims --release a|b --kind bridge
+```
+
+Content edits still follow last-writer-wins, so two sessions revising the
+same motif's text at the same moment will keep only one version. Links and
+new motifs are never lost.
+
 ## Environment variables
 
 | Variable | Default | Purpose |
@@ -351,6 +393,8 @@ together, boosting chunks whose tags overlap the active motifs' symbols.
 | `SMC_TRAJECTORY_PATH` | `data/trajectory.jsonl` | trajectory journal |
 | `SMC_FLOW_PATH` | `data/flow.jsonl` | flow ledger |
 | `SMC_DOC_REGISTRY` | `data/doc_registry.json` | captured-document registry |
+| `SMC_CLAIMS_PATH` | `data/claims.jsonl` | pursuit claims ledger |
+| `SMC_AGENT` | `anonymous` | this session's identity on every record |
 | `SMC_ROUTER` | blank | `vector` or `chroma` |
 | `SMC_MODEL` | `llama3:instruct` | model for `multi_run` |
 | `SMC_EMB_MODEL` | `sentence-transformers/all-MiniLM-L6-v2` | SBERT model |

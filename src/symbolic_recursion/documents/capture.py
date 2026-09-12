@@ -24,6 +24,7 @@ import os
 import re
 from typing import Dict, List, Optional, Tuple
 
+from symbolic_recursion.core.agent import agent_id
 from symbolic_recursion.core.motif import MotifNode, SymbolicMemoryCore
 
 _STOPWORDS = frozenset(
@@ -207,6 +208,7 @@ def capture_document(
             id=spec["id"], symbols=spec["symbols"], content=spec["content"],
             thread_id=plan["thread"],
             references=[r for r in spec["references"] if smc.get_motif(r) is not None],
+            agent=agent_id(),
         ))
     registry = _load_registry()
     registry[plan["registered_as"]] = plan["motifs"][0]["id"]

@@ -117,5 +117,5 @@ def test_render_trajectory_contains_table_and_regime():
     ]
     out = render_trajectory(events)
     assert "## Regime: fragmenting" in out
-    assert "| ts | event |" in out
+    assert "| ts | agent | event |" in out
     assert render_trajectory([]).count("No journaled events") == 1
